@@ -323,8 +323,8 @@ IP주소, 쿠키, 서비스 이용기록, 방문기록 등
 			    </div>
 			    <!-- 텍스트 클래스 -->
 				<div class="caption">
-			    	<a href="login.jsp">아이디가 있으신가요?</a><br /><br />
-			    	<a href="#">고객센터</a>
+			    	<a href="login.jsp">계정이 있으신가요?</a><br /><br />
+			    	<a href="#" onclick="alert('고객 센터 : 010-xxxx-xxxx');">고객센터</a>
 			    	<p style="margin-top: 30px; font-size: 12px; color: red;">※ (  *  ) 표시는 필수 입력입니다. </p>
 			    	<p style="margin-top: 10px;font-size: 12px; color: red;">※ 개인 정보 허위 기재시 처벌의 대상이 될 수 있습니다. </p>
 			    </div>
