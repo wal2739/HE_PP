@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/css/login2H.css?ver=3">
+<link rel="stylesheet" href="/css/login2H.css?ver=4">
 <script src="/js/jquery-3.6.0.min.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -119,7 +119,14 @@ function validate() {
 }
 
 </script>
-
+<style>
+body {
+  height: 300vh;
+}
+body::before {
+  height : 300vh;
+}
+</style>
 <body>
 	<section class="login-form">
 		<h1>회원가입</h1>

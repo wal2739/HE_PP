@@ -112,7 +112,6 @@
 		System.err.println("비회원 userClass int형 변환 에러 : " + e);
 	}
 
-	System.out.println(checkData);
 %>
 </head>
 <script

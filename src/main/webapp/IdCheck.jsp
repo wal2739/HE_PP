@@ -31,7 +31,7 @@
 	font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
 }
 body {
-	background: rgba(0,0,0,.25);
+    background: url("/image/bg_body.png") repeat center;
 }
 form {
 	text-align: center;

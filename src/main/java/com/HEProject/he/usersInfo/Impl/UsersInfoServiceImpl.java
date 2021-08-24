@@ -43,7 +43,6 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 			}else {
 				session.setAttribute("boCheckIndex", "check");
 			}
-			System.out.println(session.getAttribute("boCheckIndex"));
 			return "main.do";
 		}else{
 			request.setAttribute("loginST", 2);
@@ -93,7 +92,6 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 		vo.setUserName(request.getParameter("userName"));
 		vo.setUserPW(request.getParameter("userPW"));
 		
-		System.out.println("회원가입 - " + vo);
 		int rltNum = 0;
 		if(vo.getUserClass()==1) {
 			rltNum = dao.newIUser(vo);
@@ -166,5 +164,49 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 			request.setAttribute("MDFUS", 0);
 		}
 	}
+
+	@Override
+	public String getFdInfo(HttpServletRequest request) {
+		String rqm01 = "userId";
+		String rqm02 = "userEmail";
+		String rqmVal01 = "";
+		String rqmVal02 = ""; 
+		String rqmVal03 = "";
+		int muNxed =  Integer.parseInt(request.getParameter("muNxed"));
+		if(muNxed==1) {
+			rqmVal02 = tc("userEmail",request);
+			rqmVal03 = tc("userName",request);
+			String rlt = "";
+			try {
+				rlt = dao.getFdInfo(rqm02, rqmVal02, rqmVal03).getUserID();
+			} catch (NullPointerException e) {
+				return "0";
+			}
+			return rlt;
+		}else if(muNxed==2) {
+			rqmVal01 = tc("userId",request);
+			rqmVal03 = tc("userName",request);
+			String rlt = "";
+			try {
+				rlt = dao.getFdInfo(rqm01, rqmVal01, rqmVal03).getUserPW();
+			} catch (NullPointerException e) {
+				return "0";
+			}
+			return rlt;
+		}else {
+			System.err.println("getFdInfo method is fuckin error !!!");
+			return "err";
+		}
+	}
 	
+	private String tc(String valCon,HttpServletRequest request) {
+		String rlt = "";
+		try {
+			rlt =  request.getParameter(valCon);
+			return rlt;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}
 }

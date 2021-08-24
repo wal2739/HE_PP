@@ -104,5 +104,15 @@ public class UserInfoDAO {
 			return 0;
 		}
 	}
+
+	public UsersInfoVO getFdInfo(String rqm, String rqmVal01, String rqmVal02) {
+		String sql = "select * from usersInfo where userName = ? and " + rqm + "='" + rqmVal01 + "'";
+		Object[] args = {rqmVal02};
+		try {
+			return jdbcTemplate.queryForObject(sql, args, new UsersInfoRowmapper());
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
 	
 }

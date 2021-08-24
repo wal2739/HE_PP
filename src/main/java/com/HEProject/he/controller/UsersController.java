@@ -32,7 +32,6 @@ public class UsersController {
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login_Post(HttpSession session,BOInfoVO boVO, UsersInfoVO vo,HttpServletRequest request) {
-		System.out.println("로그인 시도");
 		return usersInfoService.getUser(boVO, vo, session, request);
 	}
 	
@@ -44,14 +43,12 @@ public class UsersController {
 	
 	@RequestMapping("newUser.do")
 	public String newUser(HttpSession session,UsersInfoVO vo,HttpServletRequest request) {
-		System.out.println("회원가입 시도");
 		usersInfoService.newUser(vo, session, request);
 		return "login.jsp";
 	}
 	
 	@RequestMapping("IdCheck.do")
 	public String IdCheck(HttpSession session,UsersInfoVO vo,HttpServletRequest request) {
-		System.out.println("중복확인 시도");
 		System.out.println(request.getParameter("userId"));
 		return usersInfoService.IdCheck(vo, request);
 	}
@@ -90,6 +87,12 @@ public class UsersController {
 	public ModelAndView modifyUserInfoAct(ModelAndView mav,UsersInfoVO vo,HttpServletRequest request,HttpSession session) {
 		usersInfoService.modifyUserInfo(vo, session, request);
 		mav.setViewName("modifyUserInfo.do");
+		return mav;
+	}
+	@RequestMapping("getFdInfo.do")
+	public ModelAndView getFdInfo(ModelAndView mav,HttpServletRequest request) {
+		mav.addObject("fdInfoRlt",usersInfoService.getFdInfo(request));
+		mav.setViewName("getFdInfo.jsp");
 		return mav;
 	}
 }
