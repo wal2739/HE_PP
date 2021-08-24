@@ -44,7 +44,7 @@
 <title>사업자 등록/수정</title>
 </head>
 <script type="text/javascript" src="/js/main.js?ver=11"></script>
-<link rel="stylesheet" href="/css/main.css?ver=15">
+<link rel="stylesheet" href="/css/main.css?ver=16">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript">
@@ -465,9 +465,7 @@ caption {
 				</div>
 			</div>
 		</div>
-		<div class="div3">
-			<!-- 하단 내용이 필요하면 들어감 -->
-		</div>
+		
 	</div>
 	</main>
 </body>

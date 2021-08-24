@@ -139,7 +139,7 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/main.js" ></script>
-<link rel="stylesheet" href="/css/main.css?ver=17">
+<link rel="stylesheet" href="/css/main.css?ver=18">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript">

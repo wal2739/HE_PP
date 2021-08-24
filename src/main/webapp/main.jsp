@@ -116,9 +116,9 @@
 </head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?ver=12"></script>
+<script type="text/javascript" src="/js/main.js?ver=13"></script>
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="/css/main.css?ver=13">
+<link rel="stylesheet" href="/css/main.css?ver=14">
 <script type="text/javascript">
 	function loadOn() {
 		var checkData = '<%=checkData%>';

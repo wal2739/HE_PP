@@ -90,7 +90,7 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/main.js" ></script>
-<link rel="stylesheet" href="/css/main.css?ver=15">
+<link rel="stylesheet" href="/css/main.css?ver=16">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript">
@@ -858,10 +858,6 @@ table p {
       </div>
     	</div>
     </form>
-      <div class="div3">
-        <p>하단 내용</p>
-      </div>
-    
   </main>
 </body>
 </html>

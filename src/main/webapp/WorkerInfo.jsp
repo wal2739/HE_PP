@@ -36,7 +36,7 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/main.js" ></script>
-<link rel="stylesheet" href="/css/main.css?ver=15">
+<link rel="stylesheet" href="/css/main.css?ver=16">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript">
@@ -348,6 +348,7 @@ $('document').ready(function() {
 	border: 0.5px solid #d7d7d7;
 }
 .div2_2 {
+  background: rgba(255,255,255,.75);
   width: 80%;
   height: 70%;
   overflow-y: auto;
