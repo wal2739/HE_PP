@@ -13,7 +13,7 @@ public class WorkInfoVO implements Serializable{
 	private String fieldManagerMail;
 	private String fieldAdd01;
 	private String fieldAdd02;
-	private String workAmount;
+	private int workAmount;
 	private String workTime;
 	private String workRequests;
 	private int st;
@@ -52,7 +52,7 @@ public class WorkInfoVO implements Serializable{
 		result = prime * result + ((relative == null) ? 0 : relative.hashCode());
 		result = prime * result + ((rv == null) ? 0 : rv.hashCode());
 		result = prime * result + st;
-		result = prime * result + ((workAmount == null) ? 0 : workAmount.hashCode());
+		result = prime * result + workAmount;
 		result = prime * result + ((workCode == null) ? 0 : workCode.hashCode());
 		result = prime * result + ((workDate == null) ? 0 : workDate.hashCode());
 		result = prime * result + ((workField == null) ? 0 : workField.hashCode());
@@ -132,10 +132,7 @@ public class WorkInfoVO implements Serializable{
 			return false;
 		if (st != other.st)
 			return false;
-		if (workAmount == null) {
-			if (other.workAmount != null)
-				return false;
-		} else if (!workAmount.equals(other.workAmount))
+		if (workAmount != other.workAmount)
 			return false;
 		if (workCode == null) {
 			if (other.workCode != null)
@@ -223,10 +220,10 @@ public class WorkInfoVO implements Serializable{
 	public void setFieldAdd02(String fieldAdd02) {
 		this.fieldAdd02 = fieldAdd02;
 	}
-	public String getWorkAmount() {
+	public int getWorkAmount() {
 		return workAmount;
 	}
-	public void setWorkAmount(String workAmount) {
+	public void setWorkAmount(int workAmount) {
 		this.workAmount = workAmount;
 	}
 	public String getWorkTime() {

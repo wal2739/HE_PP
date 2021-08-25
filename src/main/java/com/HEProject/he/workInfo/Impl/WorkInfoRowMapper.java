@@ -21,7 +21,7 @@ public class WorkInfoRowMapper implements RowMapper<WorkInfoVO>{
 		vo.setFieldManagerMail(rs.getString("FIELDMANAGERMAIL"));
 		vo.setFieldAdd01(rs.getString("FIELDADD01"));
 		vo.setFieldAdd02(rs.getString("FIELDADD02"));
-		vo.setWorkAmount(rs.getString("WORKAMOUNT"));
+		vo.setWorkAmount(rs.getInt("WORKAMOUNT"));
 		vo.setWorkTime(rs.getString("WORKTIME"));
 		vo.setWorkRequests(rs.getString("WORKREQUESTS"));
 		vo.setSt(rs.getInt("ST"));

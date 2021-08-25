@@ -293,7 +293,7 @@
 				</tr>
 				<tr>
 					<td>작업 금액</td>
-					<td><input type="text" name="workAmount" id="workAmount" maxlength="10"/><br /></td>
+					<td><input type="text" name="workAmount" id="workAmount" maxlength="9"/><br /></td>
 				</tr>
 				<tr>
 					<td>작업 날짜</td>

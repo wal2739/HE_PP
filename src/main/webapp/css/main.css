@@ -21,9 +21,13 @@ a {
   text-transform: uppercase;
 }
 
+.nav-area *{
+  z-index : 999;
+}
 .nav-area ul {float:right;}
 
 .nav-area {
+  position : static;
   background: #262626;
 }
 
@@ -104,9 +108,37 @@ main {
 .div1 {
 	border-bottom: 0.5px solid #d7d7d7;
 }
-.div2_1 {
-	background: rgba(255,255,255,.75);
+.floating_btn { 
+	position: absolute; 
+	right: 50%; 
+	top : 70%;
+	right : 50px;
+	text-align:center; 
+	width: 50px;
+	height: 250px;
+	border: 0.5px #CCCCCC solid;
+	background: linear-gradient( 45deg, #6E6E6E, #CCCCCC );
+	border-radius: 10px / 10px;
+	padding-bottom: 5px;
 }
-.div2_2 {
-  background: rgba(255,255,255,.75);
+.floating_btn_img {
+	margin : 5px 0px 5px 0px;
+	display : inline-block;
+	background: linear-gradient( 45deg, #f0f0f0, #F2F2F2 );
+	width: 80%;
+	height: 30px;
+	padding-top: 5px;
+	border: 0.3px #f0f0f0 solid;
+	border-radius: 10px / 10px;
+}
+.floating_btn img {
+	width: 60%;
+	height: 65%;
+}
+.floating_btn p {
+	font-size : 7px;
+	color : #E3E3E3;
+}
+.floating_btn #floating_title{
+	color: black;
 }

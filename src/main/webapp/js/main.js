@@ -97,3 +97,14 @@ function boIndexCheck(boCheckData) {
 		return location.href='main.do';
 	}
 }
+
+function show_top() {
+	var scroll_val = $(window).scrollTop();
+	if(scroll_val!=0){
+		$("html, body").animate({ scrollTop : 0 },500);
+	}
+}
+
+function link_call() {
+	alert('고객센터 연결')
+}

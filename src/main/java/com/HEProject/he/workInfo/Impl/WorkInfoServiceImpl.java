@@ -41,7 +41,7 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		vo.setFieldManagerPhone(request.getParameter("fieldManagerPhone"));
 		vo.setFieldManagerCell(request.getParameter("fieldManagerCell"));
 		vo.setFieldAdd01(request.getParameter("fieldAdd01"));
-		vo.setWorkAmount(request.getParameter("workAmount"));
+		vo.setWorkAmount(Integer.parseInt(request.getParameter("workAmount")));
 		vo.setWorkTime(request.getParameter("workTime"));
 		if(rv.equals("직접입력")) {
 			vo.setRv(request.getParameter("rvDirect"));
@@ -109,7 +109,7 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		vo.setFieldManagerPhone(request.getParameter("fieldManagerPhone"));
 		vo.setFieldManagerCell(request.getParameter("fieldManagerCell"));
 		vo.setFieldAdd01(request.getParameter("fieldAdd01"));
-		vo.setWorkAmount(request.getParameter("workAmount"));
+		vo.setWorkAmount(Integer.parseInt(request.getParameter("workAmount")));
 		vo.setWorkTime(request.getParameter("workTime"));
 		if(rv.equals("직접입력")) {
 			vo.setRv(request.getParameter("rvDirect"));
