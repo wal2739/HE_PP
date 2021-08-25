@@ -31,8 +31,8 @@
 <title>게시물 수정</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js" ></script>
-<link rel="stylesheet" href="/css/main.css?ver=17">
+<script type="text/javascript" src="/js/main.js?ver=1" ></script>
+<link rel="stylesheet" href="/css/main.css?ver=20">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
 <script src="/naver-smarteditor2-ca95d21/demo/js/service/HuskyEZCreator.js?ver=9"></script>	
@@ -59,7 +59,13 @@
 		oEditors.getById["ir1"].exec("SET_IR", [""]); // 에디터 내에 있는 내용 삭제
 		oEditors.getById["ir1"].exec("PASTE_HTML", [contentsVal]); // 에디터에 내용 삽입
 	}
-	
+	$(document).ready(function(){
+		var currentPosition = parseInt($("#floating_btn").css("top"));
+		$(window).scroll(function() {
+			var position = $(window).scrollTop();
+			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
+		});
+	});
 </script>
 <%
 	Object userClassData = session.getAttribute("userClass");
@@ -172,8 +178,8 @@
   }
   .div2_1 {
     width: 80%;
-    height: 95%;
-    overflow: hidden;
+    height: auto;
+    overflow: auto;
     margin : 0 auto 0 auto;
   }
 
@@ -292,7 +298,7 @@ th {
                     <th>작성자</th>
                     <td><%=vo.getUserName() %></td>
                 </tr>
-                <tr style="height: 79%;">
+                <tr style="height: auto;">
                     <th>
                     	내용
                     	<p style="font-size: 7px; color: red;" class="countSpan"></p>
@@ -317,6 +323,21 @@ th {
             <p>하단 내용</p>
           </div>
         </div>
+        <div class="floating_btn" id="floating_btn">
+			<p id="floating_title"><b>리모컨</b></p>
+			<div class="floating_btn_img" onclick="show_top();">
+				<img src="/image/up_arrow.png" alt="상단 이동"/>
+			</div>
+			<p>맨위로</p>
+			<div class="floating_btn_img" onclick="link_call();">
+				<img src="/image/call_img.png" alt="상담 버튼"/>
+			</div>
+			<p>고객센터</p>
+			<div class="floating_btn_img" onclick="location.href='main.do'">
+				<img src="/image/home_btn.png" alt="상담 버튼"/>
+			</div>
+			<p>HOME</p>
+		</div>        
       </main>
 </body>
 <script type="text/javascript">

@@ -134,6 +134,13 @@
 		var boCheckIndex = '<%=boCheckIndex%>';
 		boIndexCheck(boCheckIndex);
 	}
+	$(document).ready(function(){
+		var currentPosition = parseInt($("#floating_btn").css("top"));
+		$(window).scroll(function() {
+			var position = $(window).scrollTop();
+			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
+		});
+	});
 </script>
 <style>
 </style>
@@ -180,6 +187,21 @@
 		</ul>
 	</nav>
 	<main> <!-- 4분할 or 3분할 or 2분할 필요 , 좌측 상단에 로고 영역 표시 필요--> 내용이 들어감
+	<div class="floating_btn" id="floating_btn">
+    	<p id="floating_title"><b>리모컨</b></p>
+    	<div class="floating_btn_img" onclick="show_top();">
+    		<img src="/image/up_arrow.png" alt="상단 이동"/>
+    	</div>
+    	<p>맨위로</p>
+    	<div class="floating_btn_img" onclick="link_call();">
+    		<img src="/image/call_img.png" alt="상담 버튼"/>
+    	</div>
+    	<p>고객센터</p>
+    	<div class="floating_btn_img" onclick="location.href='main.do'">
+    		<img src="/image/home_btn.png" alt="상담 버튼"/>
+    	</div>
+    	<p>HOME</p>
+    </div>
 	</main>
 	<%-- <a href="#">메세지 페이지로</a> --%>
 

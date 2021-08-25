@@ -35,7 +35,7 @@
 <title>대리작업자 등록 화면</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js" ></script>
+<script type="text/javascript" src="/js/main.js?ver=1" ></script>
 <link rel="stylesheet" href="/css/main.css?ver=16">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
@@ -287,6 +287,13 @@ $('document').ready(function() {
 
 
     });
+	$(document).ready(function(){
+		var currentPosition = parseInt($("#floating_btn").css("top"));
+		$(window).scroll(function() {
+			var position = $(window).scrollTop();
+			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
+		});
+	});
 </script>
 <style>
 .mainDiv{
@@ -308,7 +315,15 @@ $('document').ready(function() {
 .div2{
   display: inline-block;
   width: 100%;
-  height: 700px;  
+  height: 1200px;
+  text-align: center;
+}
+.div_2_back {
+	display : inline-block;
+	width: 70%;
+	height: 90%;
+	background: rgba(255,255,255,.75);
+	
 }
 .div2_1 {
   width: 80%;
@@ -329,23 +344,33 @@ $('document').ready(function() {
   height: calc(100% - 50px);
 }
 #inputTB {
-  width: 100%;
-  height: 80%;
-	border: 0.5px solid #d7d7d7;
+    width: 100%;
+    border-right: 0.5px solid #d7d7d7;
+    border-left: 0.5px solid #d7d7d7;
+	font-size: 15px;
+	text-align: center;
+	background: white;
 }
-#inputTB td,#inputTB th{
-  padding: 0 5% 0 5%;
-}
+
 #inputTB th {
 	background: #f7f7f5;
 	border: 0.5px solid #d7d7d7;
-  width: 200px;
+    width: 200px;
 }
 
 #inputTB td{
   width: 300px;
-	align: center;
-	border: 0.5px solid #d7d7d7;
+  border: 0.5px solid #d7d7d7;
+  white-space:normal;
+}
+
+#top_tr th{
+	position: sticky;
+	top: 0px;
+}
+#btm_tr th{
+	position: sticky;
+	bottom: 0;
 }
 .div2_2 {
   background: rgba(255,255,255,.75);
@@ -374,7 +399,7 @@ $('document').ready(function() {
   height: 200px;
 
 }
-
+/* 
 #workerInfoTB {
   width: 100%;
   height : calc(100%-5px);
@@ -401,7 +426,7 @@ $('document').ready(function() {
 #workerInfoTB th {
 	background: #f7f7f5;
 	border: 0.5px solid #d7d7d7;
-}
+} */
 .btn {
 	width: 120px;
 	height: 30px;
@@ -576,7 +601,8 @@ p {
         <div class="div1_textArea"><h2>대리 작업자 등록/삭제</h2></div>
       </div>
       <div class="div2">
-        <div class="div2_1">
+        <div class="div_2_back">
+        	<div class="div2_1">
           <div class="div2_1_1">
             <h2 id="div2_1_1_h2">대리작업자 등록</h2>
           </div>
@@ -636,8 +662,8 @@ p {
         </div>
         <div class="div2_2">
           <div class="div2_2_1">
-            <table id="workerInfoTB">
-              <tr>
+            <table id="inputTB">
+              <tr id="top_tr">
                 <th></th>
                 <th>아이디</th>
                 <th>비밀번호</th>
@@ -669,9 +695,25 @@ p {
           </div>
           
         </div>
+        </div>
       </div>
       <div class="div3">
       </div>
+    </div>
+        <div class="floating_btn" id="floating_btn">
+    	<p id="floating_title"><b>리모컨</b></p>
+    	<div class="floating_btn_img" onclick="show_top();">
+    		<img src="/image/up_arrow.png" alt="상단 이동"/>
+    	</div>
+    	<p>맨위로</p>
+    	<div class="floating_btn_img" onclick="link_call();">
+    		<img src="/image/call_img.png" alt="상담 버튼"/>
+    	</div>
+    	<p>고객센터</p>
+    	<div class="floating_btn_img" onclick="location.href='main.do'">
+    		<img src="/image/home_btn.png" alt="상담 버튼"/>
+    	</div>
+    	<p>HOME</p>
     </div>
   </main>
 

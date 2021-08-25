@@ -43,7 +43,8 @@
 
 <title>사업자 등록/수정</title>
 </head>
-<script type="text/javascript" src="/js/main.js?ver=11"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?ver=1"></script>
 <link rel="stylesheet" href="/css/main.css?ver=16">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
@@ -64,6 +65,14 @@
 		var loginCheckData = '<%=loginCheckData%>';
 		loginCheck(loginCheckData);
 	}
+	
+	$(document).ready(function(){
+		var currentPosition = parseInt($("#floating_btn").css("top"));
+		$(window).scroll(function() {
+			var position = $(window).scrollTop();
+			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
+		});
+	});
 </script>
 <style>
 .mainDiv {
@@ -93,6 +102,7 @@
 }
 
 .div2_1 {
+	background: rgba(255,255,255,.75);
 	width: 80%;
 	height: 100%;
 	overflow: hidden;
@@ -467,6 +477,21 @@ caption {
 		</div>
 		
 	</div>
+	    <div class="floating_btn" id="floating_btn">
+    	<p id="floating_title"><b>리모컨</b></p>
+    	<div class="floating_btn_img" onclick="show_top();">
+    		<img src="/image/up_arrow.png" alt="상단 이동"/>
+    	</div>
+    	<p>맨위로</p>
+    	<div class="floating_btn_img" onclick="link_call();">
+    		<img src="/image/call_img.png" alt="상담 버튼"/>
+    	</div>
+    	<p>고객센터</p>
+    	<div class="floating_btn_img" onclick="location.href='main.do'">
+    		<img src="/image/home_btn.png" alt="상담 버튼"/>
+    	</div>
+    	<p>HOME</p>
+    </div>
 	</main>
 </body>
 </html>
