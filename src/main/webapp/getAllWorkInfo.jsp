@@ -18,7 +18,7 @@
   font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 	
 }
 body {
-	height: 400px;
+	height: 300px;
 }
 table {
     width: 100%;
@@ -56,9 +56,9 @@ p {
 			</tr>
 			<tr>
 				<th>거래처 명</th>
-				<td colspan="2"><%=vo.getClientCPName() %></td>
+				<td colspan="3"><%=vo.getClientCPName() %></td>
 				<th>거래처 담당자</th>
-				<td colspan="2"><%=vo.getClientManager() %></td>
+				<td><%=vo.getClientManager() %></td>
 				<th>거래처 전화번호</th>
 				<td><%=vo.getClientPhone() %></td>
 			</tr>
@@ -94,8 +94,6 @@ p {
 				<td colspan="7" style="height: 100px;"><%=vo.getRelative() %></td>
 			</tr>
 		</table>
-		<p>※ 중계 사업자에 의해 작업이 취소 될 수 있습니다.</p>
-		<p>※ 취소된 작업은 <b>[취소 작업 조회]</b>에서 확인 할 수 있습니다.</p>
 	</div>
 </body>
 </html>

@@ -14,7 +14,7 @@ public class OrderInfoForIndiVO implements Serializable{
 	private String fieldManagerMail;
 	private String fieldAdd01;
 	private String fieldAdd02;
-	private String workAmount;
+	private int workAmount;
 	private String workTime;
 	private String workRequests;
 	private int st;
@@ -83,7 +83,7 @@ public class OrderInfoForIndiVO implements Serializable{
 		result = prime * result + ((userCell == null) ? 0 : userCell.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
-		result = prime * result + ((workAmount == null) ? 0 : workAmount.hashCode());
+		result = prime * result + workAmount;
 		result = prime * result + ((workCode == null) ? 0 : workCode.hashCode());
 		result = prime * result + ((workDate == null) ? 0 : workDate.hashCode());
 		result = prime * result + ((workField == null) ? 0 : workField.hashCode());
@@ -229,10 +229,7 @@ public class OrderInfoForIndiVO implements Serializable{
 				return false;
 		} else if (!userName.equals(other.userName))
 			return false;
-		if (workAmount == null) {
-			if (other.workAmount != null)
-				return false;
-		} else if (!workAmount.equals(other.workAmount))
+		if (workAmount != other.workAmount)
 			return false;
 		if (workCode == null) {
 			if (other.workCode != null)
@@ -321,10 +318,10 @@ public class OrderInfoForIndiVO implements Serializable{
 	public void setFieldAdd02(String fieldAdd02) {
 		this.fieldAdd02 = fieldAdd02;
 	}
-	public String getWorkAmount() {
+	public int getWorkAmount() {
 		return workAmount;
 	}
-	public void setWorkAmount(String workAmount) {
+	public void setWorkAmount(int workAmount) {
 		this.workAmount = workAmount;
 	}
 	public String getWorkTime() {

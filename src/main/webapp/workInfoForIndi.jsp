@@ -35,10 +35,6 @@
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="/js/main.js?ver=10" ></script>
 <script type="text/javascript">
-	function getAllWorkInfo(workCode) {
-		window.name="parentForm";
-		window.open("getAllWorkInfo.do?wCode="+workCode,"getAllWorkInfo","width=1250,height=500,resizable=no,scrollbars=yes");
-	}
 	function cfmWork(wCode){
 		window.open("workESCheck.do?wCode=" + wCode,"workESCheck","width=1250,height=500,resizable=no,scrollbars=yes");	
 	}
@@ -216,7 +212,7 @@ p {
 }
 #workInfo {
 	width: 100%;
-	height: 90%;
+	height: 75%;
 }
 
 </style>
@@ -422,6 +418,8 @@ p {
           <div class="div2_2_1">
             <p>※ 상세보기를 원하시는 작업을 선택해주세요.</p>
       		<iframe src="" frameborder="0" id="workInfo"></iframe>
+      		<p>※ 중계 사업자에 의해 작업이 취소 될 수 있습니다.</p>
+			<p>※ 취소된 작업은 <b>[취소 작업 조회]</b>에서 확인 할 수 있습니다.</p>
           </div>
           <div class="div2_2_2">
           	<div class="div2_2_2_btn">
@@ -451,17 +449,6 @@ p {
     	<p>HOME</p>
     </div>
   </main>
-	<%-- <!-- 현재 작업 정보 리스트 -->
-	<div>
-		<%if(list.size()==0){%>
-			<p>등록된 작업이 없습니다.</p>
-		<%}else{for(int i = 0 ; i < list.size(); i++){%>
-			<p onclick="getAllWorkInfo('<%=list.get(i).getWorkCode()%>');"><%=i+1 %>. 현장명 : <%=list.get(i).getWorkField() %> | 현장 책임자 : <%=list.get(i).getFieldManager() %> | 현장 주소 : <%=list.get(i).getFieldAdd01() %> | 현장 상세 주소 : <%=list.get(i).getFieldAdd02() %> | 상태 : <%=status[i] %> </p><input type="button" value="작업 완료" onclick="cfmWork('<%=list.get(i).getWorkCode()%>')"/><br />
-		<%}} %>
-	</div>
-	<input type="button" value="취소된 작업" onclick="location.href='cancelWorkListForIndi.do'"/>
-	<input type="button" value="작업 의뢰 확인" onclick="location.href='orderInfoForIndi.do'"/>
-	<input type="button" value="뒤로가기" onClick="location.href='workMainForIndi.do'"/> --%>
 </body>
 </html>
 
