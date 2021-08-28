@@ -24,6 +24,25 @@ public class BOInfoServiceImpl implements BOInfoService{
 	}
 	
 	@Override
+	public BOInfoVO getBOInfo(BOInfoVO vo, HttpServletRequest request) {
+		String usRn = "";
+		try {
+			usRn = request.getParameter("usRn");
+			if(usRn==null) {
+				System.out.println(vo.getUsRn());
+				return dao.getBOInfo(vo);
+			}else {
+				vo.setUsRn(usRn);
+				return dao.getBOInfo(vo);
+			}
+			
+		} catch (NullPointerException e) {
+			System.err.println("bo정보 가져오기 1번 에러" + e);
+			return null;
+		}
+	}
+	
+	@Override
 	public BOInfoVO checkBOInfo(BOInfoVO vo) {
 		return dao.checkBOInfo(vo);
 	}

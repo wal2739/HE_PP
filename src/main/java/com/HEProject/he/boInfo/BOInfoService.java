@@ -19,5 +19,7 @@ public interface BOInfoService {
 	
 	String deleteBO(BOInfoVO vo, HttpSession session, HttpServletRequest request);
 
+	BOInfoVO getBOInfo(BOInfoVO vo, HttpServletRequest request);
+
 	
 }

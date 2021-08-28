@@ -383,7 +383,8 @@ $('document').ready(function() {
 }
 .div2_2_1 {
   width: 100%;
-  height: 100%;
+  height: 80%;
+  overflow-y : scroll;
 }
 .div2_2_2 {
   width: 100%;
@@ -399,34 +400,7 @@ $('document').ready(function() {
   height: 200px;
 
 }
-/* 
-#workerInfoTB {
-  width: 100%;
-  height : calc(100%-5px);
-  	border: 0.5px solid #d7d7d7;
-  	background: white;
-  	
-  
-}
 
-#workerInfoTB th,#workerInfoTB td {
-  display: inline-block;
-  height: 30px;
-  width: calc(100%/10.27);
-  font-size: 12.5px;
-  text-align: center;
-  
-}
-
-#workerInfoTB td {
-	align: center;
-	border: 0.5px solid #d7d7d7;
-}
-
-#workerInfoTB th {
-	background: #f7f7f5;
-	border: 0.5px solid #d7d7d7;
-} */
 .btn {
 	width: 120px;
 	height: 30px;
@@ -458,6 +432,24 @@ $('document').ready(function() {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+#btn_offer {
+	background-color: #72B08E;
+	color: white;
+	border: none;
+	width: auto;
+	height: 30px;
+}
+
+
+#btn_offer:hover {
+	background-color: #4E7861;
+	box-shadow: 1px 1px 1px 1px #3C5C4A;
+}
+
+#btn_offer:active {
+	text-shadow: 6px 2px 2px black;
 }
 
 p {
@@ -675,7 +667,11 @@ p {
                 <th>상세 주소</th>
                 <th></th>
               </tr>
-              <%if(vo==null){}else{for(int i = 0 ; i < vo.size(); i++){ %>
+              <%if(vo==null){%>
+              <tr>
+              	<td colspan="10">대리 작업자가 없습니다.</td>
+              </tr>
+              <%}else{for(int i = 0 ; i < vo.size(); i++){ %>
               <tr>
                 <th><b><%=i+1 %></b></th>
                 <td><%=vo.get(i).getWorkerCode() %></td>
@@ -686,14 +682,13 @@ p {
                 <td><%=vo.get(i).getWorkerCell() %></td>
                 <td><%=vo.get(i).getWorkerAdd01() %></td>
                 <td><%=vo.get(i).getWorkerAdd02() %></td>
-                <td><a href="deleteWorker.do?workerCode=<%=vo.get(i).getWorkerCode() %>">삭제</a></td>
+                <td><button id="btn_offer" onclick="deleteWorker.do?workerCode=<%=vo.get(i).getWorkerCode() %>">삭제</button></td>
               </tr>
               <%}} %>
             </table>
-            <p>※ 아이디는 자동 생성됩니다.</p>
-            <p>※ 생성된 대리 작업자 정보는 수정이 불가능 합니다. 삭제 후 재등록 해주세요.</p>
           </div>
-          
+          <p>※ 아이디는 자동 생성됩니다.</p>
+          <p>※ 생성된 대리 작업자 정보는 수정이 불가능 합니다. 삭제 후 재등록 해주세요.</p>
         </div>
         </div>
       </div>

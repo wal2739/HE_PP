@@ -150,6 +150,7 @@
 }
 #inputTB {
     width: 100%;
+    height : auto;
     border-right: 0.5px solid #d7d7d7;
     border-left: 0.5px solid #d7d7d7;
 	font-size: 15px;
@@ -187,7 +188,8 @@
 }
 .div2_2_1 {
   width: 100%;
-  height: 100%;
+  height: 80%;
+  overflow-y: scroll;
 }
 .div2_2_2 {
   width: 100%;

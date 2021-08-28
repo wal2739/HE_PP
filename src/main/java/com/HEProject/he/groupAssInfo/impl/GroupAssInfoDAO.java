@@ -113,10 +113,10 @@ public class GroupAssInfoDAO {
 		return jdbcTemplate.query(sql, new GroupAssInfoRowMapper());
 	}
 	
-	public int modifyOffer(GroupAssInfoVO vo,int stNum,String boNum) {
-		String sql = "update groupassInfo set st=? where groupassinfo.assusrn = (select gInfo.assusrn from groupassinfo gInfo where (select usrn from boInfo where bonumber=?) = (select assusrn from groupassinfo where grusrn=?))";
+	public int modifyOffer(GroupAssInfoVO vo) {
+		String sql = "update groupassInfo set st=? where assusrn = ? and grusrn = ?";
 		try {
-			jdbcTemplate.update(sql,stNum,boNum,vo.getGrUsRn());
+			jdbcTemplate.update(sql,vo.getSt(),vo.getAssUsRn(),vo.getGrUsRn());
 			return 1;
 		}catch (Exception e) {
 			System.err.println(e);

@@ -57,6 +57,40 @@ function loadon() {
 	}
 	
 }
+function conFirm_Forms(num) {
+	switch (num) {
+	case 0:
+		var rpNum = document.getElementsByName('new_chkUsRn');
+		for(var i = 0; i < rpNum.length; i++){
+			if(rpNum[i].checked==true){
+				var check_confirm = confirm('가입 신청 하시겠습니까?');
+				if(check_confirm==true){
+					document.getElementById('form_Aci').submit();
+				}
+				return false;
+			}
+		}
+		alert('가입 신청 하실 그룹을 선택하세요.');
+		break;
+	case 1:
+		var rpNum = document.getElementsByName('del_chkUsRn');
+		for(var i = 0; i < rpNum.length; i++){
+			if(rpNum[i].checked==true){
+				var check_confirm = confirm('정말 탈퇴 하시겠습니까?');
+				if(check_confirm==true){
+					document.getElementById('form_del').submit();
+				}
+				return false;
+			}
+		}
+		alert('탈퇴 하실 그룹을 선택하세요.');
+		break;
+
+	default:
+		alert('잘못된 요청입니다.');
+		break;
+	}
+}
 </script>
 <style>
 	.mainDiv{
@@ -85,7 +119,7 @@ function loadon() {
 .div_2_back {
 	display : inline-block;
 	width: 70%;
-	height: 90%;
+	height: 100%;
 	background: rgba(255,255,255,.75);
 	
 }
@@ -109,12 +143,17 @@ function loadon() {
   overflow: auto;
 }
 
-.inpuTBDiv {
+.inputTBDiv {
 	width: 100%;
-	height: calc(100%-30px);
+	height: 80%;
+}
+#form_del #form_Aci {
+	height: 100%;
+	overflow-y: scroll;
 }
 #inputTB {
   width: 100%;
+  height : auto;
   border: 0.5px solid #d7d7d7;
 	font-size: 15px;
 	text-align: center;
@@ -161,6 +200,7 @@ function loadon() {
 
 #workerInfoTB {
     width: 100%;
+    height : auto;
     border-right: 0.5px solid #d7d7d7;
     border-left: 0.5px solid #d7d7d7;
 	font-size: 15px;
@@ -214,26 +254,42 @@ function loadon() {
 }
 
 .btnDiv_01 {
-	display: flex;
+	display: inline-block;
 	align-items: center;
 	justify-content: center;
-	position: absolute;
-	top: 35%;
-	left: 45%;
+	left : 45%;
+	top : 90%;
+}
+
+#offer_Btn {
+	background-color: #72B08E;
+	color: white;
+	border: none;
+	width: auto;
+	height: 30px;
+}
+
+
+#offer_Btn:hover {
+	background-color: #4E7861;
+	box-shadow: 1px 1px 1px 1px #3C5C4A;
+}
+
+#offer_Btn:active {
+	text-shadow: 6px 2px 2px black;
 }
 
 .btnDiv_02 {
-	display: flex;
+	display: inline-block;
 	align-items: center;
 	justify-content: center;
-	position: absolute;
 	left : 45%;
 	top : 90%;
 }
 
 p {
 	color: red;
-	font-size: 7px;
+	font-size: 14px;
 }
 </style>
 <%
@@ -375,73 +431,78 @@ p {
         	<div class="div2_1">
           <div class="div2_1_1">
             <h2 id="div2_1_1_h2">그룹 목록 및 등록</h2>
+            <button id="offer_Btn" onclick="location.href='getOffer.do'">가입 제의 확인</button>
           </div>
           <div class="div2_1_2">
-          <form action="newAci.do" name="forms" id="forms">
-            	<table id="inputTB">
-		            <tr id="top_tr">
-		            	<th></th>
-			 			<th>업체명</th>
-			 			<th>사업자번호</th>
-			 			<th>대표자명</th>
-			 			<th>대표 번호</th>
-			 			<th>핸드폰번호</th>
-			 			<th>이메일</th>
-			 		</tr>
-					<%if(newAsslist.size()==0){%>
-				    <% }else{%>
-					<%for(int i = 0 ; i < newAsslist.size(); i++){ %>				
-					<tr>
-						<td><input type="checkbox" value="<%=newAsslist.get(i).getUsRn() %>" name="chkUsRn" id="chkUsRn"/></td>
-						<td><%=newAsslist.get(i).getCpName() %></td>
-						<td><%=newAsslist.get(i).getBoNumber() %></td>
-						<td><%=newAsslist.get(i).getBoName() %></td>
-						<td><%=newAsslist.get(i).getBoPhone() %></td>
-						<td><%=newAsslist.get(i).getBoCell() %></td>
-						<td><%=newAsslist.get(i).getBoMail() %></td>
-					</tr>
-					<%}	} %>
-					
-	            </table>
-            <div class="btnDiv_01">
-              <input type="submit" class="btn" value="가입 신청" />
-            </div>
-            </form>
+	          <div class="inputTBDiv">
+		          <form action="newAci.do" name="form_Aci" id="form_Aci">
+			          <table id="inputTB">
+					            <tr id="top_tr">
+					            	<th></th>
+						 			<th>업체명</th>
+						 			<th>사업자번호</th>
+						 			<th>대표자명</th>
+						 			<th>대표 번호</th>
+						 			<th>핸드폰번호</th>
+						 			<th>이메일</th>
+						 		</tr>
+								<%if(newAsslist.size()==0){%>
+							    <% }else{%>
+								<%for(int i = 0 ; i < newAsslist.size(); i++){ %>				
+								<tr>
+									<td><input type="checkbox" value="<%=newAsslist.get(i).getUsRn() %>" name="new_chkUsRn" id="new_chkUsRn"/></td>
+									<td><%=newAsslist.get(i).getCpName() %></td>
+									<td><%=newAsslist.get(i).getBoNumber() %></td>
+									<td><%=newAsslist.get(i).getBoName() %></td>
+									<td><%=newAsslist.get(i).getBoPhone() %></td>
+									<td><%=newAsslist.get(i).getBoCell() %></td>
+									<td><%=newAsslist.get(i).getBoMail() %></td>
+								</tr>
+								<%}	} %>
+								
+				            </table>
+		          </form>
+		          <div class="btnDiv_01">
+			      	<input type="button" class="btn" value="가입 신청" onclick="conFirm_Forms(0)"/>
+			      </div>
+	          </div>
           </div>
           
         </div>
         <div class="div2_2">
           <div class="div2_2_1">
-          <form action="delGroupAction.do" onsubmit="return confirm('정말로 탈퇴 하시겠습니까?');">
-          
-	          <table id="workerInfoTB">
-	              <tr id="top_tr">
-	                <th></th>
-	                <th>업체명</th>
-	                <th>사업자번호</th>
-	                <th>대표자명</th>
-	                <th>대표 번호</th>
-	                <th>핸드폰번호</th>
-	                <th>이메일</th>
-	              </tr>
-		<%if(nowAsslist==null||nowAsslist.size()==0){ %>
-		<%}else{for(int i = 0 ; i < nowAsslist.size(); i++){ %>
-				<tr>
-					<td><input type="checkbox" value="<%=nowAsslist.get(i).getUsRn() %>" name="chkUsRn" id="chkUsRn"/></td>
-					<td><%=nowAsslist.get(i).getCpName() %></td>
-					<td><%=nowAsslist.get(i).getBoNumber() %></td>
-					<td><%=nowAsslist.get(i).getBoName() %></td>
-					<td><%=nowAsslist.get(i).getBoPhone() %></td>
-					<td><%=nowAsslist.get(i).getBoCell() %></td>
-					<td><%=nowAsslist.get(i).getBoMail() %></td>
-				</tr>
-		<%}}%>
-	          </table>
-	          <div class="btnDiv_02">
-              <input type="submit" class="btn" value="삭제" />
-            </div>
-	      </form>
-	          
+          <div class="inputTBDiv">
+	          <form action="delGroupAction.do" id="form_del" name="form_del" onsubmit="return confirm('정말로 탈퇴 하시겠습니까?');">
+	          		<table id="workerInfoTB">
+		              <tr id="top_tr">
+		                <th></th>
+		                <th>업체명</th>
+		                <th>사업자번호</th>
+		                <th>대표자명</th>
+		                <th>대표 번호</th>
+		                <th>핸드폰번호</th>
+		                <th>이메일</th>
+		              </tr>
+			<%if(nowAsslist==null||nowAsslist.size()==0){ %>
+			<%}else{for(int i = 0 ; i < nowAsslist.size(); i++){ %>
+					<tr>
+						<td><input type="checkbox" value="<%=nowAsslist.get(i).getUsRn() %>" name="del_chkUsRn" id="del_chkUsRn"/></td>
+						<td><%=nowAsslist.get(i).getCpName() %></td>
+						<td><%=nowAsslist.get(i).getBoNumber() %></td>
+						<td><%=nowAsslist.get(i).getBoName() %></td>
+						<td><%=nowAsslist.get(i).getBoPhone() %></td>
+						<td><%=nowAsslist.get(i).getBoCell() %></td>
+						<td><%=nowAsslist.get(i).getBoMail() %></td>
+					</tr>
+			<%}}%>
+		          </table>
+		      </form>
+		      <div class="btnDiv_02">
+	          		<input type="button" class="btn" value="삭제" onclick="conFirm_Forms(1)"/>
+	          </div>
+		      <p>※ 탈퇴 후 재가입 가능합니다.</p>
+	      </div>
+
           </div>
         </div>
         </div>

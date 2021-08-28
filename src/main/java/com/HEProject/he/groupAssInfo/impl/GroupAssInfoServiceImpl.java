@@ -106,22 +106,27 @@ public class GroupAssInfoServiceImpl implements GroupAssInfoService{
 	@Override
 	public void modifyOffer(GroupAssInfoVO vo,BOInfoVO boVO, MessageInfoVO msgVO,HttpSession session, HttpServletRequest request) {
 		int stNum = Integer.parseInt(request.getParameter("state"));
-		String boNum = request.getParameter("boNumber");
+		String assUsRn = request.getParameter("assUrRn");
 		String usRn = (String)session.getAttribute("usRn");
+		vo.setAssUsRn(assUsRn);
+		vo.setSt(stNum);
 		vo.setGrUsRn(usRn);
-		int successNum = dao.modifyOffer(vo, stNum, boNum);
-		int delSuccessNum = dao.deleteOffer(vo, boNum);
-		if(successNum==1&&delSuccessNum==1) {
+		int successNum = dao.modifyOffer(vo);
+		if(successNum==1) {
 			msgVO.setsUsRn(usRn);//보낸 사람 test04
-			boVO.setBoNumber(boNum);//받는 사람의 사업자 정보를 가져올 사업자 번호
-			msgVO.setgUsRn(boInfoService.checkBOInfo(boVO).getUsRn());//받는 사람 test05을 가져옴
+			boVO.setUsRn(assUsRn);//받는 사람의 사업자 정보를 가져올 usRn
+			msgVO.setgUsRn(assUsRn);//받는 사람 test05을 가져옴
 			boVO.setUsRn(usRn);//보낸 사람의 사업자 정보
-			msgVO.setMessageContents(boInfoService.getBOInfo(boVO, session).getBoName() + " 님이 그룹 가입 제의를 수락 하셨습니다.");//메세지 내용
+			if(stNum==1) {
+				msgVO.setMessageContents(boInfoService.getBOInfo(boVO, request).getBoName() + " 님이 그룹 가입 제의를 수락 하셨습니다.");//메세지 내용
+			}else {
+				msgVO.setMessageContents(boInfoService.getBOInfo(boVO, request).getBoName() + " 님이 그룹 가입 제의를 거절 하셨습니다.");//메세지 내용
+			}
 			msgVO.setRelative("-");
 			msgVO.setwMsg(1);
 			messageInfoService.sendMessage(msgVO, session);
 			request.setAttribute("MO", 1);
-		}else if(successNum==0&&delSuccessNum==0){
+		}else if(successNum==0){
 			request.setAttribute("MO", 0);
 		}else {
 			request.setAttribute("MO", 2);
@@ -136,7 +141,7 @@ public class GroupAssInfoServiceImpl implements GroupAssInfoService{
 
 	@Override
 	public void newAci(GroupAssInfoVO vo, MessageInfoVO msgVO, BOInfoVO boVO, HttpSession session,HttpServletRequest request) {
-		String[] AssUsRn = request.getParameterValues("chkUsRn");
+		String[] AssUsRn = request.getParameterValues("new_chkUsRn");
 		String usRn = (String)session.getAttribute("usRn");
 		vo.setGrUsRn(usRn);//I0000000
 		boVO.setUsRn(usRn);//A0000000
@@ -172,7 +177,7 @@ public class GroupAssInfoServiceImpl implements GroupAssInfoService{
 
 	@Override
 	public void deleteGroup(GroupAssInfoVO vo, HttpSession session, HttpServletRequest request) {
-		String[] AssUsRn = request.getParameterValues("chkUsRn");
+		String[] AssUsRn = request.getParameterValues("del_chkUsRn");
 		vo.setGrUsRn((String)session.getAttribute("usRn"));
 		int result = 1;
 		for(int i = 0 ; i < AssUsRn.length; i++) {
