@@ -1,0 +1,286 @@
+
+* { 
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif';	
+}
+
+
+body {
+  font-family: 'Rubik', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("/image/bg_body.png") repeat center;
+  -webkit-background-size: cover;
+  background-size: contain;
+  background-repeat: repeat;
+  height: calc(600vh + 100px);
+}
+
+/* 상단 고정 메뉴 */
+#top_div {
+	width: 100%;
+	height: 100px;
+	position: fixed;
+	top: 0;
+	background-color: rgba(255,255,255,.75);
+	z-index: 9999;
+	
+}
+/* 상단 좌측 뒤로가기 버튼 div */
+#top_div_back_btn {
+	width: 5%;
+	height: 100%;
+	display: inline-block;
+	float: left;
+}
+/* 상단 좌측 뒤로가기 버튼 이미지 */
+#back_img {
+	width: 100%;
+	height: 100%;
+  	-webkit-background-size: cover;
+  	background-position: center center;
+  	object-fit: cover;
+}
+#back_img:hover {
+	filter: drop-shadow(5px 5px 5px #000);
+	transition : all 0.5 2s 0s;
+}
+/* #back_img:active {
+	box-shadow : 2px 2px 2px 2px #666666 inset;
+	transition : all 1 2s 0s;
+} */
+
+/* 상단 제목이 보이는 자리 */
+#top_div_text_area {
+	width: 95%;
+	height: 100%;
+	display: inline-block;
+	text-align: center;
+	float: left;
+	vertical-align: middle;
+}
+#top_div_text_area h1 {
+	display: inline-block;
+	height: 100%;
+}
+
+/* content */
+#div1 {
+	width: 100%;
+	height: 150vh;
+	background-color : rgba(0,0,0,.75);
+	display: block;
+}
+/* div1 content font&style */
+#div1_content {
+	width: 100%;
+	height: 40%;
+	padding-top: 130px;
+	margin-bottom: 30px;
+}
+#div1_content_left {
+	display: inline-block;
+	width: 50%;
+	height: 100%;
+	top:20%;
+	float: left;
+}
+#div1_content_right {
+	display: inline-block;
+	width: 30%;
+	height: 100%;
+	top:20%;
+	float: left;
+}
+#div1_content_right img {
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+				to bottom,
+				rgba(0,0,0,0) 10%,
+				rgba(0,0,0,0.15) 30%,
+				rgba(0,0,0,0.35) 50%,
+				rgba(0,0,0,0.5) 75%,
+				rgba(0,0,0,0.7) 100%,
+				), url("/image/div1_content_pic01.jpg");
+} 
+#div1_content *{
+	padding-left: 5%;
+	font-size : 20px;
+	color: white;
+}
+#div1_content h1{
+	font-size: 80px;
+}
+#div1_content blockquote{
+	font-weight: 700;
+	display: inline-block;
+}
+#quotation_1 {
+	animation: fadein 15s;
+    -moz-animation: fadein 15s;/* 글자 페이드인 */
+    /* Firefox */
+    -webkit-animation: fadein 15s;
+    /* Safari and Chrome */
+    -o-animation: fadein 15s;
+}
+#quotation_2 {
+	margin-left: 200px;
+	animation: fadein 15s;
+    -moz-animation: fadein 15s;
+    /* Firefox */
+    -webkit-animation: fadein 15s;
+    /* Safari and Chrome */
+    -o-animation: fadein 15s;
+}
+#quotation_3 {
+	margin-left: 300px;
+	animation: fadein 20s;
+    -moz-animation: fadein 20s;
+    /* Firefox */
+    -webkit-animation: fadein 20s;
+    /* Safari and Chrome */
+    -o-animation: fadein 20s;
+}
+#div1_content p {
+	display: block;
+	animation: fadein 20s;
+    -moz-animation: fadein 20s;
+    /* Firefox */
+    -webkit-animation: fadein 20s;
+    /* Safari and Chrome */
+    -o-animation: fadein 20s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+#div1_1 {
+	width: 100%;
+	height: 30%;
+	background : linear-gradient(to right, #EAA4A4, white);
+	position: relative;
+	display: flex;
+}
+
+#div1_1_left {
+	display: inline-block;
+	width: 40%;
+	height: 100%;
+	float: left;
+	display: flex;
+}
+#div1_1_content_pic {
+	width: 90%;
+	height: 90%;
+	display: inline-block;
+	margin: auto;
+}
+#div1_1_right {
+	display: inline-block;
+	width: 50%;
+	height: 80%;
+	float: left;
+	text-align: left;
+	margin : auto;
+	margin-left: 70px;
+}
+#div1_1_right *{
+	display: inline-block;
+}
+#div2 {
+	width: 100%;
+	height: 300vh;
+	background-color : rgba(155,0,0,.75);
+	padding: 3% 0 3% 0;
+}
+
+#div2 *{
+	text-align: center;
+}
+
+#div2_1 {width: 800px;height: 200px;background : black;margin: 3% 0% 3% 15%;box-shadow: 5px 5px 5px black;}
+#div2_2 {background : white;margin: 3% 0% 3% 45%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+#div2_3 {background : black;margin: 3% 0% 3% 15%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+#div2_4 {background : white;margin: 3% 0% 3% 45%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+#div2_5 {background : black;margin: 3% 0% 3% 15%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+#div2_6 {background : white;margin: 3% 0% 3% 45%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+#div2_7 {background : black;margin: 3% 0% 3% 15%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+#div2_8 {background : white;margin: 3% 0% 3% 45%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+#div2_9 {background : black;margin: 3% 0% 3% 15%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+#div2_10 {background : white;margin: 3% 0% 3% 45%;width: 800px;height: 200px;box-shadow: 5px 5px 5px black;}
+
+#div2_1_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_2_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_3_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_4_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_5_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_6_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_7_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_8_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_9_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+#div2_10_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
+
+#div2_1_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_2_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_3_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_4_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_5_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_6_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_7_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_8_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_9_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_10_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+
+/* 리모컨 */
+.floating_btn { 
+	position: absolute; 
+	right: 50%; 
+	top : 70%;
+	right : 50px;
+	text-align:center; 
+	width: 50px;
+	height: 250px;
+	border: 0.5px #CCCCCC solid;
+	background: linear-gradient( 45deg, #6E6E6E, #CCCCCC );
+	border-radius: 10px / 10px;
+	padding-bottom: 5px;
+}
+.floating_btn_img {
+	margin : 5px 0px 5px 0px;
+	display : inline-block;
+	background: linear-gradient( 45deg, #f0f0f0, #F2F2F2 );
+	width: 80%;
+	height: 30px;
+	padding-top: 5px;
+	border: 0.3px #f0f0f0 solid;
+	border-radius: 10px / 10px;
+}
+.floating_btn img {
+	width: 60%;
+	height: 65%;
+}
+.floating_btn p {
+	font-size : 7px;
+	color : #E3E3E3;
+}
+.floating_btn #floating_title{
+	color: black;
+}
+
+

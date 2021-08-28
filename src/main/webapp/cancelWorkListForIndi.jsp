@@ -292,7 +292,7 @@ p {
 <nav class="nav-area">
 		<ul>
 			<li><a href="main.do">Home</a></li>
-			<li><a href="#">About</a></li>
+			<li><a href="about.html">About</a></li>
 			<li><a href="#"><%=menuInfo[0]%></a>
 				<ul>
 					<li><a href="<%=dropMenuLink[0]%>"><%=dropMenuInfo[0]%></a></li>

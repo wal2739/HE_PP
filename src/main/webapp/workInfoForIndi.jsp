@@ -29,7 +29,6 @@
 <title>작업 정보 및 발주 정보</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?ver=1" ></script>
 <link rel="stylesheet" href="/css/main.css?ver=22">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
@@ -308,7 +307,7 @@ p {
 	<nav class="nav-area">
 		<ul>
 			<li><a href="main.do">Home</a></li>
-			<li><a href="#">About</a></li>
+			<li><a href="about.html">About</a></li>
 			<li><a href="#"><%=menuInfo[0]%></a>
 				<ul>
 					<li><a href="<%=dropMenuLink[0]%>"><%=dropMenuInfo[0]%></a></li>
