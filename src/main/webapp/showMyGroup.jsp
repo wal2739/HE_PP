@@ -78,7 +78,16 @@ function loadon() {
 .div2{
   display: inline-block;
   width: 100%;
-  height: 800px;  
+  height: 1200px;
+  text-align: center;
+}
+
+.div_2_back {
+	display : inline-block;
+	width: 70%;
+	height: 90%;
+	background: rgba(255,255,255,.75);
+	
 }
 .div2_1 {
   width: 80%;
@@ -151,31 +160,31 @@ function loadon() {
 }
 
 #workerInfoTB {
-  width: 100%;
-  height : calc(100%-5px);
-  	border: 0.5px solid #d7d7d7;
-  	background: white;
-  	
-  
+    width: 100%;
+    border-right: 0.5px solid #d7d7d7;
+    border-left: 0.5px solid #d7d7d7;
+	font-size: 15px;
+	text-align: center;
+	background: white; 
 }
 
-#workerInfoTB th,#workerInfoTB td {
-  display: inline-block;
-  height: 30px;
-  width: calc(100%/7.137);
-  font-size: 12.5px;
-  text-align: center;
-  
-}
+
 
 #workerInfoTB td {
-	align: center;
-	border: 0.5px solid #d7d7d7;
+  width: 300px;
+  border: 0.5px solid #d7d7d7;
+  white-space:normal;
 }
 
 #workerInfoTB th {
 	background: #f7f7f5;
 	border: 0.5px solid #d7d7d7;
+    width: 200px;
+}
+
+#top_tr th{
+	position: sticky;
+	top: 0px;
 }
 .btn {
 	width: 120px;
@@ -362,14 +371,15 @@ p {
         <div class="div1_textArea"><h2>그룹 등록 및 삭제</h2></div>
       </div>
       <div class="div2">
-        <div class="div2_1">
+        <div class="div_2_back">
+        	<div class="div2_1">
           <div class="div2_1_1">
             <h2 id="div2_1_1_h2">그룹 목록 및 등록</h2>
           </div>
           <div class="div2_1_2">
           <form action="newAci.do" name="forms" id="forms">
             	<table id="inputTB">
-		            <tr>
+		            <tr id="top_tr">
 		            	<th></th>
 			 			<th>업체명</th>
 			 			<th>사업자번호</th>
@@ -405,7 +415,7 @@ p {
           <form action="delGroupAction.do" onsubmit="return confirm('정말로 탈퇴 하시겠습니까?');">
           
 	          <table id="workerInfoTB">
-	              <tr>
+	              <tr id="top_tr">
 	                <th></th>
 	                <th>업체명</th>
 	                <th>사업자번호</th>
@@ -433,6 +443,7 @@ p {
 	      </form>
 	          
           </div>
+        </div>
         </div>
       </div>
       <div class="div3">

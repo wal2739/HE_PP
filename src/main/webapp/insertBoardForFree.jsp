@@ -180,20 +180,28 @@
     padding-top: 10px;
     margin-left: 10%;
   }
-  .div2{
-    display: inline-block;
-    width: 100%;
-    height: 900px;    
-  }
+	.div2{
+	  display: inline-block;
+	  width: 100%;
+	  height: auto;
+	  text-align: center;
+	}
+  .div_2_back {
+		display : inline-block;
+		width: 80%;
+		height: 100%;
+		background: rgba(255,255,255,.75);
+		text-align: start;
+	}
   .div2_1 {
-    width: 80%;
+    width: 100%;
     height: auto;
     overflow: auto;
     margin : 0 auto 0 auto;
   }
 
   .div2_2 {
-    width: 80%;
+    width: 100%;
     height: 10%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -289,7 +297,8 @@ th {
             <div class="div1_textArea"><h2>게시글 작성</h2></div>
           </div>
           <div class="div2">
-            <div class="div2_1">
+          	<div class="div_2_back">
+          		<div class="div2_1">
             <table id="boardTB">
             <%
 				Date nowTime = new Date();
@@ -326,6 +335,7 @@ th {
 				<input type="image" value="작성 완료" src="/image/submit_board.png" onclick="return examine();"  id="etcBtn" name="etcBtn"/>
 				<input type="image" value="뒤로가기" src="/image/back_board.png" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("boardClassRe")%>'"  id="etcBtn" name="etcBtn"/>
             </div>
+          	</div>
           </div>
           <div class="div3">
             <p>하단 내용</p>

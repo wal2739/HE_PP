@@ -283,20 +283,29 @@
     padding-top: 10px;
     margin-left: 10%;
   }
-  .div2{
-    display: inline-block;
-    width: 100%;
-    height: 900px;    
-  }
+.div2{
+  display: inline-block;
+  width: 100%;
+  height: 1200px;
+  text-align: center;
+}
+
+.div_2_back {
+	display : inline-block;
+	width: 70%;
+	height: 90%;
+	background: rgba(255,255,255,.75);
+	
+}
   .div2_1 {
-    width: 80%;
-    height: 95%;
+    width: 95%;
+    height: 90%;
     overflow: hidden;
     margin : 0 auto 0 auto;
   }
 
   .div2_2 {
-    width: 80%;
+    width: 95%;
     height: 10%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -433,59 +442,61 @@
             <div class="div1_textArea"><h2>게시판</h2></div>
           </div>
           <div class="div2">
-            <div class="div2_1">
-                <h2><%=classType %> 목록</h2>
-                <form action="eachBoard.do" class="searchForm">
-                	<input type="hidden" value="<%=request.getAttribute("classType")%>" id="boardClassNum" name="boardClassNum"/>
-                	<input type="image" src="/image/searchBtn.png" value="검색" id="searchBtn" name="searchBtn">
-                    <input type="search" id="searchBox" name="searchBox" placeholder="검색어를 입력해주세요.">
-                	<select name="searchCond" id="searchCond">
-                		<option value="boardTitle" selected="selected">글 제목</option>
-                		<option value="boardCode">글 번호</option>
-                		<option value="userName">작성자 이름</option>
-                	</select>
-                	
-                </form>
-                <div>
-                <%if(list==null||list.size()==0){ %>
-					<p style="text-align: center; margin-top: 20%">게시글이 없습니다.</p>
-				<%}else{%>
-                    <table id="boardTB">
-                        <tr>
-                            <th style="width: 10%;">글 번호</th>
-                            <th style="width: 65%;">제목</th>
-                            <th style="width: 10%;">작성자</th>
-                            <th style="width: 10%;">날짜</th>
-                            <th style="width: 5%;">조회수</th>
-                        </tr>
-				<%for(int i = 0 ; i < list.size(); i++){ %>
-                        <tr>
-                            <td><%=list.get(i).getBoardCode() %></td>
-                            <td><a href="getBoard.do?boardCode=<%=list.get(i).getBoardCode()%>&statusNum=1"><%=list.get(i).getBoardTitle() %></a></td>
-                            <td><%=list.get(i).getUserName() %></td>
-							<td><%=list.get(i).getWriteDate() %></td>
-							<td><%=list.get(i).getViews() %></td>
-                        </tr>
-				<%}%>
-					</table>
-				<%} %>
-			</div>
-                <div class="pagingA">
-	                <input type="image" src="/image/left double arrow.png" id="arrBtn01" name="arrBtn01" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=0'">
-	                <input type="image" src="/image/left arrow.png" id="arrBtn02" name="arrBtn02" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=<%=(Integer)request.getAttribute("pageNum")-1%>'">
-	                <p id="pTagInner" style="display: inline;"></p>
-	                <input type="image" src="/image/right arrow.png" id="arrBtn03" name="arrBtn03" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=<%=(Integer)request.getAttribute("pageNum")+1%>'">
-	                <input type="image" src="/image/right double arrow.png" id="arrBtn04" name="arrBtn04" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=<%=(Integer)request.getAttribute("pagingCntRlt")-1%>'">
-                </div>
-            </div>
-            <div class="div2_2">
-                <pre style="font-size: 13px;"><b>※ 부적절한 제목/내용의 게시글은 관리자에 의해 삭제될 수 있습니다.
-※ 점검을 위해 사진 업로드 기능을 일시적으로 비활성화 했습니다. 양해 부탁드립니다.
-※ 글 등록 시 특수문자가 등록되지 않는 버그가 발견되어 현재 수정 중입니다.</b></pre>
-                <input type="image" src="/image/my writing.png" class="etcBtn" id="my_writing" name="my_writing" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&mw=1'">
-                <input type="image" src="/image/list.png" class="etcBtn" id="list" name="list" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>'">
-                <input type="image" src="/image/writing.png" class="etcBtn" id="writing" name="writing" 	onclick="location.href='insertBoardForFree.do?boardClass=<%=request.getAttribute("classType")%>'">
-            </div>
+	          <div class="div_2_back">
+	          	<div class="div2_1">
+	                <h2><%=classType %> 목록</h2>
+	                <form action="eachBoard.do" class="searchForm">
+	                	<input type="hidden" value="<%=request.getAttribute("classType")%>" id="boardClassNum" name="boardClassNum"/>
+	                	<input type="image" src="/image/searchBtn.png" value="검색" id="searchBtn" name="searchBtn">
+	                    <input type="search" id="searchBox" name="searchBox" placeholder="검색어를 입력해주세요.">
+	                	<select name="searchCond" id="searchCond">
+	                		<option value="boardTitle" selected="selected">글 제목</option>
+	                		<option value="boardCode">글 번호</option>
+	                		<option value="userName">작성자 이름</option>
+	                	</select>
+	                	
+	                </form>
+	                <div>
+	                <%if(list==null||list.size()==0){ %>
+						<p style="text-align: center; margin-top: 20%">게시글이 없습니다.</p>
+					<%}else{%>
+	                    <table id="boardTB">
+	                        <tr>
+	                            <th style="width: 10%;">글 번호</th>
+	                            <th style="width: 65%;">제목</th>
+	                            <th style="width: 10%;">작성자</th>
+	                            <th style="width: 10%;">날짜</th>
+	                            <th style="width: 5%;">조회수</th>
+	                        </tr>
+					<%for(int i = 0 ; i < list.size(); i++){ %>
+	                        <tr>
+	                            <td><%=list.get(i).getBoardCode() %></td>
+	                            <td><a href="getBoard.do?boardCode=<%=list.get(i).getBoardCode()%>&statusNum=1"><%=list.get(i).getBoardTitle() %></a></td>
+	                            <td><%=list.get(i).getUserName() %></td>
+								<td><%=list.get(i).getWriteDate() %></td>
+								<td><%=list.get(i).getViews() %></td>
+	                        </tr>
+					<%}%>
+						</table>
+					<%} %>
+				</div>
+	                <div class="pagingA">
+		                <input type="image" src="/image/left double arrow.png" id="arrBtn01" name="arrBtn01" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=0'">
+		                <input type="image" src="/image/left arrow.png" id="arrBtn02" name="arrBtn02" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=<%=(Integer)request.getAttribute("pageNum")-1%>'">
+		                <p id="pTagInner" style="display: inline;"></p>
+		                <input type="image" src="/image/right arrow.png" id="arrBtn03" name="arrBtn03" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=<%=(Integer)request.getAttribute("pageNum")+1%>'">
+		                <input type="image" src="/image/right double arrow.png" id="arrBtn04" name="arrBtn04" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=<%=(Integer)request.getAttribute("pagingCntRlt")-1%>'">
+	                </div>
+	            </div>
+	            <div class="div2_2">
+	                <pre style="font-size: 13px;"><b>※ 부적절한 제목/내용의 게시글은 관리자에 의해 삭제될 수 있습니다.
+	※ 점검을 위해 사진 업로드 기능을 일시적으로 비활성화 했습니다. 양해 부탁드립니다.
+	※ 글 등록 시 특수문자가 등록되지 않는 버그가 발견되어 현재 수정 중입니다.</b></pre>
+	                <input type="image" src="/image/my writing.png" class="etcBtn" id="my_writing" name="my_writing" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&mw=1'">
+	                <input type="image" src="/image/list.png" class="etcBtn" id="list" name="list" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>'">
+	                <input type="image" src="/image/writing.png" class="etcBtn" id="writing" name="writing" 	onclick="location.href='insertBoardForFree.do?boardClass=<%=request.getAttribute("classType")%>'">
+	            </div>
+	          </div>
           </div>
           <div class="div3">
           </div>

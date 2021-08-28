@@ -239,21 +239,31 @@
     padding-top: 10px;
     margin-left: 10%;
   }
-  .div2{
-    display: inline-block;
-    overflow: visible;
-    width: 100%;
-    height: auto;    
-  }
+.div2{
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  overflow: visible;
+}
+
+.div_2_back {
+	display : inline-block;
+	width: 80%;
+	height: 100%;
+	background: rgba(255,255,255,.75);
+	text-align: start;
+	
+}
   .div2_1 {
-    width: 80%;
+    width: 100%;
     height: 40%;
     overflow: hidden;
     margin : 0 auto 0 auto;
   }
 
   .div2_2 {
-    width: 80%;
+    width: 100%;
     height: 40%;
     border-top: 0.5px solid #d7d7d7;
     overflow-y: visible;
@@ -267,7 +277,7 @@
   
   }
     .div2_3 {
-    width: 80%;
+    width: 100%;
     height: 20%;
     overflow-y: visible;
     overflow-x: hidden;
@@ -396,7 +406,8 @@ td {
             <div class="div1_textArea"><h2>게시글 상세보기</h2></div>
           </div>
           <div class="div2">
-            <div class="div2_1">
+            <div class="div_2_back">
+            	<div class="div2_1">
             	<div class="contents_board">
                 <header class="contents_head">
                   <div class="contents_title">
@@ -447,7 +458,7 @@ td {
             		</table>
             	</div>
             </div>
-            
+            </div>            
           </div>
           <div class="div3">
           </div>

@@ -385,6 +385,7 @@ function validate() {
 }
 
 .div2_1 {
+	background: rgba(255,255,255,.75);
 	width: 80%;
 	height: 100%;
 	overflow: hidden;
@@ -774,8 +775,8 @@ table p {
           </div>
         </div>
       </div>
+      </div>
     </form>
-    </div>
 
   </main>
 </body>
