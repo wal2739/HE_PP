@@ -13,6 +13,7 @@ body {
   background-size: contain;
   background-repeat: repeat;
   height: calc(600vh + 100px);
+  width: 100%;
 }
 
 /* 상단 고정 메뉴 */
@@ -67,8 +68,9 @@ body {
 #div1 {
 	width: 100%;
 	height: 150vh;
-	background-color : rgba(0,0,0,.75);
+	background-color : rgba(0,0,0,.55);
 	display: block;
+	background: linear-gradient(to bottom, rgba(59, 59, 59,.55), rgba(176, 60, 61,.55));
 }
 /* div1 content font&style */
 #div1_content {
@@ -134,21 +136,21 @@ body {
 }
 #quotation_3 {
 	margin-left: 300px;
-	animation: fadein 20s;
-    -moz-animation: fadein 20s;
+	animation: fadein 15s;
+    -moz-animation: fadein 15s;
     /* Firefox */
-    -webkit-animation: fadein 20s;
+    -webkit-animation: fadein 15s;
     /* Safari and Chrome */
-    -o-animation: fadein 20s;
+    -o-animation: fadein 15s;
 }
 #div1_content p {
 	display: block;
-	animation: fadein 20s;
-    -moz-animation: fadein 20s;
+	animation: fadein 15s;
+    -moz-animation: fadein 15s;
     /* Firefox */
-    -webkit-animation: fadein 20s;
+    -webkit-animation: fadein 15s;
     /* Safari and Chrome */
-    -o-animation: fadein 20s;
+    -o-animation: fadein 15s;
 }
 
 @keyframes fadein {
@@ -173,7 +175,7 @@ body {
 #div1_1 {
 	width: 100%;
 	height: 30%;
-	background : linear-gradient(to right, #EAA4A4, white);
+	background : linear-gradient(to right, #c18b8c, white);
 	position: relative;
 	display: flex;
 }
@@ -203,10 +205,22 @@ body {
 #div1_1_right *{
 	display: inline-block;
 }
+
+#div1_2 {
+	width: 100%;
+	height: 17.2%;
+	text-align: center;
+	color: white;
+	vertical-align: text-bottom;
+}
+
+#div1_2 h3{
+}
+
 #div2 {
 	width: 100%;
 	height: 300vh;
-	background-color : rgba(155,0,0,.75);
+	background: linear-gradient(to bottom, rgba(176, 60, 61,.55), rgb(78, 230, 119,.55));
 	padding: 3% 0 3% 0;
 }
 
@@ -236,7 +250,7 @@ body {
 #div2_9_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
 #div2_10_1{height: 100%;width: 30%;display: inline-block;background: white;float: left;}
 
-#div2_1_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
+#div2_1_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;text-shadow: 2px 2px 2px black;}
 #div2_2_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
 #div2_3_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
 #div2_4_2{height: 100%;width: 70%;display: inline-block;background: #3b3b3b;float: left;color:white;}
