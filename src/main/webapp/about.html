@@ -5,7 +5,7 @@
 <title>ABOUT</title>
 </head>
 <script type="text/javascript" src="/js/main.js?ver=10" ></script>
-<link rel="stylesheet" href="/css/about.css?ver=2">
+<link rel="stylesheet" href="/css/about.css?ver=5">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -17,11 +17,46 @@
 		$(window).scroll(function() {
 			var position = $(window).scrollTop();
 			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
+			if(position<=1224){
+				document.getElementById('top_title').innerHTML = '머리글';
+				document.getElementById('top_title').style.color = 'black';
+			}else if(position>=1225&&position<=4199){
+				document.getElementById('top_title').innerHTML = '주요 기능';
+				document.getElementById('top_title').style.color = 'black';
+			}else if(position>=4200&&position<=5559){
+				document.getElementById('top_title').innerHTML = '편의 기능';
+				document.getElementById('top_title').style.color = 'white';
+			}else if(position>=5560){
+				document.getElementById('top_title').innerHTML = '감사합니다';
+				document.getElementById('top_title').style.color = 'white';
+			}
+			
+			var indicator_percentage = ($(window).scrollTop() / ($(document).outerHeight() - $(window).height())) * 100;
+			document.getElementById('indicator').style.width = indicator_percentage + '%';
+			document.getElementById('indicator').style.background = 'rgba(115, 109, 95,' + (indicator_percentage*0.025) + ')';
 		});
 	});
-	window.addEventListener("load", function(){
-	    var div = new Hakademy.util.meteor(".meteor-wrap");
+	$(document).ready(function() {
+		var position = $(window).scrollTop();
+		if(position<=1224){
+			document.getElementById('top_title').innerHTML = '머리글';
+			document.getElementById('top_title').style.color = 'black';
+		}else if(position>=1225&&position<=4199){
+			document.getElementById('top_title').innerHTML = '주요 기능';
+		}else if(position>=4200&&position<=5559){
+			document.getElementById('top_title').innerHTML = '편의 기능';
+			document.getElementById('top_title').style.color = 'white';
+		}else if(position>=5560){
+			document.getElementById('top_title').innerHTML = '감사합니다';
+			document.getElementById('top_title').style.color = 'white';
+		}
+		var indicator_percentage = ($(window).scrollTop() / ($(document).outerHeight() - $(window).height())) * 100;
+		document.getElementById('indicator').style.background = 'rgba(115, 109, 95,' + (indicator_percentage*0.025) + ')';
+		document.getElementById('indicator').style.width = indicator_percentage + '%';
 	});
+	/* window.addEventListener("load", function(){
+	    var div = new Hakademy.util.meteor(".meteor-wrap");
+	}); */
 	
 	
 	var div1_pic_val = 1;
@@ -71,8 +106,9 @@
 			<img src="/image/back_btn_about.png" alt="뒤로가기" id="back_img" onclick="location.href='main.do'"/>
 		</div>
 		<div id="top_div_text_area">
-			<h1>샘플 데이터를 삽입 했습니다.</h1>
+			<h1 id="top_title"></h1>
 		</div>
+		<div id="indicator"></div>
 	</div>
 	<div id="div1" data-aos="fade-down">
 		<div id="div1_content">
@@ -107,9 +143,9 @@
 		<!-- 
 			div[id=div2_$ data-aos=fade-up]*10>div[id=div2_$_1 data-aos=fade-down]+div[id=div2_$_2 data-aos=fade-down]
 		 -->
-		<div id="div2_1" data-aos="fade-up">
+		<div id="div2_1" data-aos="fade-up" data-aos-anchor-placement="top-center">
 			<div id="div2_1_1">
-				<h2>⓪</h2>
+				<h2>①</h2>
 				<h2>회원가입 및 로그인</h2>
 				<p><b>Sign up</b> or <b>sign in</b></p>
 			</div>
@@ -119,7 +155,7 @@
 				<p>또한 사업자 정보 및 개인 정보를 등록하지 않은 회원 역시 일부 기능이 제한 됩니다.<br />이로 인해 허위 작업 및 발주 등 의 불법적인 행위를 제한 하고 있습니다.</p>
 			</div>
 		</div>
-		<div id="div2_2" data-aos="fade-down">
+		<div id="div2_2" data-aos="fade-down" data-aos-anchor-placement="top-center">
 			<div id="div2_2_1">
 				<h2>②</h2>
 				<h2>그룹원 혹은 그룹 찾기</h2>
@@ -130,7 +166,7 @@
 				<p><b>개인 사업자</b><br />현장 작업을 중계 해줄 중계사업자의 그룹에 <br />신청 혹은 가입 제의를 통해 가입할 수 있습니다.</p>
 			</div>
 		</div>
-		<div id="div2_3" data-aos="fade-left">
+		<div id="div2_3" data-aos="fade-left" data-aos-anchor-placement="top-center">
 			<div id="div2_3_1">
 				<h2>③</h2>
 				<h2>거래처 작업 등록</h2>
@@ -141,7 +177,7 @@
 				<p>중계 사업자 분들의 전용 기능으로<br />자신의 거래처를 사이트에 등록하여 해당 거래처의 작업들을<br /> 일괄적으로 관리 할 수 있습니다.<br />또한 전체 거래처의 작업 상황 및 월/년별 현황을 한눈에 파악할 수 있습니다.</p>
 			</div>
 		</div>
-		<div id="div2_4" data-aos="fade-right">
+		<div id="div2_4" data-aos="fade-right" data-aos-anchor-placement="top-center">
 			<div id="div2_4_1">
 				<h2>④</h2>
 				<h2>작업 발주</h2>
@@ -155,7 +191,7 @@
 				</p>
 			</div>
 		</div>
-		<div id="div2_5" data-aos="fade-up-left">
+		<div id="div2_5" data-aos="fade-up-left" data-aos-anchor-placement="top-center">
 			<div id="div2_5_1">
 				<h2>⑤</h2>
 				<h2>발주 작업 수락/거절</h2>
@@ -166,7 +202,7 @@
 			<p>개인 사업자는 자신이 속해 있는 그룹을 통해 발주 된 작업을 받을 수 있습니다. <br />이 기능에서는 해당 그룹의 그룹장(중계 사업자)의 중계를 통해 발주 된 작업을<br />수락 혹은 거절 할 수 있습니다.</p>
 			</div>
 		</div>
-		<div id="div2_6" data-aos="fade-up-right">
+		<div id="div2_6" data-aos="fade-up-right" data-aos-anchor-placement="top-center">
 			<div id="div2_6_1">
 				<h3>⑥</h3>
 				<h5>작업 수행<br />(대리작업자 등록)</h5>
@@ -177,7 +213,7 @@
 				<p>수락한 작업을 본인 혹은 대리 작업자를 통해 작업을 진행합니다. <br />이 때 개인 사업자는 대리 작업자를 등록하여 대리 작업자의 <br />작업 수행 현황을 모니터링 할 수 있습니다.</p>
 			</div>
 		</div>
-		<div id="div2_7" data-aos="flip-left">
+		<div id="div2_7" data-aos="flip-left" data-aos-anchor-placement="top-center">
 			<div id="div2_7_1">
 				<h2>⑦</h2>
 				<h2>작업 증빙 자료 등록</h2>
@@ -188,7 +224,7 @@
 				<p>작업 완료 후 <br />완료 작업에 대한 증빙 자료를 업로드 하여 등록 합니다. <br />추후 재확인이 가능하며, 증빙 자료를 기반으로 <br />중계사업자가 급여를 지급합니다.</p>
 			</div>
 		</div>
-		<div id="div2_8" data-aos="flip-right">
+		<div id="div2_8" data-aos="flip-right" data-aos-anchor-placement="top-center">
 			<div id="div2_8_1">
 				<h2>⑧</h2>
 				<h2>완료 작업 확인 및 승인</h2>
@@ -199,7 +235,7 @@
 				<p>완료된 작업에 대한 증빙 자료를 확인 하고 승인합니다.<br />언제든 해당 작업에 관한 증빙자료를 열람 혹은 다운로드 할 수 있습니다.<br />만약 작업자가 증빙자료를 업로드 하지 않았다면<br />증빙자료 업로드 요청을 통해 증빙자료에 대한 요청이 가능합니다.</p>
 			</div>
 		</div>
-		<div id="div2_9" data-aos="flip-left">
+		<div id="div2_9" data-aos="flip-left" data-aos-anchor-placement="top-center">
 			<div id="div2_9_1">
 				<h2>⑨</h2>
 				<h2>작업 급여 지급</h2>
@@ -210,7 +246,7 @@
 				<p>증빙 자료 확인 후 작업이 정상적으로 마무리 되었다면<br />중계 사업자는 작업 발주 시 작성된 급여를 지불합니다. <br />그에 따른 영수증 및 세금 계산서 등의 자료를 사이트에서 <br />확인 및 다운로드 할 수 있습니다.</p>
 			</div>
 		</div>
-		<div id="div2_10" data-aos="flip-right">
+		<div id="div2_10" data-aos="flip-right" data-aos-anchor-placement="top-center">
 			<div id="div2_10_1">
 				<h2>⑩</h2>
 				<h2>작업/발주량 관리</h2>
@@ -219,6 +255,112 @@
 			<div id="div2_10_2">
 				<h4>공용</h4>
 				<p>자신의 작업 혹은 발주량 등등을 확인 할 수 있습니다. <br />연도별 / 월별 / 기간 별 조회가 가능하며<br />Excel 파일로 다운로드 할 수 있습니다.</p>
+			</div>
+		</div>
+	</div>
+	
+	<div id="div3">
+		<div id="div3_1" data-aos="fade-down" >
+			<div id="div3_1_title" data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-duration="2000">
+				<h1 style="font-size: 80px;">잘 보셨나요?</h1>
+			</div>
+			<div id="div3_1_contents" data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-duration="4000">
+				<h1>위의 작업들을 마땅한 프로그램 없이 진행하기엔 너무 복잡합니다.</h1>
+			</div>
+			<div id="div3_1_contents" data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-duration="1000">
+				<h1>중장비 서비스는 복잡한 작업 과정을 단 하나의 사이트로 가능하게 만들어졌습니다. </h1>
+			</div>
+			<div id="div3_1_contents" data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-duration="1000">
+				<h3>아래는 편의 기능에 대한 글 입니다.</h3>	
+				<h3 style="color : black;">아래로 스크롤 해주세요 ! <br />▼</h3>
+			</div>
+		</div>
+		<div id="div3_2" data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-duration="4000">
+			<input type="radio" name="slide" id="slide01" checked="checked"/>
+			<input type="radio" name="slide" id="slide02"/>
+			<input type="radio" name="slide" id="slide03"/>
+			<div id="div3_2_1_content">
+				<ul id="div3_ul">
+					<li>
+						<label for="slide03" id="left"></label>
+						<div id="div3_li_img">
+							<div id="div3_li_img_center">
+								<img src="/image/div3_sample01.png" alt="sample01" />
+							</div>
+						</div>
+						<div id="div3_li_content">
+							<div id="div3_li_content_center">
+								<h1>게시판 기능</h1>
+								<blockquote style="font-size: 20px; font-weight: 800;">" 중계/개인 사업자 전용 게시판과 모두가 함께 소통 가능한 자유 게시판까지 "</blockquote>
+								<p>중장비 서비스 프로그램에서는 이용자 간의 소통 및 운영자의 정보 전달을 위한 게시판 기능을 지원하고있습니다.</p>
+								<p>게시판은 <b>중계 사업자 전용 게시판</b>,<b>개인 사업자 전용 게시판</b>,<b>자유 게시판</b>,<b>공지 게시판</b> 으로 총 4개의 게시판을 사용 할 수 있습니다.</p>
+								<p>게시판 이름 그대로 중계자, 작업자 전용 게시판부터 모두가 사용 할 수 있는 자유게시판</p>
+								<p>그리고 운영정책 및 기타 홈페이지 공지 사항을 전달 할 수 있는 공지 게시판을 이용하여</p>
+								<p>좀 더 많은 이용자들과 원활한 소통을 해보세요.</p>
+							</div>
+						</div>
+						<label for="slide02" id="right"></label>
+					</li>
+					<li>
+						<label for="slide01" id="left"></label>
+						<div id="div3_li_img">
+							<div id="div3_li_img_center">
+								<img src="/image/div3_sample02.png" alt="sample02" />
+							</div>
+						</div>
+						<div id="div3_li_content">
+							<div id="div3_li_content_center">
+								<h1>차량 등록 기능</h1>
+								<blockquote style="font-size: 20px; font-weight: 800;">" 자신의 차량을 좀 더 쉽고 편리하게 관리 "</blockquote>
+								<p><b>(개인 사업자 전용)</b></p>
+								<p>자신의 중장비 차량을 사이트에 등록하여 차량의 검사일, 등록일 까지 한눈에 확인하여</p>
+								<p>관리 해보세요. 또한 등록한 차량이 많을 수록 해당 차량이 필요한 작업을 더 많이 발주 받을 수 있습니다.</p>
+								<p></p>
+							</div>
+						</div>
+						<label for="slide03" id="right"></label>
+					</li>
+					<li>
+						<label for="slide02" id="left"></label>
+						<div id="div3_li_img">
+							<div id="div3_li_img_center">
+								<img src="/image/div3_sample02.png" alt="sample03" /><!-- 추후 이미지 변경 -->
+							</div>
+						</div>
+						<div id="div3_li_content">
+							<div id="div3_li_content_center">
+								<h1>메세지 기능 및 그룹 공지 기능</h1>
+								<blockquote style="font-size: 20px; font-weight: 800;">" 자신의 회원/그룹을 관리하고, 서로에게 메세지를 통해 전달사항을 전달 "</blockquote>
+								<p>이미 중장비 서비스 프로그램을 사용 중이신가요?</p>
+								<p>그렇다면 자신의 그룹을 만들거나, 다른 중계자의 그룹에 가입하여 서로에게 메세지를 보낼 수 있습니다.</p>
+								<p>이 기능은 작업 수락 혹은 취소, 발주 그룹 탈되 등등 다양한 상황에서 자동으로 메세지를 보내주며</p>
+								<p>필요에 따라 그룹 전체 공지 및 메세지 기능을 통해 수동으로 메세지를 보낼 수 있습니다.</p>
+								<p></p>
+							</div>
+						</div>
+						<label for="slide01" id="right"></label>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="div3_3">
+			<div id="div3_3_1">
+				<div id="div3_3_title">
+					<h1 style="font-size: 80px;" data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-easing="linear" data-aos-duration="1500">준비한 내용은 여기까지 입니다</h1>
+					<h1 style="font-size: 40px;" data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-easing="linear" data-aos-duration="1500">끝까지 읽어주셔서 감사합니다</h1>
+					<h1 data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-easing="linear" data-aos-duration="1500">혹시 권상원 의 더 많은 포트폴리오가 보고 싶으시다면</h1>
+					<h1 data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-easing="linear" data-aos-duration="1500">스크롤을 제일 하단을 참고 해주세요 <br /><br />마지막으로 다시 한번 끝까지 읽어 주신 여러분께 다시 한번 감사드립니다</h1>
+				</div>
+			</div>
+			<div id="div3_3_2" data-aos="fade-up">
+				<div id="div3_3_2_right">
+					<img src="/image/project_logo.jpg" alt="프로젝트 로고"/>
+				</div>
+				<div id="div3_3_2_left">
+					<p>좌측 상단 [BACK] 버튼을 누르시면 메인 화면으로 이동합니다.</p>
+					<h1 style="font-size: 40px;">권상원 의 포트폴리오</h1>
+					<h1><a href="#" style="color: white;">보러가기</a></h1>
+				</div>
 			</div>
 		</div>
 	</div>
