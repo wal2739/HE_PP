@@ -33,6 +33,7 @@ import com.HEProject.he.workInfo.WorkInfoService;
 import com.HEProject.he.workInfo.WorkInfoVO;
 import com.HEProject.he.workInfo.WorkInfo_ST0VO;
 import com.HEProject.he.workInfo.WorkInfo_ST1VO;
+import com.HEProject.he.workInfo.WorkInfo_ST2VO;
 import com.HEProject.he.workInfo.WorkerInfoVO;
 
 @Controller
@@ -234,11 +235,6 @@ public class WorkController {
 		return mav;
 	}
 	
-	@RequestMapping("finishedWorkList.do")
-	public ModelAndView finishedWorkList(ModelAndView mav,HttpSession session,HttpServletRequest request) {
-		mav.setViewName("finishedWorkList.jsp");
-		return mav;
-	}
 	
 	@RequestMapping("newWorkData.do")
 	public ModelAndView newWorkData(ModelAndView mav,WorkInfo_ST0VO vo,HttpSession session,HttpServletRequest request) {
@@ -263,6 +259,13 @@ public class WorkController {
 	public ModelAndView workDataIMG(ModelAndView mav,HttpServletRequest request) {
 		mav.addObject("vo",workDataInfoService.getDataName(request));
 		mav.setViewName("workDataIMG.jsp");
+		return mav;
+	}
+	
+	@RequestMapping("finishedWorkList.do")
+	public ModelAndView finishedWorkList(ModelAndView mav,WorkInfo_ST2VO vo,HttpSession session) {
+		mav.addObject("list",workInfoService.getAllWorkInfo_st2_Indi(vo,session));
+		mav.setViewName("finishedWorkList.jsp");
 		return mav;
 	}
 	

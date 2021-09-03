@@ -41,5 +41,9 @@ public interface WorkInfoService {
 
 	List<WorkInfo_ST0VO> getAllWork_toSt2ForIndiData(WorkInfo_ST0VO vo, HttpSession session,
 			HttpServletRequest request);
+	
+	List<WorkInfo_ST2VO> getAllWorkInfo_st2_Indi(WorkInfo_ST2VO vo,HttpSession session);
+	
+	WorkInfo_ST2VO getWorkInfo_st2_Indi(WorkInfo_ST2VO vo,HttpSession session,HttpServletRequest request);
 
 }

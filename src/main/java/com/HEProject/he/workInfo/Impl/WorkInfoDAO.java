@@ -11,6 +11,7 @@ import com.HEProject.he.clientInfo.impl.ClientInfoRowMapper;
 import com.HEProject.he.workInfo.WorkInfoVO;
 import com.HEProject.he.workInfo.WorkInfo_ST0VO;
 import com.HEProject.he.workInfo.WorkInfo_ST1VO;
+import com.HEProject.he.workInfo.WorkInfo_ST2VO;
 import com.HEProject.he.workInfo.WorkerInfoVO;
 
 @Repository
@@ -90,6 +91,27 @@ public class WorkInfoDAO {
 			System.err.println("work DAO 오류 : " + e);
 			return null;
 		}	
+	}
+	
+	List<WorkInfo_ST2VO> getAllWorkInfo_st2_Indi(WorkInfo_ST2VO vo){//usRn 으로 st2 조회 <<
+		String sql = "select * from work_st2 where indiusrn = '" + vo.getIndiUsRn() + "'";
+		try {
+			return jdbcTemplate.query(sql, new WorkInfo_ST2RowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+	
+	WorkInfo_ST2VO getWorkInfo_st2_Indi(WorkInfo_ST2VO vo) {//workCode 로 st2 조회 <<
+		String sql = "select * from work_st2 where workCode = ?";
+		Object[] args = {vo.getWorkCode()};
+		try {
+			return jdbcTemplate.queryForObject(sql,args, new WorkInfo_ST2RowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
 	}
 	
 	WorkInfo_ST0VO getAllWorkInfo_st3(WorkInfo_ST0VO vo) {//workCode를 이용한 work_st3 조회

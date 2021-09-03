@@ -15,6 +15,7 @@ import com.HEProject.he.workInfo.WorkInfoService;
 import com.HEProject.he.workInfo.WorkInfoVO;
 import com.HEProject.he.workInfo.WorkInfo_ST0VO;
 import com.HEProject.he.workInfo.WorkInfo_ST1VO;
+import com.HEProject.he.workInfo.WorkInfo_ST2VO;
 import com.HEProject.he.workInfo.WorkerInfoVO;
 
 @Repository
@@ -241,6 +242,18 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public List<WorkInfo_ST0VO> getAllWork_toSt2ForIndiData(WorkInfo_ST0VO vo, HttpSession session,HttpServletRequest request) {
 		vo.setIndiUsRn((String)session.getAttribute("usRn"));
 		return dao.getAllWork_toSt2ForIndiData(vo);
+	}
+
+	@Override
+	public List<WorkInfo_ST2VO> getAllWorkInfo_st2_Indi(WorkInfo_ST2VO vo, HttpSession session) {
+		vo.setIndiUsRn((String)session.getAttribute("usRn"));
+		return dao.getAllWorkInfo_st2_Indi(vo);
+	}
+
+	@Override
+	public WorkInfo_ST2VO getWorkInfo_st2_Indi(WorkInfo_ST2VO vo, HttpSession session, HttpServletRequest request) {
+		vo.setWorkCode(request.getParameter("workCode"));
+		return dao.getWorkInfo_st2_Indi(vo);
 	}
 	
 }

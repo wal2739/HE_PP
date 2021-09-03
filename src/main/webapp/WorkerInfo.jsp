@@ -475,7 +475,7 @@ p {
 			dropMenuInfo[3] = "그룹 정보";
 			dropMenuInfo[4] = "작업 목록";
 			dropMenuInfo[5] = "증빙 자료";
-			dropMenuInfo[6] = "작업 조회";
+			dropMenuInfo[6] = "완료 작업";
 			dropMenuInfo[7] = "현황/그래프";
 			dropMenuInfo[8] = "정산 조회";
 			dropMenuInfo[9] = "자료 조회";
@@ -492,7 +492,7 @@ p {
 			dropMenuLink[3] = "showMyGroup.do";
 			dropMenuLink[4] = "workInfoForIndi.do?uClass=indiUsrn";
 			dropMenuLink[5] = "workData.do";
-			dropMenuLink[6] = "#";
+			dropMenuLink[6] = "finishedWorkList.do";
 			dropMenuLink[7] = "#";
 			dropMenuLink[8] = "#";
 			dropMenuLink[9] = "#";
