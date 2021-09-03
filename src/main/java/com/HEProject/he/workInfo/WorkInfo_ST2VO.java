@@ -39,6 +39,7 @@ public class WorkInfo_ST2VO implements Serializable{
 	String clientManager;
 	String clientPhone;
 	String rv;
+	String assPhone;
 	int es;
 	int et;
 	int aa;
@@ -58,7 +59,8 @@ public class WorkInfo_ST2VO implements Serializable{
 				+ ", indiBOName=" + indiBOName + ", indiCPName=" + indiCPName + ", equipNum=" + equipNum
 				+ ", equipType=" + equipType + ", equipClass=" + equipClass + ", equipOption=" + equipOption
 				+ ", clientCPName=" + clientCPName + ", clientManager=" + clientManager + ", clientPhone=" + clientPhone
-				+ ", rv=" + rv + ", es=" + es + ", et=" + et + ", aa=" + aa + ", de=" + de + ", dtName=" + dtName + "]";
+				+ ", rv=" + rv + ", assPhone=" + assPhone + ", es=" + es + ", et=" + et + ", aa=" + aa + ", de=" + de
+				+ ", dtName=" + dtName + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -67,6 +69,7 @@ public class WorkInfo_ST2VO implements Serializable{
 		result = prime * result + aa;
 		result = prime * result + ((assBOName == null) ? 0 : assBOName.hashCode());
 		result = prime * result + ((assCPName == null) ? 0 : assCPName.hashCode());
+		result = prime * result + ((assPhone == null) ? 0 : assPhone.hashCode());
 		result = prime * result + ((assUsRn == null) ? 0 : assUsRn.hashCode());
 		result = prime * result + ((assUserID == null) ? 0 : assUserID.hashCode());
 		result = prime * result + ((assUserName == null) ? 0 : assUserName.hashCode());
@@ -126,6 +129,11 @@ public class WorkInfo_ST2VO implements Serializable{
 			if (other.assCPName != null)
 				return false;
 		} else if (!assCPName.equals(other.assCPName))
+			return false;
+		if (assPhone == null) {
+			if (other.assPhone != null)
+				return false;
+		} else if (!assPhone.equals(other.assPhone))
 			return false;
 		if (assUsRn == null) {
 			if (other.assUsRn != null)
@@ -509,6 +517,12 @@ public class WorkInfo_ST2VO implements Serializable{
 	public void setRv(String rv) {
 		this.rv = rv;
 	}
+	public String getAssPhone() {
+		return assPhone;
+	}
+	public void setAssPhone(String assPhone) {
+		this.assPhone = assPhone;
+	}
 	public int getEs() {
 		return es;
 	}
@@ -539,6 +553,7 @@ public class WorkInfo_ST2VO implements Serializable{
 	public void setDtName(String dtName) {
 		this.dtName = dtName;
 	}
+	
 	
 	
 	

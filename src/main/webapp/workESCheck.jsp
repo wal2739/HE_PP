@@ -65,15 +65,14 @@
 			window.close();
 			break;
 		case 1:
-			var cfmData = confirm('작업 완료가 정상적으로 등록 되었습니다. 증빙 자료 페이지로 바로 이동 하시겠습니까 ?');
+			var cfmData = confirm('작업 완료가 정상적으로 등록 되었습니다. 완료 작업 페이지로 이동 하시겠습니까?');
 			switch (cfmData) {
 			case true:
-				opener.parent.location='workData.do';
+				opener.parent.location='finishedWorkList.do';
 				window.close();
 				break;
 			case false:
-				alert('완료 작업 페이지로 이동합니다.');
-				opener.parent.location='finishedWorkList.do';
+				opener.parent.location='workInfoForIndi.do?uClass=indiUsrn';
 				window.close();
 				break;
 			}

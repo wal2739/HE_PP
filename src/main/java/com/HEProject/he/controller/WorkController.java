@@ -1,15 +1,20 @@
 package com.HEProject.he.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 import javax.imageio.IIOException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -238,21 +243,72 @@ public class WorkController {
 	
 	@RequestMapping("newWorkData.do")
 	public ModelAndView newWorkData(ModelAndView mav,WorkInfo_ST0VO vo,HttpSession session,HttpServletRequest request) {
-		mav.addObject("list",workInfoService.getAllWork_toSt2ForIndiNoData(vo, session, request));
+		mav.addObject("wCode",request.getParameter("wCode"));
 		mav.setViewName("newWorkData.jsp");
 		return mav;
 	}
 	
 	@RequestMapping("WorkDataUpload.do")
 	public String testUpload(WorkDataInfoVO vo, HttpServletRequest request) throws IllegalStateException, IOException{
+		String saveFileName ="";
+		//MultipartFile로 파일 정보를 받음
 		MultipartFile uploadFile = vo.getUploadFile();
-		String fileName = "";
+		//randomUUID로 랜덤값 받음
+		String genId = UUID.randomUUID().toString().substring(5, 12);
+		// realPath로 프로젝트에 fileSave 폴더에 값을 저장함
+		String realPath = request.getSession().getServletContext().getRealPath("/workDataUpload/");
+		
+		// 만약 uploadFile이 비어있지않다면 다음과 같이 코드 실행
 		if(!uploadFile.isEmpty()) {
-			fileName = uploadFile.getOriginalFilename();
-			uploadFile.transferTo(new File("D:/workSpace/work/HEProject/src/main/webapp/workDataUpload/" + fileName));
+			// originalFileName에 원본 파일명을 저장한다.
+			String originalFileName = uploadFile.getOriginalFilename();
+			// saveFileName에 랜덤값이 저장된 genID와 파일명을 저장한다.
+			saveFileName = genId + "." + FilenameUtils.getExtension(originalFileName);
+			// 아래 함수로 파일을 업로드한다.
+            uploadFile.transferTo(new File(realPath+saveFileName));
+			// 다음 함수로 파일명을 vo에 저장한다.
 		}
-		workDataInfoService.workDataUpload(fileName, request);
+		workDataInfoService.workDataUpload(saveFileName, request);
+		saveFileName = "";
 		return "newWorkData.do";
+
+	}
+	
+	@RequestMapping("workDataDownload.do")
+	public void fileDownload(HttpServletResponse response,HttpServletRequest request) {
+        String fileName = (String)request.getParameter("dtName");
+        String realPath = request.getSession().getServletContext().getRealPath("/workDataUpload/");
+        realPath = realPath+fileName;
+        
+        // contentType 가져오고
+ 
+        File file = new File(realPath);
+        long fileLength = file.length();
+        // 데이터베이스에 없는 정보는 파일로 만들어서 가져온다. 이 경우엔 Content-Length 가져온 것
+ 
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+        response.setHeader("Content-Transfer-Encoding", "binary"); 
+        response.setHeader("Content-Type", "jpg");
+        response.setHeader("Content-Length", "" + fileLength);
+        response.setHeader("Pragma", "no-cache;");
+        response.setHeader("Expires", "-1;");
+        // 그 정보들을 가지고 reponse의 Header에 세팅한 후
+        
+		try {
+            // saveFileName을 파라미터로 넣어 inputStream 객체를 만들고 
+            // response에서 파일을 내보낼 OutputStream을 가져와서  
+			FileInputStream fis = new FileInputStream(realPath);
+			OutputStream out = response.getOutputStream();
+            int readCount = 0;
+            byte[] buffer = new byte[1024];
+            // 파일 읽을 만큼 크기의 buffer를 생성한 후 
+            while ((readCount = fis.read(buffer)) != -1) {
+                out.write(buffer, 0, readCount);
+                // outputStream에 씌워준다
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
 	}
 	
 	@RequestMapping("workDataIMG.do")
@@ -268,6 +324,14 @@ public class WorkController {
 		mav.setViewName("finishedWorkList.jsp");
 		return mav;
 	}
+	
+	@RequestMapping("getFinishedWork.do")
+	public ModelAndView getFinishedWork(ModelAndView mav,WorkInfo_ST2VO vo,HttpSession session, HttpServletRequest request) {
+		mav.addObject("vo",workInfoService.getWorkInfo_st2_Indi(vo, session, request));
+		mav.setViewName("getFinishedWork.jsp");
+		return mav;
+	}
+	
 	
 }
 

@@ -52,6 +52,7 @@ public class WorkInfo_ST2RowMapper implements RowMapper<WorkInfo_ST2VO>{
 		vo.setAa(rs.getInt("aa"));
 		vo.setDe(rs.getInt("de"));
 		vo.setDtName(rs.getString("dtname"));
+		vo.setAssPhone(rs.getString("ASSPHONE"));
 		return vo;
 	}
 	

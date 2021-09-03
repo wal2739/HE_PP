@@ -252,7 +252,7 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 
 	@Override
 	public WorkInfo_ST2VO getWorkInfo_st2_Indi(WorkInfo_ST2VO vo, HttpSession session, HttpServletRequest request) {
-		vo.setWorkCode(request.getParameter("workCode"));
+		vo.setWorkCode(request.getParameter("wCode"));
 		return dao.getWorkInfo_st2_Indi(vo);
 	}
 	

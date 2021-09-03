@@ -38,11 +38,17 @@
 	});
 	
 	function view_iframe(code) {
-		document.getElementById('workInfo').setAttribute('src','getAllWorkInfo.do?wCode='+code);
+		document.getElementById('workInfo').setAttribute('src','getFinishedWork.do?wCode='+code);
+	}
+	function showData(workCode) {
+		window.open("workDataIMG.do?workCode="+workCode,"workDataIMG","width=650px,height=760px,resizable=no,scrollbars=yes");
+	}
+	function newData(workCode) {
+		window.open("newWorkData.do?wCode="+workCode,"newWorkData","width=550,height=500,resizable=no,scrollbars=yes");
 	}
 </script>
 <style>
-	.mainDiv{
+.mainDiv{
   width: 100%;
   height: 100%;
 }
@@ -61,7 +67,7 @@
 .div2{
   display: inline-block;
   width: 100%;
-  height: 1200px;
+  height: 1400px;
   text-align: center;
 }
 .div_2_back {
@@ -87,10 +93,19 @@
 }
 .div2_1_2 {
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(90% - 50px);
   overflow: auto;
 }
-
+.div2_1_3 {
+  width: 100%;
+  height: 10%;
+  overflow: auto;
+}
+.div2_1_3 p {
+	display: inline;
+	text-align: left;
+	
+}
 .inpuTBDiv {
 	width: 100%;
 	height: calc(100%-30px);
@@ -341,9 +356,8 @@ p {
 			 			<th>거래 업체</th>
 			 			<th>현장 책임자</th>
 			 			<th>현장 연락처</th>
-			 			<th>증빙 자료</th>
 			 			<th>총 작업 금액</th>
-			 			<th>비고</th>
+			 			<th>증빙 자료</th>
 			 		</tr>
 			 		<%
 			 		int amount = 0;
@@ -355,29 +369,31 @@ p {
 			 		</tr>
 					<%}else{
 						for(int i = 0 ; i < list.size(); i++){%>
-						<tr onclick="view_iframe('<%=list.get(i).getWorkCode()%>');">
-		                	<td><input type="button" value="작업 완료" onclick="cfmWork('<%=list.get(i).getWorkCode()%>')"/></td>
+						<tr onclick="view_iframe('<%=list.get(i).getWorkCode()%>');" style="cursor: pointer;">
+		                	<td><%=i+1 %></td>
 		                	<td><%=list.get(i).getWorkField() %></td>
 		                	<td><%=list.get(i).getAssCPName() %></td>
-			                <td><%=list.get(i) %></td>
+			                <td><%=list.get(i).getAssPhone() %></td>
+			                <td><%=list.get(i).getClientCPName() %></td>
 			                <td><%=list.get(i).getFieldManager() %></td>
 			                <td><%=list.get(i).getFieldManagerCell() %></td>
-			                <td><%=list.get(i).getFieldAdd01() %></td>
-			                <td><%=list.get(i).getFieldAdd02() %></td>
-			                <td><%=formatter.format(list.get(i).getWorkAmount()) %></td>
+			                <td><%=formatter.format(list.get(i).getWorkAmount()+list.get(i).getAa()) %></td>
 			                <%
 			                	switch(list.get(i).getDe()) {
 			                	case 0:
-			                		status_now = "없음";
+			                %>
+							<td style="color: red;" onclick="newData('<%=list.get(i).getWorkCode()%>');"><b>등록</b></td>
+							<%
 			                		break;
 			                	case 1:
-			                		status_now = "첨부 완료";
+							%>
+							<td onclick="showData('<%=list.get(i).getWorkCode()%>');" style="color: blue;"><b>확인/다운로드</b></td>
+							<%
+									break;
+			                	default:
 			                		break;
-			                		default:
-			                			break;
 			                	}
 			                %>
-			                <td><%=status_now %></td>
 		               </tr>
 						<!--  -->
 					<%amount = amount + list.get(i).getWorkAmount();}} %>
@@ -397,22 +413,24 @@ p {
 			 			<th>-</th>
 			 			<th>합계</th>
 			 			<th><%=formatter.format(amount) %></th>
-			 			<th></th>
 			 		</tr>
 	            </table>
+          </div>
+          <div class="div2_1_3">
+          	<p>※ 첨부파일을 등록하지 않으면, [등록] 으로 표시됩니다. 또한 증빙 자료를 등록하고 싶다면 [등록] 을 클릭 하면 됩니다.</p><br />
+          	<p>※ 만약 증빙 자료를 다운로드 하고 싶다면 [확인/다운로드]를 클릭하세요.</p>
           </div>
         </div>
         <div class="div2_2">
           <div class="div2_2_1">
-            <p>※ 상세보기를 원하시는 작업을 선택해주세요.</p>
+            <p style="color: black;">※ 상세보기를 원하시는 작업을 선택해주세요.</p>
       		<iframe src="" frameborder="0" id="workInfo"></iframe>
-      		<p>※ 중계 사업자에 의해 작업이 취소 될 수 있습니다.</p>
-			<p>※ 취소된 작업은 <b>[취소 작업 조회]</b>에서 확인 할 수 있습니다.</p>
+      		<p>※ 한번 등록한 증빙 자료는 수정 할 수 없습니다. 하지만 중계 사업자가 해당 작업에 대한 추가 증빙자료를 요청 한다면 추가 등록이 가능합니다.</p>
+			<p>※ 추가 증빙자료 요청 목록은 아래 <b>[자료 요청 목록]</b>에서 확인 가능합니다</p>
           </div>
           <div class="div2_2_2">
           	<div class="div2_2_2_btn">
-          		<button onclick="location.href='cancelWorkListForIndi.do'">취소 작업 조회</button>
-          		<button onclick="location.href='orderInfoForIndi.do'">작업 의뢰 조회</button>
+          		<button onclick="#">자료 요청 목록</button>
           	</div>
           </div>
         </div>
