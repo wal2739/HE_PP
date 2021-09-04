@@ -209,4 +209,21 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 			return null;
 		}
 	}
+
+	@Override
+	public void changePW(UsersInfoVO vo, HttpSession session, HttpServletRequest request) {
+		vo.setUsRn((String)session.getAttribute("usRn"));
+		String re_userPW = request.getParameter("passWord");
+		String newPW = request.getParameter("newPW");
+		String userPW = dao.getUserInfo(vo).getUserPW();
+		if((userPW.equals(re_userPW)) ? true : false) {
+			if((dao.changePw(vo, newPW)==1) ? true : false) {
+				request.setAttribute("ch_pw", 1);
+			}else {
+				request.setAttribute("ch_pw", 2);
+			}
+		}else {
+			request.setAttribute("ch_pw", 0);
+		}
+	}
 }

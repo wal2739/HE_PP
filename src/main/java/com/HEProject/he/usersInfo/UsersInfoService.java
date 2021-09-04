@@ -36,4 +36,6 @@ public interface UsersInfoService {
 	void modifyUserInfo(UsersInfoVO vo, HttpSession session, HttpServletRequest request);
 	
 	String getFdInfo(HttpServletRequest request);
+
+	void changePW(UsersInfoVO vo, HttpSession session, HttpServletRequest request);
 }

@@ -104,7 +104,18 @@ public class UserInfoDAO {
 			return 0;
 		}
 	}
-
+	
+	public int changePw(UsersInfoVO vo, String pw) {
+		String sql = "update usersInfo set userPW=? where usrn=?";
+		try {
+			jdbcTemplate.update(sql,pw,vo.getUsRn());
+			return 1;
+		} catch (Exception e) {
+			System.err.println(e);
+			return 0;
+		}
+	}
+	
 	public UsersInfoVO getFdInfo(String rqm, String rqmVal01, String rqmVal02) {
 		String sql = "select * from usersInfo where userName = ? and " + rqm + "='" + rqmVal01 + "'";
 		Object[] args = {rqmVal02};

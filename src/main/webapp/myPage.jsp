@@ -417,7 +417,7 @@
 				        	</div>
 				        	<div class="btn_Area">
 								<button onclick="location.href='modifyUserInfo.do'">정보 수정</button>
-								<button onclick="alert('미구현')">비밀번호 변경</button>
+								<button onclick="location.href='changePW.jsp'">비밀번호 변경</button>
 								<button id="red_btn" onclick="alert('미구현')">회원 탈퇴</button>
 				        	</div>
 				        </div>
@@ -442,6 +442,5 @@
 	  	</div>
 	</main>
 
-		 --%>
 </body>
 </html>

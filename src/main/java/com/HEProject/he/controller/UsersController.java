@@ -89,6 +89,15 @@ public class UsersController {
 		mav.setViewName("modifyUserInfo.do");
 		return mav;
 	}
+	
+	@RequestMapping("changePW.do")
+	public ModelAndView changePW(ModelAndView mav,UsersInfoVO vo,HttpServletRequest request,HttpSession session) {
+		usersInfoService.changePW(vo, session, request);
+		mav.setViewName("changePW.jsp");
+		return mav;
+	}
+	
+	
 	@RequestMapping("getFdInfo.do")
 	public ModelAndView getFdInfo(ModelAndView mav,HttpServletRequest request) {
 		mav.addObject("fdInfoRlt",usersInfoService.getFdInfo(request));
