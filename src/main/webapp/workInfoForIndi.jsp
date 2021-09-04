@@ -188,8 +188,8 @@
 	transition: all 0.3s ease 0s;
 	cursor: pointer;
 	outline: none;
-  margin-left: 10px;
-  margin-top: 15px;
+	margin-left: 10px;
+	margin-top: 15px;
 }
 
 .div2_2_2_btn button:hover {
