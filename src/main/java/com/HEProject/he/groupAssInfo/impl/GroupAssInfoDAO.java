@@ -9,7 +9,11 @@ import org.springframework.stereotype.Repository;
 import com.HEProject.he.boInfo.BOInfoVO;
 import com.HEProject.he.boInfo.impl.BOInfoRowMapper;
 import com.HEProject.he.groupAssInfo.GroupAssInfoVO;
+import com.HEProject.he.groupAssInfo.GrouperInfoVO;
+import com.HEProject.he.messageInfo.impl.MessageInfoRowMapper;
+import com.HEProject.he.usersInfo.SearchInfoVO;
 import com.HEProject.he.usersInfo.UsersInfoVO;
+import com.HEProject.he.usersInfo.Impl.SearchInfoRowMapper;
 import com.HEProject.he.usersInfo.Impl.UsersInfoRowmapper;
 
 @Repository
@@ -18,11 +22,37 @@ public class GroupAssInfoDAO {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public List<GroupAssInfoVO> getAllGrouper(GroupAssInfoVO vo) {
-		String sql = "select * from groupAssInfo where st=1 and ASSUSRN='" + vo.getAssUsRn() + "'";
-		return jdbcTemplate.query(sql, new GroupAssInfoRowMapper());
+	public List<GrouperInfoVO> getAllGrouper(String usRn) {
+		String sql = "select * from grouperInfo where st=0 and ASSUSRN='" + usRn + "'";
+		try {
+			return jdbcTemplate.query(sql, new GrouperInfoRowMapper());
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
 	}
-	//
+	
+	public GrouperInfoVO getGrouperInfo(GrouperInfoVO vo) {
+		String sql = "select * from grouperInfo where st=0 and assUsRn = '" + vo.getAssUsRn() +  "' and usRn = ?";
+		try {
+			Object[] args = {vo.getUsRn()};
+			return jdbcTemplate.queryForObject(sql, args, new GrouperInfoRowMapper());
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}
+	
+	public SearchInfoVO searchGrouperInfo(SearchInfoVO vo) {
+		String sql = "select * from searchInfo where st=0 and usRn = ?";
+		try {
+			Object[] args = {vo.getUsRn()};
+			return jdbcTemplate.queryForObject(sql, args, new SearchInfoRowMapper());
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}
 	
 	public List<UsersInfoVO> getAllGrouperInfo(GroupAssInfoVO vo) {
 		String sql = "select * from usersInfo where usrn in (select grusrn from groupassinfo where st=1 and assusrn='" + vo.getAssUsRn() + "')";

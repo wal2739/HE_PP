@@ -1,10 +1,9 @@
-package com.HEProject.he.usersInfo;
+package com.HEProject.he.groupAssInfo;
 
 import java.io.Serializable;
 import java.sql.Date;
 
-public class SearchInfoVO implements Serializable{
-
+public class GrouperInfoVO implements Serializable{
 	private String userID;
 	private String userPW;
 	private String userName;
@@ -33,26 +32,28 @@ public class SearchInfoVO implements Serializable{
 	private String tob01;
 	private String tob02;
 	private String cpName;
+	private String assUsRn;
 	private String equipType;
 	private String equipOption;
 	private String equipClass;
-	public SearchInfoVO() {}
+	public GrouperInfoVO() {}
 	@Override
 	public String toString() {
-		return "SearchInfoVO [userID=" + userID + ", userPW=" + userPW + ", userName=" + userName + ", userCell="
+		return "GrouperInfoVO [userID=" + userID + ", userPW=" + userPW + ", userName=" + userName + ", userCell="
 				+ userCell + ", userAdd01=" + userAdd01 + ", userAdd02=" + userAdd02 + ", userClass=" + userClass
 				+ ", userEmail=" + userEmail + ", userConsent01=" + userConsent01 + ", userConsent02=" + userConsent02
 				+ ", userConsent03=" + userConsent03 + ", st=" + st + ", usRn=" + usRn + ", regiDate=" + regiDate
 				+ ", boNumber=" + boNumber + ", boName=" + boName + ", boRrn=" + boRrn + ", boPhone=" + boPhone
 				+ ", boCell=" + boCell + ", boMail=" + boMail + ", boLicense=" + boLicense + ", boAdd01=" + boAdd01
 				+ ", boAdd02=" + boAdd02 + ", boAcc=" + boAcc + ", boAccBack=" + boAccBack + ", tob01=" + tob01
-				+ ", tob02=" + tob02 + ", cpName=" + cpName + ", equipType=" + equipType + ", equipOption="
-				+ equipOption + ", equipClass=" + equipClass + "]";
+				+ ", tob02=" + tob02 + ", cpName=" + cpName + ", assUsRn=" + assUsRn + ", equipType=" + equipType
+				+ ", equipOption=" + equipOption + ", equipClass=" + equipClass + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((assUsRn == null) ? 0 : assUsRn.hashCode());
 		result = prime * result + (int) (boAcc ^ (boAcc >>> 32));
 		result = prime * result + ((boAccBack == null) ? 0 : boAccBack.hashCode());
 		result = prime * result + ((boAdd01 == null) ? 0 : boAdd01.hashCode());
@@ -94,7 +95,12 @@ public class SearchInfoVO implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SearchInfoVO other = (SearchInfoVO) obj;
+		GrouperInfoVO other = (GrouperInfoVO) obj;
+		if (assUsRn == null) {
+			if (other.assUsRn != null)
+				return false;
+		} else if (!assUsRn.equals(other.assUsRn))
+			return false;
 		if (boAcc != other.boAcc)
 			return false;
 		if (boAccBack == null) {
@@ -399,6 +405,12 @@ public class SearchInfoVO implements Serializable{
 	public void setCpName(String cpName) {
 		this.cpName = cpName;
 	}
+	public String getAssUsRn() {
+		return assUsRn;
+	}
+	public void setAssUsRn(String assUsRn) {
+		this.assUsRn = assUsRn;
+	}
 	public String getEquipType() {
 		return equipType;
 	}
@@ -417,5 +429,6 @@ public class SearchInfoVO implements Serializable{
 	public void setEquipClass(String equipClass) {
 		this.equipClass = equipClass;
 	}
+	
 	
 }

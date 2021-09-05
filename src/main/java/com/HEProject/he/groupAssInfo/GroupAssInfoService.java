@@ -11,7 +11,6 @@ import com.HEProject.he.usersInfo.SearchInfoVO;
 import com.HEProject.he.usersInfo.UsersInfoVO;
 
 public interface GroupAssInfoService {
-	List<UsersInfoVO> getAllGrouperInfo(GroupAssInfoVO vo,HttpSession session);
 	
 	List<SearchInfoVO> searchGrouper(SearchInfoVO vo, HttpSession session,HttpServletRequest request);
 	

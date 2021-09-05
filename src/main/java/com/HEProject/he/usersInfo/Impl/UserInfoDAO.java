@@ -43,8 +43,8 @@ public class UserInfoDAO {
 		return jdbcTemplate.query(sql, new UsersInfoRowmapper());
 	}
 	
-	public List<SearchInfoVO> getAllEqInfo(SearchInfoVO vo, String eqType){
-		String sql = "select sinfo.* from searchInfo sInfo where EQUIPTYPE = '"+ eqType +"' and sinfo.usrn!=NVL((select grusrn from groupassinfo where assUsrn='"+ vo.getUsRn() +"'),0)";
+	public List<SearchInfoVO> getAllEqInfo(String usRn, String eqType){
+		String sql = "select sinfo.* from searchInfo sInfo where sInfo.EQUIPTYPE = '" + eqType + "' and sinfo.usrn in (select uinfo.usrn from usersInfo uInfo, groupassinfo gInfo where uInfo.st = 0 and (uInfo.userClass=1 or uInfo.userClass=3) and uInfo.usRn not in (select grusrn from groupassinfo where assusrn='" + usRn + "'))";                      
 		return jdbcTemplate.query(sql, new SearchInfoRowMapper());
 	}//문제의 소지가 있음
 	

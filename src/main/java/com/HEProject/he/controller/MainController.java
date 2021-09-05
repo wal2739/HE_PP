@@ -20,6 +20,8 @@ import com.HEProject.he.clientInfo.ClientInfoService;
 import com.HEProject.he.clientInfo.ClientInfoVO;
 import com.HEProject.he.groupAssInfo.GroupAssInfoService;
 import com.HEProject.he.groupAssInfo.GroupAssInfoVO;
+import com.HEProject.he.groupAssInfo.GrouperInfoService;
+import com.HEProject.he.groupAssInfo.GrouperInfoVO;
 import com.HEProject.he.groupAssInfo.impl.GroupAssInfoDAO;
 import com.HEProject.he.messageInfo.MessageInfoService;
 import com.HEProject.he.messageInfo.MessageInfoVO;
@@ -55,6 +57,9 @@ public class MainController {
 	
 	@Autowired
 	ClientInfoService clientInfoService;
+	
+	@Autowired
+	GrouperInfoService grouperInfoService;
 	
 	@RequestMapping("main.do")
 	public String main() {
@@ -234,8 +239,15 @@ public class MainController {
 	@RequestMapping(value = "showGrouper.do")
 	public ModelAndView showGrouper(ModelAndView mav,GroupAssInfoVO vo, HttpSession session,HttpServletRequest request) {
 		System.out.println("회원 관리 이동");
-		mav.addObject("list", groupAssInfoService.getAllGrouperInfo(vo, session));
+		mav.addObject("list", grouperInfoService.getAllGrouperInfo(request, session));
 		mav.setViewName("showGrouper.jsp");
+		return mav;
+	}
+	@RequestMapping(value = "getGrouperInfo.do")
+	public ModelAndView getGrouperInfo(ModelAndView mav,GrouperInfoVO vo, HttpSession session,HttpServletRequest request) {
+		System.out.println("회원 관리 이동");
+		mav.addObject("vo", grouperInfoService.getGrouperInfo(vo, request, session));
+		mav.setViewName("grouperInfo.jsp");
 		return mav;
 	}
 	@RequestMapping(value = "searchGrouper.do")
@@ -245,6 +257,14 @@ public class MainController {
 		mav.setViewName("searchGrouper.jsp");
 		return mav;
 	}
+	@RequestMapping(value = "searchGrouperInfo.do")
+	public ModelAndView searchGrouperInfo(ModelAndView mav,SearchInfoVO vo, HttpSession session,HttpServletRequest request) {
+		System.out.println("회원 검색/추가 이동");
+		mav.addObject("vo",grouperInfoService.searchGrouperInfo(vo, session, request));
+		mav.setViewName("searchGrouperInfo.jsp");
+		return mav;
+	}
+	
 	@RequestMapping(value = "sendOffer.do")
 	public ModelAndView sendOffer(ModelAndView mav,GroupAssInfoVO vo, MessageInfoVO msgVO, BOInfoVO boVO, HttpSession session, HttpServletRequest request) {
 		System.out.println("회원 추가 이동");
@@ -273,7 +293,7 @@ public class MainController {
 	@RequestMapping(value = "delGrouper.do")
 	public ModelAndView delGrouper(ModelAndView mav,GroupAssInfoVO vo, HttpSession session, HttpServletRequest request) {
 		System.out.println("회원 삭제");
-		mav.addObject("list", groupAssInfoService.getAllGrouperInfo(vo, session));
+		mav.addObject("list", grouperInfoService.getAllGrouperInfo(request, session));
 		mav.setViewName("delGrouper.jsp");
 		return mav;
 	}

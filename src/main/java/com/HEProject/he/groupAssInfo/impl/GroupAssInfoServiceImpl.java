@@ -36,18 +36,7 @@ public class GroupAssInfoServiceImpl implements GroupAssInfoService{
 	
 	@Autowired
 	BOInfoService boInfoService;
-	
-	@Override
-	public List<UsersInfoVO> getAllGrouperInfo(GroupAssInfoVO vo, HttpSession session) {
-		System.out.println("실행됨 impl");
-		vo.setAssUsRn((String)session.getAttribute("usRn"));
-		List<UsersInfoVO> list = dao.getAllGrouperInfo(vo);
-		if(list==null) {
-			System.out.println("dao에러");
-			return null;
-		}
-		return dao.getAllGrouperInfo(vo);
-	}
+
 
 	@Override
 	public List<SearchInfoVO> searchGrouper(SearchInfoVO vo, HttpSession session, HttpServletRequest request) {
@@ -58,6 +47,7 @@ public class GroupAssInfoServiceImpl implements GroupAssInfoService{
 			return list;
 		}else {
 			request.setAttribute("TorF", 1);
+			request.setAttribute("searchVal", eqType);
 			return usersInfoService.getAllEqInfo(vo, session, eqType);
 		}
 	}

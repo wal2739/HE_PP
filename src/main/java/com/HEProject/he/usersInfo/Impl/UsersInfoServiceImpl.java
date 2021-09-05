@@ -123,8 +123,7 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 
 	@Override
 	public List<SearchInfoVO> getAllEqInfo(SearchInfoVO vo, HttpSession session, String eqType) {
-		vo.setUsRn((String)session.getAttribute("usRn"));
-		return dao.getAllEqInfo(vo, eqType);
+		return dao.getAllEqInfo((String)session.getAttribute("usRn"), eqType);
 	}
 	
 	@Override

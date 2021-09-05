@@ -1,18 +1,18 @@
-package com.HEProject.he.usersInfo.Impl;
+package com.HEProject.he.groupAssInfo.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.HEProject.he.usersInfo.SearchInfoVO;
-import com.HEProject.he.usersInfo.UsersInfoVO;
+import com.HEProject.he.groupAssInfo.GroupAssInfoVO;
+import com.HEProject.he.groupAssInfo.GrouperInfoVO;
 
-public class SearchInfoRowMapper implements RowMapper<SearchInfoVO>{
+public class GrouperInfoRowMapper implements RowMapper<GrouperInfoVO>{
 
 	@Override
-	public SearchInfoVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		SearchInfoVO vo = new SearchInfoVO();
+	public GrouperInfoVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		GrouperInfoVO vo = new GrouperInfoVO();
 		vo.setUsRn(rs.getString("usRn"));
 		vo.setUserID(rs.getString("userID"));
 		vo.setUserPW(rs.getString("userPW"));
@@ -44,7 +44,9 @@ public class SearchInfoRowMapper implements RowMapper<SearchInfoVO>{
 		vo.setEquipType(rs.getString("equipType"));
 		vo.setEquipOption(rs.getString("equipOption"));
 		vo.setEquipClass(rs.getString("equipClass"));
+		vo.setAssUsRn(rs.getString("ASSUSRN"));
 		return vo;
 	}
 	
+
 }
