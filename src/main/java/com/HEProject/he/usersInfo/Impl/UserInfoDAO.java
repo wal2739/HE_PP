@@ -43,15 +43,20 @@ public class UserInfoDAO {
 		return jdbcTemplate.query(sql, new UsersInfoRowmapper());
 	}
 	
-	public List<SearchInfoVO> getAllEqInfo(String usRn, String eqType){
-		String sql = "select sinfo.* from searchInfo sInfo where sInfo.EQUIPTYPE = '" + eqType + "' and sinfo.usrn in (select uinfo.usrn from usersInfo uInfo, groupassinfo gInfo where uInfo.st = 0 and (uInfo.userClass=1 or uInfo.userClass=3) and uInfo.usRn not in (select grusrn from groupassinfo where assusrn='" + usRn + "'))";                      
-		return jdbcTemplate.query(sql, new SearchInfoRowMapper());
-	}//문제의 소지가 있음
+	public List<SearchInfoVO> getAllSearch(){
+		String sql = "select si.usrn,sI.userId userId,si.username userName,si.usercell userCell,COUNT(si.usRn) eqCnt from searchInfo si group by si.usRn,si.userId,si.userName,si.userCell";                      
+		return jdbcTemplate.query(sql, new AllSearchRowMapper());
+	}
+	
+	public List<SearchInfoVO> getAllEqSearch(String eqType){
+		String sql = "select si.usrn,sI.userId userId,si.username userName,si.equiptype,si.usercell userCell,si.equipclass,si.equipoption from searchInfo si where si.equiptype='" + eqType + "'";                      
+		return jdbcTemplate.query(sql, new EqSearchInfoRowMapper());
+	}
 	
 	public List<SearchInfoVO> getAllEqInfo(SearchInfoVO vo){
 		String sql = "select * from searchInfo where usrn in (select grusrn from groupassinfo where st=4 and ASSUSRN='" + vo.getUsRn() + "')";
 		return jdbcTemplate.query(sql, new SearchInfoRowMapper());
-	}
+	}//변경 요망
 	
 	public UsersInfoVO getUserInfo(UsersInfoVO vo) {
 		String sql = "select * from usersInfo where USRN = ? and st=0";

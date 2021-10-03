@@ -13,4 +13,6 @@ public interface GrouperInfoService {
 	GrouperInfoVO getGrouperInfo(GrouperInfoVO vo,HttpServletRequest request, HttpSession session);
 
 	SearchInfoVO searchGrouperInfo(SearchInfoVO vo, HttpSession session, HttpServletRequest request);
+
+	List<SearchInfoVO> searchGrouperEquipInfo(HttpServletRequest request);
 }

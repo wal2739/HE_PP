@@ -51,8 +51,15 @@ p {
 				<th colspan="8" style="background: rgba(0,0,0,.15); height: 30px;">회원 정보</th>
 			</tr>
 			<tr>
+				<%
+					int length_id = vo.getUserID().length()/2;
+					String id_Rlt = vo.getUserID().substring(0,length_id);
+					for(int i = 0 ; i < vo.getUserID().substring(length_id).length();i++){
+						id_Rlt = id_Rlt + "*";
+					} 
+				%>
 				<th>회원 아이디</th>
-				<td colspan="3"><%=vo.getUserID() %></td>
+				<td colspan="3"><%=id_Rlt %></td>
 				<th>회원 이름 </th>
 				<td colspan="3"><%=vo.getUserName() %></td>
 			</tr>
@@ -79,24 +86,11 @@ p {
 				<th>사업자 주소</th>
 				<td style="height: 50px;"><%= vo.getBoAdd01()%></td>
 				<th>사업자 상세 주소</th>
-				<td style="height: 50px;"><%= vo.getBoAdd02()%></td>
+				<td style="height: 50px;">[비공개]</td>
 				<th>사업자 계좌 번호</th>
-				<td><%= vo.getBoAcc()%></td>
+				<td>[비공개]</td>
 				<th>사업자 계좌 은행</th>
-				<td><%= vo.getBoAccBack()%></td>
-			</tr>
-			<tr>
-				<th colspan="8" style="background: rgba(0,0,0,.15);height: 30px;">회원 차량 정보</th>
-			</tr>
-			<tr>
-				<th>차량 번호</th>
-				<td>비공개</td>
-				<th>차량 종류</th>
-				<td><%= vo.getEquipType() %></td>
-				<th>차량 분류</th>
-				<td><%= vo.getEquipClass() %></td>
-				<th>차량 옵션</th>
-				<td><%= vo.getEquipOption() %></td>
+				<td>[비공개]</td>
 			</tr>
 			<tr>
 				<th>비고</th>

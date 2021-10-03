@@ -36,6 +36,9 @@ public class SearchInfoVO implements Serializable{
 	private String equipType;
 	private String equipOption;
 	private String equipClass;
+	private Date equipRD;
+	private Date equipID;
+	private int eqCnt;
 	public SearchInfoVO() {}
 	@Override
 	public String toString() {
@@ -47,7 +50,8 @@ public class SearchInfoVO implements Serializable{
 				+ ", boCell=" + boCell + ", boMail=" + boMail + ", boLicense=" + boLicense + ", boAdd01=" + boAdd01
 				+ ", boAdd02=" + boAdd02 + ", boAcc=" + boAcc + ", boAccBack=" + boAccBack + ", tob01=" + tob01
 				+ ", tob02=" + tob02 + ", cpName=" + cpName + ", equipType=" + equipType + ", equipOption="
-				+ equipOption + ", equipClass=" + equipClass + "]";
+				+ equipOption + ", equipClass=" + equipClass + ", equipRD=" + equipRD + ", equipID=" + equipID
+				+ ", eqCnt=" + eqCnt + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -65,8 +69,11 @@ public class SearchInfoVO implements Serializable{
 		result = prime * result + ((boPhone == null) ? 0 : boPhone.hashCode());
 		result = prime * result + ((boRrn == null) ? 0 : boRrn.hashCode());
 		result = prime * result + ((cpName == null) ? 0 : cpName.hashCode());
+		result = prime * result + eqCnt;
 		result = prime * result + ((equipClass == null) ? 0 : equipClass.hashCode());
+		result = prime * result + ((equipID == null) ? 0 : equipID.hashCode());
 		result = prime * result + ((equipOption == null) ? 0 : equipOption.hashCode());
+		result = prime * result + ((equipRD == null) ? 0 : equipRD.hashCode());
 		result = prime * result + ((equipType == null) ? 0 : equipType.hashCode());
 		result = prime * result + ((regiDate == null) ? 0 : regiDate.hashCode());
 		result = prime * result + st;
@@ -149,15 +156,27 @@ public class SearchInfoVO implements Serializable{
 				return false;
 		} else if (!cpName.equals(other.cpName))
 			return false;
+		if (eqCnt != other.eqCnt)
+			return false;
 		if (equipClass == null) {
 			if (other.equipClass != null)
 				return false;
 		} else if (!equipClass.equals(other.equipClass))
 			return false;
+		if (equipID == null) {
+			if (other.equipID != null)
+				return false;
+		} else if (!equipID.equals(other.equipID))
+			return false;
 		if (equipOption == null) {
 			if (other.equipOption != null)
 				return false;
 		} else if (!equipOption.equals(other.equipOption))
+			return false;
+		if (equipRD == null) {
+			if (other.equipRD != null)
+				return false;
+		} else if (!equipRD.equals(other.equipRD))
 			return false;
 		if (equipType == null) {
 			if (other.equipType != null)
@@ -417,5 +436,26 @@ public class SearchInfoVO implements Serializable{
 	public void setEquipClass(String equipClass) {
 		this.equipClass = equipClass;
 	}
+	public Date getEquipRD() {
+		return equipRD;
+	}
+	public void setEquipRD(Date equipRD) {
+		this.equipRD = equipRD;
+	}
+	public Date getEquipID() {
+		return equipID;
+	}
+	public void setEquipID(Date equipID) {
+		this.equipID = equipID;
+	}
+	public int getEqCnt() {
+		return eqCnt;
+	}
+	public void setEqCnt(int eqCnt) {
+		this.eqCnt = eqCnt;
+	}
+	
+	
+	
 	
 }

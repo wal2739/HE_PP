@@ -69,18 +69,6 @@
 			boMail = null;
 			boAdd01 = null;
 		}
-		
-		
-		
-    	
-    	
-    	/* if(boNumber03.length()==5){
-    		
-    	}else{
-    		for(int i = boNumber03.length() ; i < 5; i++){
-    			"0".concat(boNumber03);
-    		}
-    	} */
     %>
 <!DOCTYPE html>
 <html>
@@ -293,7 +281,6 @@
 		loginCheck(loginCheckData);
 		////		
 		var boCheck = <%=request.getAttribute("boCheck")%>
-		console.log(boCheck);
 		if(boCheck==null){}
 		if(boCheck==0){	
 			alert('정상적으로 사업자가 수정되지 않았습니다. 다시 작성해주세요.');

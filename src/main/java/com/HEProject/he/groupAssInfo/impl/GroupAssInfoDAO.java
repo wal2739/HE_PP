@@ -13,6 +13,8 @@ import com.HEProject.he.groupAssInfo.GrouperInfoVO;
 import com.HEProject.he.messageInfo.impl.MessageInfoRowMapper;
 import com.HEProject.he.usersInfo.SearchInfoVO;
 import com.HEProject.he.usersInfo.UsersInfoVO;
+import com.HEProject.he.usersInfo.Impl.SearchForEquipRowMapper;
+import com.HEProject.he.usersInfo.Impl.SearchGrouperInfoRowMapper;
 import com.HEProject.he.usersInfo.Impl.SearchInfoRowMapper;
 import com.HEProject.he.usersInfo.Impl.UsersInfoRowmapper;
 
@@ -44,10 +46,10 @@ public class GroupAssInfoDAO {
 	}
 	
 	public SearchInfoVO searchGrouperInfo(SearchInfoVO vo) {
-		String sql = "select * from searchInfo where st=0 and usRn = ?";
+		String sql = "select DISTINCT BOACC,BOACCBANK,BOADD01,BOADD02,BOCELL,BOLICENSE,BOMAIL,BONAME,BONUMBER,BOPHONE,BORRN,CPNAME,REGIDATE,ST,TOB01,TOB02,USERADD01,USERADD02,USERCELL,USERCLASS,USERCONSENT01,USERCONSENT02,USERCONSENT03,USEREMAIL,USERID,USERNAME,USERPW,USRN from searchInfo where st=0 and usrn=?";
 		try {
 			Object[] args = {vo.getUsRn()};
-			return jdbcTemplate.queryForObject(sql, args, new SearchInfoRowMapper());
+			return jdbcTemplate.queryForObject(sql, args, new SearchGrouperInfoRowMapper());
 		} catch (Exception e) {
 			System.err.println(e);
 			return null;
@@ -174,5 +176,10 @@ public class GroupAssInfoDAO {
 			System.err.println(e);
 			return 0;
 		}
+	}
+
+	public List<SearchInfoVO> searchGrouperEquipInfo(String usRn) {
+		String sql = "select si.equiptype,si.equipclass,si.equipoption,si.userid,si.userName,si.usRn,si.equipId,si.equipRd from searchInfo si where usRn='" + usRn + "'";
+		return jdbcTemplate.query(sql, new SearchForEquipRowMapper());
 	}
 }

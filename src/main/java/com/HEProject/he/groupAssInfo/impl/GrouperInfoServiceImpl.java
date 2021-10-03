@@ -36,5 +36,11 @@ public class GrouperInfoServiceImpl implements GrouperInfoService{
 		vo.setUsRn(request.getParameter("usRn"));
 		return dao.searchGrouperInfo(vo);
 	}
+	
+	@Override
+	public List<SearchInfoVO> searchGrouperEquipInfo(HttpServletRequest request) {//회원 검색 - 상세 보기
+		String usRn = request.getParameter("usRn");
+		return dao.searchGrouperEquipInfo(usRn);
+	}
 
 }

@@ -75,6 +75,9 @@
 	function showGrouperInfo(grouperUsRn) {
 		document.getElementById('grouperInfo').setAttribute('src','searchGrouperInfo.do?usRn='+grouperUsRn);
 	}
+	function check_EQ1(usRn) {
+		window.open("getEquipInfo.do?usRn="+usRn,"eq","width=1000,height=600,resizable=no,scrollbars=yes");
+	}
 </script>
 <style>
 .mainDiv{
@@ -275,6 +278,23 @@ select {
 	-moz-appearance: none; 
 	appearance: none; 
 }
+#check_EQ{
+	background-color: #72B08E;
+	color: white;
+	border: none;
+	width: auto;
+	height: 30px;
+}
+
+#check_EQ:hover {
+	background-color: #4E7861;
+	box-shadow: 1px 1px 1px 1px #3C5C4A;
+}
+
+#check_EQ:active {
+	text-shadow: 4px 2px 2px black;
+}
+
 </style>
 <%
 	Object userClassData = session.getAttribute("userClass");
@@ -415,7 +435,7 @@ select {
 	      		<div class="searchBox_content">
 		      		<p style="">※ 차량 조건에 무관하게 검색하는 기능은 현재 지원하고 있지 않습니다.</p>
 		      		<select name="equipInfo" id="equipInfo" onchange="changeEquipInfo()" style="float: right; margin-right: 50px;">
-					    <option value="noEq">차량 선택</option>
+					    <option value="all">전체</option>
 					    <option value="크레인">크레인</option>
 					    <option value="덤프">덤프</option>
 					    <option value="굴삭기">굴삭기</option>
@@ -444,6 +464,7 @@ select {
 				 			<th>차량 종류</th>
 				 			<th>차량 분류</th>
 				 			<th>차량 옵션</th>
+				 			<th>전체 차량 보기</th>
 				 		</tr>
 				 		<%if(list==null||list.size()==0){%>
 						<tr>
@@ -453,14 +474,15 @@ select {
 							for(int i = 0 ; i < list.size(); i++){%>
 							<tr style="cursor: pointer;" onclick="showGrouperInfo('<%=list.get(i).getUsRn()%>');">
 								<td><input type="checkbox" value="<%=list.get(i).getUsRn() %>" name="chkUsRn" id="chkUsRn"/></td>
-								<td><%=list.get(i).getUserName() %></td>
-								<td><%=list.get(i).getEquipType() %></td>
-								<td><%=list.get(i).getEquipClass() %></td>
-								<td><%=list.get(i).getEquipOption() %></td>
+								<td><%=list.get(i).getUserName()!=null ? list.get(i).getUserName() : "-" %></td>
+								<td><%=list.get(i).getEquipType()!=null ? list.get(i).getEquipType() : "-" %></td>
+								<td><%=list.get(i).getEquipClass()!=null ? list.get(i).getEquipClass() : "-" %></td>
+								<td><%=list.get(i).getEquipOption()!=null ? list.get(i).getEquipOption() : "-" %></td>
+				                <td><button type="button" id="check_EQ" onclick="check_EQ1('<%=list.get(i).getUsRn()%>');">차량 확인</button></td>
 							</tr>
 						<%}%>
 						<tr id="btm_tr">
-				 			<th colspan="5" style="height: 30px; align-items: center;"><button id="sbt_btn" type="submit">추가</button></th>
+				 			<th colspan="6" style="height: 30px; align-items: center;"><button id="sbt_btn" type="submit">추가</button></th>
 				 		</tr>
 						<%} %>
 		            </table>			

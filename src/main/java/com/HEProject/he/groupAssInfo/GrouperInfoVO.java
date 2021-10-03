@@ -33,9 +33,6 @@ public class GrouperInfoVO implements Serializable{
 	private String tob02;
 	private String cpName;
 	private String assUsRn;
-	private String equipType;
-	private String equipOption;
-	private String equipClass;
 	public GrouperInfoVO() {}
 	@Override
 	public String toString() {
@@ -46,8 +43,7 @@ public class GrouperInfoVO implements Serializable{
 				+ ", boNumber=" + boNumber + ", boName=" + boName + ", boRrn=" + boRrn + ", boPhone=" + boPhone
 				+ ", boCell=" + boCell + ", boMail=" + boMail + ", boLicense=" + boLicense + ", boAdd01=" + boAdd01
 				+ ", boAdd02=" + boAdd02 + ", boAcc=" + boAcc + ", boAccBack=" + boAccBack + ", tob01=" + tob01
-				+ ", tob02=" + tob02 + ", cpName=" + cpName + ", assUsRn=" + assUsRn + ", equipType=" + equipType
-				+ ", equipOption=" + equipOption + ", equipClass=" + equipClass + "]";
+				+ ", tob02=" + tob02 + ", cpName=" + cpName + ", assUsRn=" + assUsRn + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -66,9 +62,6 @@ public class GrouperInfoVO implements Serializable{
 		result = prime * result + ((boPhone == null) ? 0 : boPhone.hashCode());
 		result = prime * result + ((boRrn == null) ? 0 : boRrn.hashCode());
 		result = prime * result + ((cpName == null) ? 0 : cpName.hashCode());
-		result = prime * result + ((equipClass == null) ? 0 : equipClass.hashCode());
-		result = prime * result + ((equipOption == null) ? 0 : equipOption.hashCode());
-		result = prime * result + ((equipType == null) ? 0 : equipType.hashCode());
 		result = prime * result + ((regiDate == null) ? 0 : regiDate.hashCode());
 		result = prime * result + st;
 		result = prime * result + ((tob01 == null) ? 0 : tob01.hashCode());
@@ -154,21 +147,6 @@ public class GrouperInfoVO implements Serializable{
 			if (other.cpName != null)
 				return false;
 		} else if (!cpName.equals(other.cpName))
-			return false;
-		if (equipClass == null) {
-			if (other.equipClass != null)
-				return false;
-		} else if (!equipClass.equals(other.equipClass))
-			return false;
-		if (equipOption == null) {
-			if (other.equipOption != null)
-				return false;
-		} else if (!equipOption.equals(other.equipOption))
-			return false;
-		if (equipType == null) {
-			if (other.equipType != null)
-				return false;
-		} else if (!equipType.equals(other.equipType))
 			return false;
 		if (regiDate == null) {
 			if (other.regiDate != null)
@@ -411,24 +389,5 @@ public class GrouperInfoVO implements Serializable{
 	public void setAssUsRn(String assUsRn) {
 		this.assUsRn = assUsRn;
 	}
-	public String getEquipType() {
-		return equipType;
-	}
-	public void setEquipType(String equipType) {
-		this.equipType = equipType;
-	}
-	public String getEquipOption() {
-		return equipOption;
-	}
-	public void setEquipOption(String equipOption) {
-		this.equipOption = equipOption;
-	}
-	public String getEquipClass() {
-		return equipClass;
-	}
-	public void setEquipClass(String equipClass) {
-		this.equipClass = equipClass;
-	}
-	
 	
 }

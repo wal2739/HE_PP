@@ -23,6 +23,9 @@ import com.HEProject.he.groupAssInfo.GroupAssInfoVO;
 import com.HEProject.he.groupAssInfo.GrouperInfoService;
 import com.HEProject.he.groupAssInfo.GrouperInfoVO;
 import com.HEProject.he.groupAssInfo.impl.GroupAssInfoDAO;
+import com.HEProject.he.groupAssInfo.impl.GrouperInfoServiceImpl;
+import com.HEProject.he.grouperEquipInfo.GrouperEquipInfoService;
+import com.HEProject.he.grouperEquipInfo.GrouperEquipInfoVO;
 import com.HEProject.he.messageInfo.MessageInfoService;
 import com.HEProject.he.messageInfo.MessageInfoVO;
 import com.HEProject.he.messageInfo.MsgInfoVO;
@@ -60,6 +63,9 @@ public class MainController {
 	
 	@Autowired
 	GrouperInfoService grouperInfoService;
+	
+	@Autowired
+	GrouperEquipInfoService grouperEquipInfoService;
 	
 	@RequestMapping("main.do")
 	public String main() {
@@ -247,9 +253,26 @@ public class MainController {
 	public ModelAndView getGrouperInfo(ModelAndView mav,GrouperInfoVO vo, HttpSession session,HttpServletRequest request) {
 		System.out.println("회원 관리 이동");
 		mav.addObject("vo", grouperInfoService.getGrouperInfo(vo, request, session));
+		mav.addObject("list", grouperEquipInfoService.getAllEquipInfo(request, session));
 		mav.setViewName("grouperInfo.jsp");
 		return mav;
 	}
+	@RequestMapping(value = "getGrouperEquipInfo.do")
+	public ModelAndView getGrouperEquipInfo(ModelAndView mav, HttpSession session,HttpServletRequest request) {
+		System.out.println("회원 차량 확인 이동");
+		mav.addObject("list", grouperEquipInfoService.getAllEquipInfo(request, session));
+		mav.setViewName("getGrouperEquipInfo.jsp");
+		return mav;
+	}
+	
+	@RequestMapping(value = "getEquipInfo.do")
+	public ModelAndView getEquipList(ModelAndView mav,HttpServletRequest request) {
+		System.out.println("차량 확인 이동");
+		mav.addObject("list", grouperInfoService.searchGrouperEquipInfo(request));
+		mav.setViewName("searchGrouperEquipInfo.jsp");
+		return mav;
+	}
+	
 	@RequestMapping(value = "searchGrouper.do")
 	public ModelAndView searchGrouper(ModelAndView mav,SearchInfoVO vo, HttpSession session,HttpServletRequest request) {
 		System.out.println("회원 검색/추가 이동");

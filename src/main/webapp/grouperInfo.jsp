@@ -1,3 +1,4 @@
+<%@page import="com.HEProject.he.grouperEquipInfo.GrouperEquipInfoVO"%>
 <%@page import="com.HEProject.he.groupAssInfo.GrouperInfoVO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.HEProject.he.workInfo.WorkInfo_ST0VO"%>
@@ -83,19 +84,6 @@ p {
 				<td><%= vo.getBoAcc()%></td>
 				<th>사업자 계좌 은행</th>
 				<td><%= vo.getBoAccBack()%></td>
-			</tr>
-			<tr>
-				<th colspan="8" style="background: rgba(0,0,0,.15);height: 30px;">회원 차량 정보</th>
-			</tr>
-			<tr>
-				<th>차량 번호</th>
-				<td>비공개</td>
-				<th>차량 종류</th>
-				<td><%= vo.getEquipType() %></td>
-				<th>차량 분류</th>
-				<td><%= vo.getEquipClass() %></td>
-				<th>차량 옵션</th>
-				<td><%= vo.getEquipOption() %></td>
 			</tr>
 			<tr>
 				<th>비고</th>

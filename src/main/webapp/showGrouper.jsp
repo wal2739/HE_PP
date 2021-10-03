@@ -44,6 +44,9 @@
 	function showGrouperInfo(gourperUsRn) {
 		document.getElementById('grouperInfo').setAttribute('src','getGrouperInfo.do?usRn='+gourperUsRn);
 	}
+	function check_EQ(usRn) {
+		window.open("getGrouperEquipInfo.do?usRn="+usRn,"eq","width=1000,height=600,resizable=no,scrollbars=yes");
+	}
 </script>
 <style>
 	.mainDiv{
@@ -192,6 +195,22 @@ p {
 #grouperInfo {
 	width: 100%;
 	height: 75%;
+}
+#check_EQ{
+	background-color: #72B08E;
+	color: white;
+	border: none;
+	width: auto;
+	height: 30px;
+}
+
+#check_EQ:hover {
+	background-color: #4E7861;
+	box-shadow: 1px 1px 1px 1px #3C5C4A;
+}
+
+#check_EQ:active {
+	text-shadow: 4px 2px 2px black;
 }
 
 </style>
@@ -343,6 +362,7 @@ p {
 				 			<th>아이디</th>
 				 			<th>연락처</th>
 				 			<th>이메일</th>
+				 			<th></th>
 				 		</tr>
 				 		<%if(list==null){%>
 						<tr>
@@ -356,11 +376,12 @@ p {
 			                	<td><%=list.get(i).getUserID() %></td>
 				                <td><%=list.get(i).getUserCell() %></td>
 				                <td><%=list.get(i).getUserEmail() %></td>
+				                <td><button id="check_EQ" onclick="check_EQ('<%=list.get(i).getUsRn()%>');">차량 확인</button></td>
 			               </tr>
 							<!--  -->
 						<%}%>
 						<tr id="btm_tr">
-				 			<th colspan="5"><%=list.size() %></th>
+				 			<th colspan="6"><%=list.size() %></th>
 				 		</tr>
 						<%} %>
 		            </table>
@@ -370,12 +391,12 @@ p {
 	          <div class="div2_2_1">
 	            <p>※ 상세보기를 원하시는 회원을 선택해주세요.</p>
 	      		<iframe src="" frameborder="0" id="grouperInfo"></iframe>
-	      		<p>※ 차량 번호는 개인정보를 위해 비공개 처리 해두었습니다. 참고 부탁드립니다.</p>
+	      		<p>※ 차량 확인은 해당 회원 우측 [차량확인] 버튼으로 확인 가능합니다<span class=""></span></p>
 	          </div>
 	          <div class="div2_2_2">
 	          	<div class="div2_2_2_btn">
 	          		<button onclick="location.href='delGrouper.do'">회원 삭제</button>
-	          		<button onclick="location.href='searchGrouper.do'">회원 검색/추가</button>
+	          		<button onclick="location.href='searchGrouper.do?eqType=all'">회원 검색/추가</button>
 	          		<button onclick="location.href='getAci.do'">가입 신청 확인</button>
 	          		<button onclick="messageCheck();">메세지</button>
 	          	</div>

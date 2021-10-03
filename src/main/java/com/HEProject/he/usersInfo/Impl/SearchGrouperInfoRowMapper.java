@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import com.HEProject.he.usersInfo.SearchInfoVO;
 import com.HEProject.he.usersInfo.UsersInfoVO;
 
-public class SearchInfoRowMapper implements RowMapper<SearchInfoVO>{
+public class SearchGrouperInfoRowMapper implements RowMapper<SearchInfoVO>{
 
 	@Override
 	public SearchInfoVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -41,11 +41,6 @@ public class SearchInfoRowMapper implements RowMapper<SearchInfoVO>{
 		vo.setTob01(rs.getString("TOB01"));
 		vo.setTob02(rs.getString("TOB02"));
 		vo.setCpName(rs.getString("CPNAME"));
-		vo.setEquipType(rs.getString("equipType"));
-		vo.setEquipOption(rs.getString("equipOption"));
-		vo.setEquipClass(rs.getString("equipClass"));
-		vo.setEquipID(rs.getDate("equipid"));
-		vo.setEquipRD(rs.getDate("equiprd"));
 		return vo;
 	}
 	
