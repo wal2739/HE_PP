@@ -28,6 +28,7 @@ public class GrouperInfoServiceImpl implements GrouperInfoService{
 	public GrouperInfoVO getGrouperInfo(GrouperInfoVO vo, HttpServletRequest request, HttpSession session) {// 내 회원 상세 정보
 		vo.setAssUsRn((String)session.getAttribute("usRn"));
 		vo.setUsRn(request.getParameter("usRn"));
+		vo.setgSt(Integer.parseInt(request.getParameter("gst")));
 		return dao.getGrouperInfo(vo);
 	}
 

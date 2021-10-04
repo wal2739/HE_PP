@@ -22,6 +22,7 @@ public class GrouperEquipInfoRowMapper implements RowMapper<GrouperEquipInfoVO>{
 		vo.setGrUsRn(rs.getString("GRUSRN"));
 		vo.setAssUsRn(rs.getString("ASSUSRN"));
 		vo.setUserId(rs.getString("USERID"));
+		vo.setgSt(rs.getInt("gst"));
 		return vo;
 	}
 	

@@ -14,12 +14,14 @@ public class GrouperEquipInfoVO implements Serializable{
 	private String equipOption;
 	private Date equipRD;
 	private Date equipID;
+	private int gSt;
 	public GrouperEquipInfoVO() {}
 	@Override
 	public String toString() {
 		return "GrouperEquipInfoVO [userId=" + userId + ", grUsRn=" + grUsRn + ", assUsRn=" + assUsRn + ", eqRn=" + eqRn
 				+ ", equipNum=" + equipNum + ", equipType=" + equipType + ", equipClass=" + equipClass
-				+ ", equipOption=" + equipOption + ", equipRD=" + equipRD + ", equipID=" + equipID + "]";
+				+ ", equipOption=" + equipOption + ", equipRD=" + equipRD + ", equipID=" + equipID + ", gSt=" + gSt
+				+ "]";
 	}
 	@Override
 	public int hashCode() {
@@ -33,6 +35,7 @@ public class GrouperEquipInfoVO implements Serializable{
 		result = prime * result + ((equipOption == null) ? 0 : equipOption.hashCode());
 		result = prime * result + ((equipRD == null) ? 0 : equipRD.hashCode());
 		result = prime * result + ((equipType == null) ? 0 : equipType.hashCode());
+		result = prime * result + gSt;
 		result = prime * result + ((grUsRn == null) ? 0 : grUsRn.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
@@ -85,6 +88,8 @@ public class GrouperEquipInfoVO implements Serializable{
 			if (other.equipType != null)
 				return false;
 		} else if (!equipType.equals(other.equipType))
+			return false;
+		if (gSt != other.gSt)
 			return false;
 		if (grUsRn == null) {
 			if (other.grUsRn != null)
@@ -158,6 +163,11 @@ public class GrouperEquipInfoVO implements Serializable{
 	public void setEquipID(Date equipID) {
 		this.equipID = equipID;
 	}
-	
+	public int getgSt() {
+		return gSt;
+	}
+	public void setgSt(int gSt) {
+		this.gSt = gSt;
+	}
 	
 }

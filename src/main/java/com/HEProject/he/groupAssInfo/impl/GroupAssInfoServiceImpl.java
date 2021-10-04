@@ -14,6 +14,7 @@ import com.HEProject.he.boInfo.BOInfoService;
 import com.HEProject.he.boInfo.BOInfoVO;
 import com.HEProject.he.groupAssInfo.GroupAssInfoService;
 import com.HEProject.he.groupAssInfo.GroupAssInfoVO;
+import com.HEProject.he.groupAssInfo.GrouperInfoVO;
 import com.HEProject.he.messageInfo.MessageInfoService;
 import com.HEProject.he.messageInfo.MessageInfoVO;
 import com.HEProject.he.usersInfo.SearchInfoVO;
@@ -206,9 +207,8 @@ public class GroupAssInfoServiceImpl implements GroupAssInfoService{
 	}
 	
 	@Override
-	public List<BOInfoVO> getAci(GroupAssInfoVO vo,HttpSession session) {
-		vo.setAssUsRn((String)session.getAttribute("usRn"));
-		return dao.getAci(vo);
+	public List<GrouperInfoVO> getAci(HttpSession session) {
+		return dao.getAci((String)session.getAttribute("usRn"));
 	}
 
 	@Override

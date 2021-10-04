@@ -297,10 +297,9 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "getAci.do")
-	public ModelAndView getAci(ModelAndView mav,GroupAssInfoVO gVO,SearchInfoVO sVO, HttpSession session, HttpServletRequest request) {
-		System.out.println("회원 추가 이동");
-		mav.addObject("gList",groupAssInfoService.getAci(gVO, session));
-		mav.addObject("sList",usersInfoService.getAllEqInfo(sVO, session));
+	public ModelAndView getAci(ModelAndView mav, HttpSession session) {
+		System.out.println("가입 신청 이동");
+		mav.addObject("list",groupAssInfoService.getAci(session));
 		mav.setViewName("getAci.jsp");
 		return mav;
 	}

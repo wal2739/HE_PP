@@ -25,7 +25,7 @@ public class GroupAssInfoDAO {
 	JdbcTemplate jdbcTemplate;
 	
 	public List<GrouperInfoVO> getAllGrouper(String usRn) {
-		String sql = "select * from grouperInfo where st=0 and ASSUSRN='" + usRn + "'";
+		String sql = "select * from grouperInfo where st=0 and ASSUSRN='" + usRn + "' and gst=1";
 		try {
 			return jdbcTemplate.query(sql, new GrouperInfoRowMapper());
 		} catch (Exception e) {
@@ -35,7 +35,7 @@ public class GroupAssInfoDAO {
 	}
 	
 	public GrouperInfoVO getGrouperInfo(GrouperInfoVO vo) {
-		String sql = "select * from grouperInfo where st=0 and assUsRn = '" + vo.getAssUsRn() +  "' and usRn = ?";
+		String sql = "select * from grouperInfo where st=0 and assUsRn = '" + vo.getAssUsRn() +  "' and usRn = ? and gst=" + vo.getgSt();
 		try {
 			Object[] args = {vo.getUsRn()};
 			return jdbcTemplate.queryForObject(sql, args, new GrouperInfoRowMapper());
@@ -96,11 +96,11 @@ public class GroupAssInfoDAO {
 			return null;
 		}
 	}
-	
-	public List<BOInfoVO> getAci(GroupAssInfoVO vo) {
-		String sql = "select * from BOInfo where usrn in (select grusrn from groupassinfo where st=4 and ASSUSRN='" + vo.getAssUsRn() + "')";
+
+	public List<GrouperInfoVO> getAci(String usRn) {
+		String sql = "select * from grouperInfo where st=0 and ASSUSRN='" + usRn + "' and gst=4";
 		try {
-			return jdbcTemplate.query(sql, new BOInfoRowMapper());
+			return jdbcTemplate.query(sql, new GrouperInfoRowMapper());
 		}catch (NullPointerException e) {
 			System.err.println(e);
 			return null;

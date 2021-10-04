@@ -21,6 +21,8 @@ public class GrouperEquipInfoServiceImpl implements GrouperEquipInfoService{
 	public List<GrouperEquipInfoVO> getAllEquipInfo(HttpServletRequest request, HttpSession session){
 		String usRn = request.getParameter("usRn");
 		String assUsRn = (String)session.getAttribute("usRn");
-		return dao.getAllEquipInfo(usRn, assUsRn);
+		int gst = Integer.parseInt(request.getParameter("gst"));
+		System.out.println(gst);
+		return dao.getAllEquipInfo(usRn, assUsRn,gst);
 	}
 }

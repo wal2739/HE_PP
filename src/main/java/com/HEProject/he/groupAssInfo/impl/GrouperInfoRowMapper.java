@@ -42,6 +42,7 @@ public class GrouperInfoRowMapper implements RowMapper<GrouperInfoVO>{
 		vo.setTob02(rs.getString("TOB02"));
 		vo.setCpName(rs.getString("CPNAME"));
 		vo.setAssUsRn(rs.getString("ASSUSRN"));
+		vo.setgSt(rs.getInt("gSt"));
 		return vo;
 	}
 	

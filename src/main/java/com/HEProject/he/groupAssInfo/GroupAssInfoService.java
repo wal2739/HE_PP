@@ -32,7 +32,7 @@ public interface GroupAssInfoService {
 	
 	void deleteGroup(GroupAssInfoVO vo, HttpSession session, HttpServletRequest request);
 	
-	List<BOInfoVO> getAci(GroupAssInfoVO vo, HttpSession session);
+	public List<GrouperInfoVO> getAci(HttpSession session);
 	
 	void modifyAci(GroupAssInfoVO vo, HttpSession session, HttpServletRequest request);
 }

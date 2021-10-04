@@ -42,10 +42,10 @@
 		});
 	});
 	function showGrouperInfo(gourperUsRn) {
-		document.getElementById('grouperInfo').setAttribute('src','getGrouperInfo.do?usRn='+gourperUsRn);
+		document.getElementById('grouperInfo').setAttribute('src','getGrouperInfo.do?usRn='+gourperUsRn + "&gst=1");
 	}
 	function check_EQ(usRn) {
-		window.open("getGrouperEquipInfo.do?usRn="+usRn,"eq","width=1000,height=600,resizable=no,scrollbars=yes");
+		window.open("getGrouperEquipInfo.do?usRn="+usRn+"&gst=1","eq","width=1000,height=600,resizable=no,scrollbars=yes");
 	}
 </script>
 <style>

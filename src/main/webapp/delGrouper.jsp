@@ -42,7 +42,7 @@
 		}else {} 
 	}
 	function showGrouperInfo(grouperUsRn) {
-		document.getElementById('grouperInfo').setAttribute('src','getGrouperInfo.do?usRn='+grouperUsRn);
+		document.getElementById('grouperInfo').setAttribute('src','getGrouperInfo.do?usRn='+grouperUsRn+"&gst=1");
 	}
 	
 	$(document).ready(function(){
@@ -404,7 +404,6 @@ p {
 	          <div class="div2_2_1">
 	            <p>※ 상세보기를 원하시는 회원을 선택해주세요.</p>
 	      		<iframe src="" frameborder="0" id="grouperInfo"></iframe>
-	      		<p>※ 제명된 회원은 [회원검색] 기능으로 검색되지 않습니다.</p>
 				<p>※ 한번 제명된 회원은 복구 할 수 없습니다.</p>
 	          </div>
 	          <div class="div2_2_2">

@@ -33,6 +33,7 @@ public class GrouperInfoVO implements Serializable{
 	private String tob02;
 	private String cpName;
 	private String assUsRn;
+	private int gSt;
 	public GrouperInfoVO() {}
 	@Override
 	public String toString() {
@@ -43,7 +44,7 @@ public class GrouperInfoVO implements Serializable{
 				+ ", boNumber=" + boNumber + ", boName=" + boName + ", boRrn=" + boRrn + ", boPhone=" + boPhone
 				+ ", boCell=" + boCell + ", boMail=" + boMail + ", boLicense=" + boLicense + ", boAdd01=" + boAdd01
 				+ ", boAdd02=" + boAdd02 + ", boAcc=" + boAcc + ", boAccBack=" + boAccBack + ", tob01=" + tob01
-				+ ", tob02=" + tob02 + ", cpName=" + cpName + ", assUsRn=" + assUsRn + "]";
+				+ ", tob02=" + tob02 + ", cpName=" + cpName + ", assUsRn=" + assUsRn + ", gSt=" + gSt + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -62,6 +63,7 @@ public class GrouperInfoVO implements Serializable{
 		result = prime * result + ((boPhone == null) ? 0 : boPhone.hashCode());
 		result = prime * result + ((boRrn == null) ? 0 : boRrn.hashCode());
 		result = prime * result + ((cpName == null) ? 0 : cpName.hashCode());
+		result = prime * result + gSt;
 		result = prime * result + ((regiDate == null) ? 0 : regiDate.hashCode());
 		result = prime * result + st;
 		result = prime * result + ((tob01 == null) ? 0 : tob01.hashCode());
@@ -147,6 +149,8 @@ public class GrouperInfoVO implements Serializable{
 			if (other.cpName != null)
 				return false;
 		} else if (!cpName.equals(other.cpName))
+			return false;
+		if (gSt != other.gSt)
 			return false;
 		if (regiDate == null) {
 			if (other.regiDate != null)
@@ -389,5 +393,12 @@ public class GrouperInfoVO implements Serializable{
 	public void setAssUsRn(String assUsRn) {
 		this.assUsRn = assUsRn;
 	}
+	public int getgSt() {
+		return gSt;
+	}
+	public void setgSt(int gSt) {
+		this.gSt = gSt;
+	}
+	
 	
 }
