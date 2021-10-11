@@ -125,7 +125,7 @@ public class OrderInfoDAO {
 	}
 	
 	int otherCancel(OrderInfoVO vo) {
-		String sql ="update orderInfo set appstatus=3 where gusrn in (select gusrn from orderInfo where gusrn<>?)";
+		String sql ="delete from orderInfo where gusrn in (select gusrn from orderInfo where gusrn<>?)";
 		try {
 			jdbcTemplate.update(sql,vo.getgUsRn());
 			return 1;

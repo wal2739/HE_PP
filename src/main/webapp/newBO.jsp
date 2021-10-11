@@ -634,6 +634,8 @@ table p {
 			</ul>
 		</nav>
 	<main>
+<!-- 	<input type="checkbox" id="sameInfo" value="no" onclick="checkBoxOn();"/>
+ -->	
 	<form action="createBO.do" name="forms" id="forms" onsubmit="return validate();">    	
     	<div class="mainDiv">
       <div class="div1">
@@ -651,8 +653,6 @@ table p {
                   <input type="text" name="boNumber02" id="boNumber02" maxlength="2"/><b>&nbsp;&nbsp;-&nbsp;&nbsp;</b>
                   <input type="text" name="boNumber03" id="boNumber03" maxlength="5"/>
                 </td>
-                
-
               </tr>
               <tr>
                 <th>업체명</th>

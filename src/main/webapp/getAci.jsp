@@ -49,6 +49,13 @@
 	function check_EQ(usRn) {
 		window.open("getGrouperEquipInfo.do?usRn="+usRn+"&gst=4","eq","width=1000,height=600,resizable=no,scrollbars=yes");
 	}
+	$(document).ready(function(){
+		var currentPosition = parseInt($("#floating_btn").css("top"));
+		$(window).scroll(function() {
+			var position = $(window).scrollTop();
+			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
+		});
+	});
 </script>
 <style>
 	.mainDiv{

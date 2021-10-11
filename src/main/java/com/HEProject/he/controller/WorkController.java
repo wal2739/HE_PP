@@ -78,8 +78,8 @@ public class WorkController {
 		return mav;
 	}
 	@RequestMapping("workInfo.do")
-	public ModelAndView workInfo(ModelAndView mav,WorkInfoVO vo, HttpSession session,HttpServletRequest request) {
-		mav.addObject("list",workInfoService.getAllWork(vo, session));
+	public ModelAndView workInfo(ModelAndView mav, HttpSession session) {
+		mav.addObject("list",workInfoService.getWork_Ass(session));
 		mav.setViewName("workInfo.jsp");
 		return mav;
 	}
@@ -87,6 +87,12 @@ public class WorkController {
 	public ModelAndView getAllWorkInfo(ModelAndView mav,WorkInfo_ST0VO vo, HttpSession session,HttpServletRequest request) {
 		mav.addObject("vo",workInfoService.getAllWorkInfo_st0(vo, request));
 		mav.setViewName("getAllWorkInfo.jsp");
+		return mav;
+	}
+	@RequestMapping("getAllWorkInfoAss.do")
+	public ModelAndView getAllWorkInfoAss(ModelAndView mav,HttpSession session,HttpServletRequest request) {
+		mav.addObject("vo",workInfoService.getWorkInfo_Ass(request, session));
+		mav.setViewName("getAllWorkInfoAss.jsp");
 		return mav;
 	}
 	
@@ -173,8 +179,8 @@ public class WorkController {
 		return mav;
 	}
 	@RequestMapping("cancelWork.do")
-	public ModelAndView cancelWork(ModelAndView mav,WorkInfoVO vo,HttpSession session,HttpServletRequest request) {
-		mav.addObject("list",workInfoService.getAllWork(vo, session));
+	public ModelAndView cancelWork(ModelAndView mav,HttpSession session) {
+		mav.addObject("list",workInfoService.getWork_Ass(session));
 		mav.setViewName("cancelWork.jsp");
 		return mav;
 	}
@@ -187,8 +193,8 @@ public class WorkController {
 	}
 	
 	@RequestMapping("cancelWorkList.do")
-	public ModelAndView cancelWorkList(ModelAndView mav,WorkInfo_ST0VO vo,HttpSession session,HttpServletRequest request) {
-		mav.addObject("list",workInfoService.getAllWork_toSt3(vo, session, request));
+	public ModelAndView cancelWorkList(ModelAndView mav,HttpSession session) {
+		mav.addObject("list",workInfoService.getCancelWork_Ass(session));
 		mav.setViewName("cancelWorkList.jsp");
 		return mav;
 	}

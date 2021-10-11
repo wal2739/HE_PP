@@ -362,7 +362,6 @@
         }
       });
 		
-      //이하 직접 작성
       $('document').ready(function () {
   		var boAdd01Data01 = '<%=boAdd01[0]%>';
   		var boAdd01Data02 = '<%=boAdd01[1]%>';

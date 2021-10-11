@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.HEProject.he.orderInfo.OrderInfoService;
+import com.HEProject.he.workInfo.WorkInfoForAssVO;
 import com.HEProject.he.workInfo.WorkInfoService;
 import com.HEProject.he.workInfo.WorkInfoVO;
 import com.HEProject.he.workInfo.WorkInfo_ST0VO;
@@ -255,5 +256,32 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		vo.setWorkCode(request.getParameter("wCode"));
 		return dao.getWorkInfo_st2_Indi(vo);
 	}
+	////////Ass work////////////
+	@Override
+	public List<WorkInfoForAssVO> getWork_Ass(HttpSession session) {
+		String usRn = (String)session.getAttribute("usRn");
+		return dao.getWork_Ass(usRn);
+	}
+	
+	@Override
+	public WorkInfoForAssVO getWorkInfo_Ass(HttpServletRequest request, HttpSession session) {
+		String usRn = (String)session.getAttribute("usRn");
+		String workCode = (String)request.getParameter("wCode");
+		return dao.getWorkInfo_Ass(usRn, workCode);
+	}
+	
+	@Override
+	public List<WorkInfoForAssVO> getCancelWork_Ass(HttpSession session) {
+		String usRn = (String)session.getAttribute("usRn");
+		return dao.getCancelWork_Ass(usRn);
+	}
+	
+	@Override
+	public WorkInfoForAssVO getCancelWorkInfo_Ass(HttpServletRequest request, HttpSession session) {
+		String usRn = (String)session.getAttribute("usRn");
+		String workCode = (String)request.getParameter("wCode");
+		return dao.getCancelWorkInfo_Ass(usRn, workCode);
+	}
+
 	
 }

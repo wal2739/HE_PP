@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.HEProject.he.clientInfo.impl.ClientInfoRowMapper;
+import com.HEProject.he.workInfo.WorkInfoForAssVO;
 import com.HEProject.he.workInfo.WorkInfoVO;
 import com.HEProject.he.workInfo.WorkInfo_ST0VO;
 import com.HEProject.he.workInfo.WorkInfo_ST1VO;
@@ -218,6 +219,48 @@ public class WorkInfoDAO {
 		}catch (Exception e) {
 			System.err.println("work DAO 오류 : " + e);
 			return 0;
+		}
+	}
+	///////////////ass work/////////////
+	List<WorkInfoForAssVO> getWork_Ass(String usRn){
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus from workInfoForAss where assUsrn='" + usRn + "' and (st!=2 and st!=3) and (nvl(appstatus,4)!=0)";
+		try {
+			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+	
+	WorkInfoForAssVO getWorkInfo_Ass(String usRn, String workCode){
+		String sql = "select * from workInfoForAss where assUsrn=?  and workCode='" + workCode + "' and (nvl(appstatus,4)!=0)";
+		Object[] args = {usRn};
+		try {
+			return jdbcTemplate.queryForObject(sql, args, new WorkInfoForAss_ListRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+
+	List<WorkInfoForAssVO> getCancelWork_Ass(String usRn){
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus from workInfoForAss where assUsrn='" + usRn + "' and st=3";
+		try {
+			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+
+	WorkInfoForAssVO getCancelWorkInfo_Ass(String usRn, String workCode){
+		String sql = "select * from workInfoForAss where assUsrn=?  and workCode='" + workCode + "' and st=3";
+		Object[] args = {usRn};
+		try {
+			return jdbcTemplate.queryForObject(sql, args, new WorkInfoForAss_ListRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
 		}
 	}
 	
