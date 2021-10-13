@@ -104,7 +104,17 @@ public class WorkInfoDAO {
 		}
 	}
 	
-	WorkInfo_ST2VO getWorkInfo_st2_Indi(WorkInfo_ST2VO vo) {//workCode 로 st2 조회 <<
+	List<WorkInfo_ST2VO> getAllWorkInfo_st2_Ass(WorkInfo_ST2VO vo){//usRn 으로 st2 조회 <<
+		String sql = "select * from work_st2 where assUsRn = '" + vo.getAssUsRn() + "'";
+		try {
+			return jdbcTemplate.query(sql, new WorkInfo_ST2RowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+	
+	WorkInfo_ST2VO getWorkInfo_st2(WorkInfo_ST2VO vo) {//workCode 로 st2 조회 <<
 		String sql = "select * from work_st2 where workCode = ?";
 		Object[] args = {vo.getWorkCode()};
 		try {

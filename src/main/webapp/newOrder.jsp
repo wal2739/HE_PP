@@ -440,7 +440,7 @@
 			dropMenuLink[4] = "workInfo.do";
 			dropMenuLink[5] = "workOrderInfo.do";
 			dropMenuLink[6] = "#";
-			dropMenuLink[7] = "#";
+			dropMenuLink[7] = "finishedWorkList_Ass.do";
 			dropMenuLink[8] = "#";
 			dropMenuLink[9] = "#";
 			dropMenuLink[10] = "#";
@@ -502,7 +502,7 @@
 		<div class="mainDiv">
 			<div class="div1">
 				<div class="div1_textArea">
-					<h2>작업 등록</h2>
+					<h2>새 발주 등록</h2>
 				</div>
 			</div>
 			<div class="div2">

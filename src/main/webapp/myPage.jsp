@@ -45,6 +45,13 @@
 		var loginCheckData = '<%=loginCheckData%>';
 		loginCheck(loginCheckData);
 	}
+	$(document).ready(function(){
+		var currentPosition = parseInt($("#floating_btn").css("top"));
+		$(window).scroll(function() {
+			var position = $(window).scrollTop();
+			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
+		});
+	});
 </script>
 <style>
 	.mainDiv{

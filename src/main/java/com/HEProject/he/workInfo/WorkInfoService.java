@@ -44,7 +44,7 @@ public interface WorkInfoService {
 	
 	List<WorkInfo_ST2VO> getAllWorkInfo_st2_Indi(WorkInfo_ST2VO vo,HttpSession session);
 	
-	WorkInfo_ST2VO getWorkInfo_st2_Indi(WorkInfo_ST2VO vo,HttpSession session,HttpServletRequest request);
+	WorkInfo_ST2VO getWorkInfo_st2(WorkInfo_ST2VO vo,HttpSession session,HttpServletRequest request);
 
 	List<WorkInfoForAssVO> getWork_Ass(HttpSession session);
 
@@ -53,5 +53,7 @@ public interface WorkInfoService {
 	List<WorkInfoForAssVO> getCancelWork_Ass(HttpSession session);
 
 	WorkInfoForAssVO getCancelWorkInfo_Ass(HttpServletRequest request, HttpSession session);
+
+	List<WorkInfo_ST2VO> getAllWorkInfo_st2_Ass(WorkInfo_ST2VO vo, HttpSession session);
 
 }

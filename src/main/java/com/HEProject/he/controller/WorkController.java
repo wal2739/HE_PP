@@ -335,10 +335,15 @@ public class WorkController {
 		mav.setViewName("finishedWorkList.jsp");
 		return mav;
 	}
-	
+	@RequestMapping("finishedWorkList_Ass.do")
+	public ModelAndView finishedWorkList_Ass(ModelAndView mav,WorkInfo_ST2VO vo,HttpSession session) {
+		mav.addObject("list",workInfoService.getAllWorkInfo_st2_Ass(vo,session));
+		mav.setViewName("finishedWorkList_Ass.jsp");
+		return mav;
+	}
 	@RequestMapping("getFinishedWork.do")
 	public ModelAndView getFinishedWork(ModelAndView mav,WorkInfo_ST2VO vo,HttpSession session, HttpServletRequest request) {
-		mav.addObject("vo",workInfoService.getWorkInfo_st2_Indi(vo, session, request));
+		mav.addObject("vo",workInfoService.getWorkInfo_st2(vo, session, request));
 		mav.setViewName("getFinishedWork.jsp");
 		return mav;
 	}
