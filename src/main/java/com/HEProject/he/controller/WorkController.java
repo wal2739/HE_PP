@@ -115,9 +115,14 @@ public class WorkController {
 		return mav;
 	}
 	@RequestMapping("newOrder.do")
-	public ModelAndView newOrder(ModelAndView mav, WorkInfo_ST0VO vo,HttpSession session,HttpServletRequest request) {
-		mav.addObject("list",workInfoService.getAllWork_toSt0(vo, session, request));
+	public ModelAndView newOrder(ModelAndView mav) {
 		mav.setViewName("newOrder.jsp");
+		return mav;
+	}
+	@RequestMapping("order_frame01.do")
+	private ModelAndView order_frame01(ModelAndView mav, WorkInfo_ST0VO vo,HttpSession session,HttpServletRequest request) {
+		mav.addObject("list",workInfoService.getAllWork_toSt0(vo, session, request));
+		mav.setViewName("order_frame01.jsp");
 		return mav;
 	}
 	@RequestMapping("newOrderAct.do")
@@ -126,10 +131,10 @@ public class WorkController {
 		mav.setViewName("newOrder.do");
 		return mav;
 	}
-	@RequestMapping("getWorker.do")
+	@RequestMapping("order_frame02.do")
 	public ModelAndView getWorker(ModelAndView mav, WorkerInfoVO vo,HttpSession session,HttpServletRequest request) {
 		mav.addObject("list",workInfoService.getWorkerList(vo, session, request));
-		mav.setViewName("getWorker.jsp");
+		mav.setViewName("order_frame02.jsp");
 		return mav;
 	}
 	@RequestMapping("delOrder.do")

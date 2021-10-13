@@ -9,10 +9,8 @@
 		}catch(NullPointerException e){
 			System.err.println("비회원 아이디 에러 : "+e);
 		}	
-		List<WorkInfo_ST0VO> list = null;
 		int indexNum = 0;
 		if(loginCheckData!=null){
-			list = (List)request.getAttribute("list"); 
 		}
     	
     %>
@@ -28,80 +26,6 @@
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="/js/main.js?ver=10" ></script>
 <script type="text/javascript">
-	function workInfoDraw(iNum) {
-		var FphoneNum = new Array(2);
-		var CphoneNum = new Array(2);
-		var FcellNum = new Array(2);
-		var workTime = new Array(1);
-
-		FphoneNum = document.getElementById("fieldManagerPhone"+iNum).value.split("-");
-		CphoneNum = document.getElementById("clientPhone"+iNum).value.split("-");
-		FcellNum = document.getElementById("fieldManagerCell"+iNum).value.split("-");
-		workTime = document.getElementById("workTime"+iNum).value.split(":");
-		for(var i = 1 ; i < 4; i ++){
-			document.getElementById("fieldManagerPhone0" + i).value = FphoneNum[i-1];
-			document.getElementById("fieldManagerCell0" + i).value = FcellNum[i-1];
-			document.getElementById("clientPhone0" + i).value = CphoneNum[i-1];
-		}
-		document.getElementById("workTime01").value = workTime[0];
-		document.getElementById("workTime02").value = workTime[1];
-		document.getElementById("workField").value = document.getElementById("workField"+iNum).value;
-		document.getElementById("fieldManager").value = document.getElementById("fieldManager"+iNum).value;
-		document.getElementById("boName").value = document.getElementById("boName"+iNum).value;
-		document.getElementById("fieldAdd01").value = document.getElementById("fieldAdd01"+iNum).value;
-		document.getElementById("fieldAdd02").value = document.getElementById("fieldAdd02"+iNum).value;
-		document.getElementById("workAmount").value = document.getElementById("workAmount"+iNum).value;
-		document.getElementById("workRequests").value = document.getElementById("workRequests"+iNum).value;
-		document.getElementById("workRelative").value = document.getElementById("workRelative"+iNum).value;
-		document.getElementById("clientCpName").value = document.getElementById("clientCpName"+iNum).value;
-		document.getElementById("ClientManager").value = document.getElementById("ClientManager"+iNum).value;
-		document.getElementById("fieldManagerMail").value = document.getElementById("workField"+iNum).value;
-		document.getElementById("workDate").value = document.getElementById("workDate"+iNum).value;
-		document.getElementById("workCode").value = document.getElementById("workCode"+iNum).value;
-
-		
-	}
-	function sltWorkInfo() {
-		if(document.getElementById("fieldManager").value==''||document.getElementById("fieldAdd01").value==''||document.getElementById("workRequests").value==''||document.getElementById("workDate").value==''){
-			alert('작업을 선택 해주세요.');
-		}else{
-			document.getElementById("workList").style.display = "none";
-			document.getElementById("workMsg").innerHTML = "<b>발주 하실 사용자를 선택해주세요.</b><select name=\"rv\" id=\"rv\" onchange=\"changeWorker();\"><option value=\"noData\">선택 해주세요.</option><option value=\"지게차\">지게차</option><option value=\"사다리\">사다리</option><option value=\"스카이\">스카이</option><option value=\"크레인\">크레인</option><option value=\"카고\">카고</option><option value=\"굴삭기\">굴삭기</option><option value=\"화물차\">화물차</option><option value=\"직접입력\">직접입력</option></select> ";
-			document.getElementById("workerInfo").style.display = "inline";
-		}
-	}
-	function changeWorker() {
-		var langSelect = document.getElementById("rv"); 
-		var selectValue = langSelect.options[langSelect.selectedIndex].value;
-		document.getElementById("workerList").innerHTML = "<iframe src=\"getWorker.do?equipType="+selectValue+"\" id=\"iframeToWorker\" name=\"iframeToWorker\"></iframe>";
-	}
-	function changeWorkerAct() {
-		var usRn = $("#iframeToWorker").contents().find("#usRn").attr("value");
-		var userName = $("#iframeToWorker").contents().find("#userName").attr("value");
-		var userCell = $("#iframeToWorker").contents().find("#userCell").attr("value");
-		var equipType = $("#iframeToWorker").contents().find("#equipType").attr("value");
-		var equipClass = $("#iframeToWorker").contents().find("#equipClass").attr("value");
-		var equipOption = $("#iframeToWorker").contents().find("#equipOption").attr("value");
-		var eqRn = $("#iframeToWorker").contents().find("#eqRn").attr("value");
-		document.getElementById("usRn").value=usRn;
-		document.getElementById("userName").value=userName;
-		document.getElementById("userCell").value=userCell;
-		document.getElementById("equipType").value=equipType;
-		document.getElementById("equipClass").value=equipClass;
-		document.getElementById("equipOption").value=equipOption;
-		document.getElementById("eqRn").value=eqRn;
-
-	}
-	function sltWorker() {
-		if(document.getElementById("usRn").value==''||document.getElementById("userCell").value==''||document.getElementById("equipType").value==''||document.getElementById("equipOption").value==''){
-			alert('작업자 선택 해주세요.');
-		}else{
-			document.getElementById("workListAll").style.display = "none";
-			document.getElementById("workMsg").innerHTML = "";
-			document.getElementById("relativeBox").style.display = "inline";
-			document.getElementById("submitBtn").style.display = "inline";
-		}
-	}
 	function finalCheck() {
 		var check = confirm("발주 등록 하시겠습니까?");
 		if(check==true){
@@ -114,20 +38,21 @@
 		}
 	}
 	function onLoad() {
-		var loginCheckData = <%=loginCheckData%>;
+		var loginCheckData = '<%=loginCheckData%>';
 		loginCheck(loginCheckData);
 		
 		var checkNum = <%=request.getAttribute("newOrderSuccess")%>;
-		if(checkNum==null){
-			
-		}else if(checkNum==0){
-			alert('정상적으로 처리 되지 않았습니다.');
-		}else if(checkNum==1){
-			alert('정상적으로 처리 되었습니다.');
+		if(checkNum!=null){
+			if(checkNum==0){
+				alert('정상적으로 처리 되지 않았습니다.');
+			}else if(checkNum==1){
+				alert('정상적으로 처리 되었습니다.');
+			}else{
+				alert('정상적인 요청이 아닙니다.');
+			}	
 			location.href = 'workOrderInfo.do';
-		}else{
-			alert('정상적인 요청이 아닙니다.');
 		}
+		document.getElementById('info_Frame').setAttribute('src','order_frame01.do');
 	}
 	$(document).ready(function(){
 		var currentPosition = parseInt($("#floating_btn").css("top"));
@@ -136,7 +61,134 @@
 			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
 		});
 	});
+	
+	var info_num01;
+	var info_num02;
+	function insert_val01() {
+ 		var workField = document.getElementById('info_Frame').contentDocument.getElementsByName('workField')[info_num01].value;
+ 		var fieldManager = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManager')[info_num01].value;
+ 		var fieldManagerMail = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerMail')[info_num01].value;
+ 		var fieldManagerPhone01 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerPhone01')[info_num01].value;
+ 		var fieldManagerPhone02 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerPhone02')[info_num01].value;
+ 		var fieldManagerPhone03 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerPhone03')[info_num01].value;
+ 		var fieldManagerCell01 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerCell01')[info_num01].value;
+ 		var fieldManagerCell02 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerCell02')[info_num01].value;
+ 		var fieldManagerCell03 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerCell03')[info_num01].value;
+ 		var fieldAdd01 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldAdd01')[info_num01].value;
+ 		var fieldAdd02 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldAdd02')[info_num01].value;
+ 		var workTime01 = document.getElementById('info_Frame').contentDocument.getElementsByName('workTime01')[info_num01].value;
+ 		var workTime02 = document.getElementById('info_Frame').contentDocument.getElementsByName('workTime02')[info_num01].value;
+ 		var workAmount = document.getElementById('info_Frame').contentDocument.getElementsByName('workAmount')[info_num01].value;
+ 		var workRequests = document.getElementById('info_Frame').contentDocument.getElementsByName('workRequests')[info_num01].value;
+ 		var clientCpName = document.getElementById('info_Frame').contentDocument.getElementsByName('clientCpName')[info_num01].value;
+ 		var ClientManager = document.getElementById('info_Frame').contentDocument.getElementsByName('ClientManager')[info_num01].value;
+ 		var clientPhone01 = document.getElementById('info_Frame').contentDocument.getElementsByName('clientPhone01')[info_num01].value;
+ 		var clientPhone02 = document.getElementById('info_Frame').contentDocument.getElementsByName('clientPhone02')[info_num01].value;
+ 		var clientPhone03 = document.getElementById('info_Frame').contentDocument.getElementsByName('clientPhone03')[info_num01].value;
+ 		var workCode = document.getElementById('info_Frame').contentDocument.getElementsByName('workCode')[info_num01].value;
+ 		var rv = document.getElementById('info_Frame').contentDocument.getElementsByName('rv')[info_num01].value;
+ 		
+ 		document.getElementById('workField').value = workField;
+ 		document.getElementById('fieldManager').value = fieldManager;
+ 		document.getElementById('fieldManagerMail').value = fieldManagerMail;
+ 		document.getElementById('fieldManagerPhone01').value = fieldManagerPhone01;
+ 		document.getElementById('fieldManagerPhone02').value = fieldManagerPhone02;
+ 		document.getElementById('fieldManagerPhone03').value = fieldManagerPhone03;
+ 		document.getElementById('fieldManagerCell01').value = fieldManagerCell01;
+ 		document.getElementById('fieldManagerCell02').value = fieldManagerCell02;
+ 		document.getElementById('fieldManagerCell03').value = fieldManagerCell03;
+ 		document.getElementById('fieldAdd01').value = fieldAdd01;
+ 		document.getElementById('fieldAdd02').value = fieldAdd02;
+ 		document.getElementById('workTime01').value = workTime01;
+ 		document.getElementById('workTime02').value = workTime02;
+ 		document.getElementById('workAmount').value = workAmount;
+ 		document.getElementById('workRequests').value = workRequests;
+ 		document.getElementById('clientCpName').value = clientCpName;
+ 		document.getElementById('ClientManager').value = ClientManager;
+ 		document.getElementById('clientPhone01').value = clientPhone01;
+ 		document.getElementById('clientPhone02').value = clientPhone02;
+ 		document.getElementById('clientPhone03').value = clientPhone03;
+ 		document.getElementById('workCode').value = workCode;
+ 		document.getElementById('rv').value = rv;
+	}
+	function insert_val02() {
+ 		var usRn = document.getElementById('info_Frame').contentDocument.getElementsByName('usRn')[info_num02].value;
+ 		var userName = document.getElementById('info_Frame').contentDocument.getElementsByName('userName')[info_num02].value;
+ 		var userCell = document.getElementById('info_Frame').contentDocument.getElementsByName('userCell')[info_num02].value;
+ 		var equipType = document.getElementById('info_Frame').contentDocument.getElementsByName('equipType')[info_num02].value;
+ 		var equipClass = document.getElementById('info_Frame').contentDocument.getElementsByName('equipClass')[info_num02].value;
+ 		var equipOption = document.getElementById('info_Frame').contentDocument.getElementsByName('equipOption')[info_num02].value;
+ 		var eqRn = document.getElementById('info_Frame').contentDocument.getElementsByName('eqRn')[info_num02].value;
+ 		
+ 		
+ 		document.getElementById('usRn').value = usRn;
+ 		document.getElementById('userName').value = userName;
+ 		document.getElementById('userCell').value = userCell;
+ 		document.getElementById('equipType').value = equipType;
+ 		document.getElementById('equipClass').value = equipClass;
+ 		document.getElementById('equipOption').value = equipOption;
+ 		document.getElementById('eqRn').value = eqRn;
+	}
+	function confirm_work() {
+ 		var btn_val = document.getElementById('confirmBtn').value;
+ 		var confirmBtn = document.getElementById('confirmBtn');
+ 		var backBtn = document.getElementById('backBtn');
+ 		switch (btn_val) {
+		case '0':
+			if(document.getElementById('workCode').value==''){
+				alert('작업을 선택 해주세요.');
+			}else {
+				var rv = document.getElementById('rv');
+				var h2 = document.getElementById('div2_1_1_h2');
+				document.getElementById('info_Frame').setAttribute('src','order_frame02.do?equipType=' + rv.value);
+				confirmBtn.value = 1;
+				backBtn.removeAttribute('disabled');
+				confirmBtn.innerHTML='작업자 확정';
+				h2.innerHTML='작업자 선택';
+			}
+			break;
+		case '1':
+			if(document.getElementById('workCode').value==''){
+				alert('잘못된 접근 입니다.');
+			}else if(document.getElementById('usRn').value==''||document.getElementById('eqRn').value==''){
+				alert('작업자를 선택 해주세요.');
+			}else {
+				confirmBtn.value = 2;
+				backBtn.setAttribute('disabled','disabled');
+				confirmBtn.setAttribute('disabled','disabled');
+				alert('발주 정보 등록이 완료 되었습니다. \n하단의 [ 발주 등록 ] 버튼을 눌러주세요.');
+			}
+			break;
 
+		default:
+			alert('err - 관리자에게 문의 하세요. 페이지가 새로고침 됩니다.');
+			location.href = 'newOrder.do';
+			break;
+		}
+	}
+	
+	function back_btn() {
+		var confirmBtn = document.getElementById('confirmBtn');
+		var h2 = document.getElementById('div2_1_1_h2');
+		document.getElementById('info_Frame').setAttribute('src','order_frame01.do');
+		document.getElementById('backBtn').setAttribute('disabled','disabled');
+		confirmBtn.innerHTML='작업 확정';
+		confirmBtn.value = 0;
+		h2.innerHTML='작업 선택';
+		alert('작업 선택 후 [ 작업 확정 ] 버튼을 다시 눌러주세요.');
+	}
+	function confirm_All() {
+ 		var confirmBtn = document.getElementById('confirmBtn');
+		switch (confirmBtn.value) {
+		case '2':
+			return confirm('발주 등록을 완료 하시겠습니까?');
+			break;
+		default:
+			alert('정상적인 접근이 아닙니다.\n입력된 정보를 다시 확인 해주세요.');
+			return false;
+			break;
+		}
+	}
 </script>
 <style>
 	.mainDiv{
@@ -199,16 +251,16 @@
 		text-align: center;
 		background: white;
 	}
-	
+
 	#inputTB th {
 		background: #f7f7f5;
 		border: 0.5px solid #d7d7d7;
-	    width: 170px;
-	    height: 60px;
+	    width: 100px;
+	    height: 40px;
 	}
 	
 	#inputTB td{
-	  width: 300px;
+	  width: 183px;
 	  border: 0.5px solid #d7d7d7;
 	  white-space:normal;
 	}
@@ -283,48 +335,39 @@
 		color: #fff;
 		transform: translateY(-7px);
 	}
-	th {
-		border: 1px solid black;
-		background-color: #dcdcdc;
+	#info_Frame {
+	width: 100%;
+	height: 75%;
+	}
+.h2_btn_div {
+	width: 200px;
+	height: 100%;
+	display: flex;
+	float: right;
+	align-items: center;
+}
+.check_btn{
+	display : inline-block;
+	margin : 0 auto;
+	background-color: #72B08E;
+	color: white;
+	border: none;
+	width: 90px;
+	height: 30px;
+}
 
-	}
-	td {
-		border: 1px solid black;
-		background-color: white;
-	}
-	table {
-		border: 1px solid black;
-		background-color: #f0f8ff;
-	}
-	.workList{
-		border: 1px solid black;
-		background: #dcdcdc;
-		overflow: scroll;
-		width: 1500px;
-		height: 200px;
-	}
-	.workListAll{
-		border: 1px solid black;
-		width: 1500px;
-		height: 200px;
-		overflow: hidden;
-	}
-	.workerInfo, .relativeBox, .submitBtn {
-		display: none;
-	}
-	.relativeBox{
-		width: 300px;
-		height: 300px;
-	}
-	.workerList{
-		border: 1px solid black;
-		width: 1500px;
-		height: 200px;
-	}
-	#iframeToWorker {
-		width: 1500px;
-		height: 200px;
-	}
+.check_btn:hover {
+	background-color: #4E7861;
+	box-shadow: 1px 1px 1px 1px #3C5C4A;
+}
+
+.check_btn:active {
+	text-shadow: 4px 2px 2px black;
+}
+.check_btn:disabled {
+	background: #517D65;
+	color: red;
+}
 </style>
 <%
 	Object userClassData = session.getAttribute("userClass");
@@ -455,123 +498,253 @@
 			<li><a href="checkIdentity.jsp">내정보</a></li>
 		</ul>
 	</nav>
-	<h1>발주 등록</h1>
-	<div class="workListAll" id="workListAll">
-		<p id="workMsg"><b>발주 할 작업을 선택해주세요.</b></p>
-		<div class="workList" id="workList">
-			<%if(list==null||list.size()==0){%>
-				<p>등록된 작업이 없습니다.</p>
-			<%}else{for(int i = 0 ; i < list.size(); i++){%>
-				<p onclick="workInfoDraw(<%=i%>)">
-					<%=i+1 %>. 거래처 : <%=list.get(i).getClientCPName() %> | 거래처 전화번호 : <%=list.get(i).getClientPhone() %> | 현장명 : <%=list.get(i).getWorkField() %> | 현장 주소 : <%=list.get(i).getFieldAdd01() %> , <%=list.get(i).getFieldAdd02() %>
-					<input type="hidden" id="workCode<%=i %>" name="workCode<%=i %>" value="<%=list.get(i).getWorkCode()%>"/>
-					<input type="hidden" id="workField<%=i %>" name="workField<%=i %>" value="<%=list.get(i).getWorkField()%>"/>
-					<input type="hidden" readonly="readonly" id="boName<%=i %>" name="boName<%=i %>" value="<%=list.get(i).getBoName()%>"/>
-					<input type="hidden" readonly="readonly" id="clientCpName<%=i %>" name="clientCpName<%=i %>" value="<%=list.get(i).getClientCPName()%>"/>
-					<input type="hidden" readonly="readonly" id="ClientManager<%=i %>" name="ClientManager<%=i %>" value="<%=list.get(i).getClientManager()%>"/>
-					<input type="hidden" readonly="readonly" id="clientPhone<%=i %>" name="clientPhone<%=i %>" value="<%=list.get(i).getClientPhone()%>"/>
-					<input type="hidden" readonly="readonly" id="fieldManager<%=i %>" name="fieldManager<%=i %>" value="<%=list.get(i).getFieldManager()%>"/>
-					<input type="hidden" readonly="readonly" id="fieldManagerPhone<%=i %>" name="fieldManagerPhone<%=i %>" value="<%=list.get(i).getFieldManagerPhone()%>"/>
-					<input type="hidden" readonly="readonly" id="fieldManagerCell<%=i %>" name="fieldManagerCell<%=i %>" value="<%=list.get(i).getFieldManagerCell()%>"/>
-					<input type="hidden" readonly="readonly" id="fieldManagerMail<%=i %>" name="fieldManagerMail<%=i %>" value="<%=list.get(i).getFieldManagerMail()%>"/>
-					<input type="hidden" readonly="readonly" id="fieldAdd01<%=i %>" name="fieldAdd01<%=i %>" value="<%=list.get(i).getFieldAdd01()%>"/>
-					<input type="hidden" readonly="readonly" id="fieldAdd02<%=i %>" name="fieldAdd02<%=i %>" value="<%=list.get(i).getFieldAdd02()%>"/>
-					<input type="hidden" readonly="readonly" id="workDate<%=i %>" name="workDate<%=i %>" value="<%=list.get(i).getWorkDate()%>"/>
-					<input type="hidden" readonly="readonly" id="workTime<%=i %>" name="workTime<%=i %>" value="<%=list.get(i).getWorkTime()%>"/>
-					<input type="hidden" readonly="readonly" id="workAmount<%=i %>" name="workAmount<%=i %>" value="<%=list.get(i).getWorkAmount()%>"/>
-					<input type="hidden" readonly="readonly" id="workRequests<%=i %>" name="workRequests<%=i %>" value="<%=list.get(i).getWorkRequests()%>"/>
-					<input type="hidden" readonly="readonly" id="workRelative<%=i %>" name="workRelative<%=i %>" value="<%=list.get(i).getRelative()%>"/>
-				</p>
-				<hr />
-			<%}} %>		
+	<main>
+		<div class="mainDiv">
+			<div class="div1">
+				<div class="div1_textArea">
+					<h2>작업 등록</h2>
+				</div>
+			</div>
+			<div class="div2">
+				<div class="div_2_back">
+					<div class="div2_1">
+						<div class="div2_1_1">
+							<h2 id="div2_1_1_h2">작업 선택</h2>
+							<div class="h2_btn_div">
+								<button disabled="disabled" id="backBtn" onclick="back_btn();" class="check_btn">이전</button>
+								<button onclick="confirm_work();" id="confirmBtn" value="0" class="check_btn">작업 확정</button>							
+							</div>
+						</div>
+						<div class="div2_1_2">
+      						<iframe src="" frameborder="0" id="info_Frame"></iframe>
+							<p style="font-size: 18px;">※ 작업 선택 및 확정 > 작업자 선택 및 확정 > 발주 등록 </p>
+						</div>
+					</div>
+					<div class="div2_2">
+						<div class="div2_2_1">
+							<p style="font-size: 12px;">※ 상단에 원하시는 작업 혹은 작업자 를 선택 하시면 정보가 자동으로 입력 됩니다. </p>
+							<h3>작업 정보</h3>
+							<table id="inputTB">
+								<tr>
+									<th>현장명</th>
+									<td><input type="text" readonly="readonly" id="workField"
+										name="workField" /></td>
+									<th>현장 책임자</th>
+									<td><input type="text" readonly="readonly"
+										id="fieldManager" name="fieldManager" /></td>
+									<th colspan="2">현장 책임자 메일 주소</th>
+									<td colspan="2"><input type="text" readonly="readonly"
+										id="fieldManagerMail" name="fieldManagerMail" /></td>
+								</tr>
+								<tr>
+									<th colspan="2">현장 책임자 전화번호</th>
+									<td colspan="2"><input type="text" readonly="readonly"
+										id="fieldManagerPhone01" name="fieldManagerPhone01"
+										style="width: 30px;" /> - <input type="text" readonly="readonly"
+										id="fieldManagerPhone02" name="fieldManagerPhone02"
+										style="width: 35px;" /> - <input type="text" readonly="readonly"
+										id="fieldManagerPhone03" name="fieldManagerPhone03"
+										style="width: 35px;" /></td>
+									<th colspan="2">현장 책임자 핸드폰</th>
+									<td colspan="2"><input type="text" readonly="readonly"
+										id="fieldManagerCell01" name="fieldManagerCell01"
+										style="width: 30px;" /> - <input type="text" readonly="readonly"
+										id="fieldManagerCell02" name="fieldManagerCell02"
+										style="width: 35px;" /> - <input type="text" readonly="readonly"
+										id="fieldManagerCell03" name="fieldManagerCell03"
+										style="width: 35px;" /></td>
+								</tr>
+								<tr>
+									<th colspan="2">현장 주소</th>
+									<td colspan="2"><input type="text" readonly="readonly" id="fieldAdd01"
+										name="fieldAdd01" /></td>
+									<th colspan="2">현장 상세 주소</th>
+									<td colspan="2"><input type="text" readonly="readonly" id="fieldAdd02"
+										name="fieldAdd02" /></td>
+								</tr>
+								<tr>
+									<th>작업 날짜</th>
+									<td><input type="date" readonly="readonly" id="workDate"
+										name="workDate" /></td>
+									<th>작업 시간</th>
+									<td><input type="text" readonly="readonly" id="workTime01"
+										name="workTime01" style="width: 15px;" /> : <input type="text"
+										readonly="readonly" id="workTime02" name="workTime02"
+										style="width: 15px" /></td>
+									<th>작업 수당</th>
+									<td colspan="3"><input type="text" readonly="readonly" id="workAmount"
+										name="workAmount" /></td>
+								</tr>
+								<tr>
+									<th>거래처 명</th>
+									<td><input type="text" readonly="readonly"
+										id="clientCpName" name="clientCpName" /></td>
+									<th>거래처 담당자</th>
+									<td><input type="text" readonly="readonly"
+										id="ClientManager" name="ClientManager" /></td>
+									<th colspan="2">거래처 전화번호</th>
+									<td colspan="2"><input type="text" readonly="readonly"
+										id="clientPhone01" name="clientPhone01" style="width: 35px;" />-<input
+										type="text" readonly="readonly" id="clientPhone02"
+										name="clientPhone02" style="width: 35px;" />-<input type="text"
+										readonly="readonly" id="clientPhone03" name="clientPhone03"
+										style="width: 35px;" /></td>
+								</tr>
+								<tr>
+									<th colspan="2">요청 사항</th>
+									<td colspan="6"><input style="width: 90%;" type="text" readonly="readonly" id="workRequests" name="workRequests" /></td>
+								</tr>
+							</table>
+							<h3>작업자 정보</h3>
+							<table id="inputTB">
+								<tr>
+						        	<th>작업자 이름</th>
+						            <td colspan="2">
+						            	<input type="text" id="userName" name="userName" readonly="readonly"/>
+						            	<input type="hidden" id="rv" name="rv" readonly="readonly"/>						            	
+						            </td>
+						            <th>작업자 연락처</th>
+						            <td colspan="2"><input type="text" id="userCell" name="userCell" readonly="readonly"/></td>
+						         </tr>
+						         <tr>
+						            <th>장비 종류 </th>
+						            <td><input type="text" id="equipType" name="equipType" readonly="readonly"/></td>
+						            <th>장비 분류</th>
+						            <td><input type="text" id="equipClass" name="equipClass" readonly="readonly"/></td>
+						            <th>장비 옵션</th>
+						            <td><input type="text" id="equipOption" name="equipOption" readonly="readonly"/></td>
+						         </tr>
+							</table>
+						</div>
+						<div class="div2_2_2">
+							<div class="div2_2_2_btn">
+								<form action="newOrderAct.do" style="display: inline-block;">
+									<input type="hidden" id="workCode" name="workCode"/>
+									<input type="hidden" id="usRn" name="usRn" readonly="readonly"/>
+									<input type="hidden" id="eqRn" name="eqRn" readonly="readonly"/>
+									<button type="submit" onclick="return confirm_All();">발주 등록</button>
+								</form>
+								<button onclick="location.href='workOrderInfo.do'">뒤로가기</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="div3"></div>
 		</div>
-	<div class="workerList" id="workerList"></div>
-		
-	</div>
-	<div>
-		<h3>작업 정보</h3>
-		<table>
-			<tr>
-				<th>현장명</th>
-				<td><input type="text" readonly="readonly" id="workField" name="workField"/></td>
-				<th>중계자</th>
-				<td><input type="text" readonly="readonly" id="boName" name="boName"/></td>
-			</tr>
-			<tr>
-				<th>거래처 명</th>
-				<td><input type="text" readonly="readonly" id="clientCpName" name="clientCpName"/></td>
-				<th>거래처 담당자</th>
-				<td><input type="text" readonly="readonly" id="ClientManager" name="ClientManager"/></td>
-				<th>거래처 전화번호</th>
-				<td><input type="text" readonly="readonly" id="clientPhone01" name="clientPhone01" style="width: 30px;"/>-<input type="text" readonly="readonly" id="clientPhone02" name="clientPhone02" style="width: 30px;"/>-<input type="text" readonly="readonly" id="clientPhone03" name="clientPhone03" style="width: 30px;"/></td>
-			</tr>
-			<tr>
-				<th>현장 책임자</th>
-				<td><input type="text" readonly="readonly" id="fieldManager" name="fieldManager"/></td>
-				<th>현장 책임자 전화번호</th>
-				<td><input type="text" readonly="readonly" id="fieldManagerPhone01" name="fieldManagerPhone01" style="width: 30px;"/>-<input type="text" readonly="readonly" id="fieldManagerPhone02" name="fieldManagerPhone02" style="width: 30px;"/>-<input type="text" readonly="readonly" id="fieldManagerPhone03" name="fieldManagerPhone03" style="width: 30px;"/></td>
-				<th>현장 책임자 핸드폰</th>
-				<td><input type="text" readonly="readonly" id="fieldManagerCell01" name="fieldManagerCell01" style="width: 20px;"/>-<input type="text" readonly="readonly" id="fieldManagerCell02" name="fieldManagerCell02" style="width: 30px;"/>-<input type="text" readonly="readonly" id="fieldManagerCell03" name="fieldManagerCell03" style="width: 30px;"/></td>
-				<th>현장 책임자 메일 주소</th>
-				<td><input type="text" readonly="readonly" id="fieldManagerMail" name="fieldManagerMail"/></td>
-			</tr>
-			<tr>
-				<th>현장 주소</th>
-				<td><input type="text" readonly="readonly" id="fieldAdd01" name="fieldAdd01"/></td>
-				<th>현장 상세 주소</th>
-				<td><input type="text" readonly="readonly" id="fieldAdd02" name="fieldAdd02"/></td>
-			</tr>
-			<tr>
-				<th>작업 날짜</th>
-				<td><input type="date" readonly="readonly" id="workDate" name="workDate"/></td>
-				<th>작업 시간</th>
-				<td><input type="text" readonly="readonly" id="workTime01" name="workTime01" style="width: 15px;"/>:<input type="text" readonly="readonly" id="workTime02" name="workTime02" style="width: 15px"/></td>
-				<th>작업 수당</th>
-				<td><input type="text" readonly="readonly" id="workAmount" name="workAmount"/></td>
-				<th>요청 사항</th>
-				<td><input type="text" readonly="readonly" id="workRequests" name="workRequests"/></td>
-			</tr>
-			<tr>
-				<th>비고</th>
-				<td><input type="text" readonly="readonly" id="workRelative" name="relative"/></td>
-				<td><input type="button" value="작업 확정" onclick="sltWorkInfo();"/></td>
-			</tr>
-		</table>
-	</div>
-	<div class="workerInfo" id="workerInfo">
-		<h3>작업자 정보</h3>
-		<table>
-			<tr>
-				<th>작업자 이름</th>
-				<td><input type="text" id="userName" name="userName" readonly="readonly"/></td>
-			</tr>
-			<tr>
-				<th>작업자 연락처</th>
-				<td><input type="text" id="userCell" name="userCell" readonly="readonly"/></td>
-			</tr>
-			<tr>
-				<th>장비 종류 </th>
-				<td><input type="text" id="equipType" name="equipType" readonly="readonly"/></td>
-			</tr>
-			<tr>
-				<th>장비 분류</th>
-				<td><input type="text" id="equipClass" name="equipClass" readonly="readonly"/></td>
-			</tr>
-			<tr>
-				<th>장비 옵션</th>
-				<td><input type="text" id="equipOption" name="equipOption" readonly="readonly"/></td>
-			</tr>
-			<tr>
-				<td><input type="button" value="작업자 확정" onclick="sltWorker();"/></td>
-			</tr>
-		</table>
-	</div>
+		<div class="floating_btn" id="floating_btn">
+			<p id="floating_title">
+				<b>리모컨</b>
+			</p>
+			<div class="floating_btn_img" onclick="show_top();">
+				<img src="/image/up_arrow.png" alt="상단 이동" />
+			</div>
+			<p>맨위로</p>
+			<div class="floating_btn_img" onclick="link_call();">
+				<img src="/image/call_img.png" alt="상담 버튼" />
+			</div>
+			<p>고객센터</p>
+			<div class="floating_btn_img" onclick="location.href='main.do'">
+				<img src="/image/home_btn.png" alt="상담 버튼" />
+			</div>
+			<p>HOME</p>
+		</div>
+	</main>
+	<!-- 
+	<h1>발주 등록</h1>
+   <div class="workListAll" id="workListAll">
+      <p id="workMsg"><b>발주 할 작업을 선택해주세요.</b></p>
+      <div class="workList" id="workList">
+     
+      </div>
+   <div class="workerList" id="workerList"></div>
+      
+   </div>
+   <div>
+      <h3>작업 정보</h3>
+      <table>
+         <tr>
+            <th>현장명</th>
+            <td><input type="text" readonly="readonly" id="workField" name="workField"/></td>
+            <th>중계자</th>
+            <td><input type="text" readonly="readonly" id="boName" name="boName"/></td>
+         </tr>
+         <tr>
+            <th>거래처 명</th>
+            <td><input type="text" readonly="readonly" id="clientCpName" name="clientCpName"/></td>
+            <th>거래처 담당자</th>
+            <td><input type="text" readonly="readonly" id="ClientManager" name="ClientManager"/></td>
+            <th>거래처 전화번호</th>
+            <td><input type="text" readonly="readonly" id="clientPhone01" name="clientPhone01" style="width: 30px;"/>-<input type="text" readonly="readonly" id="clientPhone02" name="clientPhone02" style="width: 30px;"/>-<input type="text" readonly="readonly" id="clientPhone03" name="clientPhone03" style="width: 30px;"/></td>
+         </tr>
+         <tr>
+            <th>현장 책임자</th>
+            <td><input type="text" readonly="readonly" id="fieldManager" name="fieldManager"/></td>
+            <th>현장 책임자 전화번호</th>
+            <td><input type="text" readonly="readonly" id="fieldManagerPhone01" name="fieldManagerPhone01" style="width: 30px;"/>-<input type="text" readonly="readonly" id="fieldManagerPhone02" name="fieldManagerPhone02" style="width: 30px;"/>-<input type="text" readonly="readonly" id="fieldManagerPhone03" name="fieldManagerPhone03" style="width: 30px;"/></td>
+            <th>현장 책임자 핸드폰</th>
+            <td><input type="text" readonly="readonly" id="fieldManagerCell01" name="fieldManagerCell01" style="width: 20px;"/>-<input type="text" readonly="readonly" id="fieldManagerCell02" name="fieldManagerCell02" style="width: 30px;"/>-<input type="text" readonly="readonly" id="fieldManagerCell03" name="fieldManagerCell03" style="width: 30px;"/></td>
+            <th>현장 책임자 메일 주소</th>
+            <td><input type="text" readonly="readonly" id="fieldManagerMail" name="fieldManagerMail"/></td>
+         </tr>
+         <tr>
+            <th>현장 주소</th>
+            <td><input type="text" readonly="readonly" id="fieldAdd01" name="fieldAdd01"/></td>
+            <th>현장 상세 주소</th>
+            <td><input type="text" readonly="readonly" id="fieldAdd02" name="fieldAdd02"/></td>
+         </tr>
+         <tr>
+            <th>작업 날짜</th>
+            <td><input type="date" readonly="readonly" id="workDate" name="workDate"/></td>
+            <th>작업 시간</th>
+            <td><input type="text" readonly="readonly" id="workTime01" name="workTime01" style="width: 15px;"/>:<input type="text" readonly="readonly" id="workTime02" name="workTime02" style="width: 15px"/></td>
+            <th>작업 수당</th>
+            <td><input type="text" readonly="readonly" id="workAmount" name="workAmount"/></td>
+            <th>요청 사항</th>
+            <td><input type="text" readonly="readonly" id="workRequests" name="workRequests"/></td>
+         </tr>
+         <tr>
+            <th>비고</th>
+            <td><input type="text" readonly="readonly" id="workRelative" name="relative"/></td>
+            <td><input type="button" value="작업 확정" onclick="sltWorkInfo();"/></td>
+         </tr>
+      </table>
+   </div>
+   <div class="workerInfo" id="workerInfo">
+      <h3>작업자 정보</h3>
+      <table>
+         <tr>
+            <th>작업자 이름</th>
+            <td><input type="text" id="userName" name="userName" readonly="readonly"/></td>
+         </tr>
+         <tr>
+            <th>작업자 연락처</th>
+            <td><input type="text" id="userCell" name="userCell" readonly="readonly"/></td>
+         </tr>
+         <tr>
+            <th>장비 종류 </th>
+            <td><input type="text" id="equipType" name="equipType" readonly="readonly"/></td>
+         </tr>
+         <tr>
+            <th>장비 분류</th>
+            <td><input type="text" id="equipClass" name="equipClass" readonly="readonly"/></td>
+         </tr>
+         <tr>
+            <th>장비 옵션</th>
+            <td><input type="text" id="equipOption" name="equipOption" readonly="readonly"/></td>
+         </tr>
+         <tr>
+            <td><input type="button" value="작업자 확정" onclick="sltWorker();"/></td>
+         </tr>
+      </table>
+   </div>
+	
+	
+	
 	<form action="newOrderAct.do">
 		<div>
 			<h3>발주 등록</h3>
-			<input type="hidden" id="workCode" name="workCode"/>
-			<input type="hidden" id="usRn" name="usRn" readonly="readonly"/>
-			<input type="hidden" id="eqRn" name="eqRn" readonly="readonly"/>
+
 			<table class="relativeBox" id="relativeBox">
 				<tr>
 					<th>비고</th>
@@ -581,7 +754,7 @@
 		</div>
 		<input type="submit" class="submitBtn" id="submitBtn" onclick="return finalCheck();"/>
 	</form>
-	<input type="button" value="뒤로가기" onClick="location.href='workOrderInfo.do'"/>
+	<input type="button" value="뒤로가기" onClick="location.href='workOrderInfo.do'"/> -->
 	
 </body>
 </html>
