@@ -24,6 +24,7 @@ public class WorkInfoForAss_OneRowMapper implements RowMapper<WorkInfoForAssVO>{
 		vo.setWorkAmount(rs.getInt("WORKAMOUNT"));
 		vo.setSt(rs.getInt("ST"));
 		vo.setAppstatus(rs.getInt("APPSTATUS"));
+		vo.setDe(rs.getInt("de"));
 		return vo;
 	}
 

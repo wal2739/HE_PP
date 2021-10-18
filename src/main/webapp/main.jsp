@@ -93,7 +93,7 @@
 			dropMenuLink[5] = "workOrderInfo.do";
 			dropMenuLink[6] = "finishedWorkList_Ass.do";
 			dropMenuLink[7] = "";
-			dropMenuLink[8] = "";
+			dropMenuLink[8] = "calculate.do?classType=assUsRn";
 			dropMenuLink[9] = "";
 			dropMenuLink[10] = "";
 			dropMenuLink[11] = "";

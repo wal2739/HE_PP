@@ -29,7 +29,6 @@ body::-webkit-scrollbar{
 	top: 0;
 	background-color: rgba(255,255,255,.75);
 	z-index: 9999;
-	
 }
 /* 상단 좌측 뒤로가기 버튼 div */
 #top_div_back_btn {

@@ -270,6 +270,13 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	}
 	
 	@Override
+	public List<WorkInfoForAssVO> getWork_Ass_st2(HttpServletRequest request, HttpSession session) {
+		String usRn = (String)session.getAttribute("usRn");
+		String type = request.getParameter("classType");
+		return dao.getWork_Ass_st2(type ,usRn);
+	}
+	
+	@Override
 	public WorkInfoForAssVO getWorkInfo_Ass(HttpServletRequest request, HttpSession session) {
 		String usRn = (String)session.getAttribute("usRn");
 		String workCode = (String)request.getParameter("wCode");
@@ -287,6 +294,26 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		String usRn = (String)session.getAttribute("usRn");
 		String workCode = (String)request.getParameter("wCode");
 		return dao.getCancelWorkInfo_Ass(usRn, workCode);
+	}
+	
+	@Override
+	public void calculateAct(HttpServletRequest request, HttpSession session) {
+		String usRn = (String)session.getAttribute("usRn");
+		String workCode = (String)request.getParameter("workCode");
+		int rlt = dao.calculateAct(workCode, usRn);
+		request.setAttribute("classType", request.getParameter("classType"));
+		switch (rlt) {
+		case 0:
+			request.setAttribute("calRlt", 0);
+			break;
+		case 1:
+			request.setAttribute("calRlt", 1);
+			request.setAttribute("wCode", workCode);
+			break;
+		default:
+			request.setAttribute("calRlt", 2);
+			break;
+		}
 	}
 
 	

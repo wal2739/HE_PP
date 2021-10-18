@@ -1,25 +1,26 @@
-<%@page import="java.text.DecimalFormat"%>
-<%@page import="com.HEProject.he.orderInfo.OrderInfo_st2VO"%>
+<%@page import="com.HEProject.he.workInfo.WorkInfoForAssVO"%>
 <%@page import="java.util.List"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
     <%
-	    String loginCheckData="";
+		
+		String loginCheckData="";
 		try{
 			loginCheckData= (String)session.getAttribute("userId");
 		}catch(NullPointerException e){
 			System.err.println("비회원 아이디 에러 : "+e);
+		}
+		List<WorkInfoForAssVO> list = null;
+		if(loginCheckData!=null){
+			list = (List)request.getAttribute("list");
 		}	
-    	List<OrderInfo_st2VO> list = null;
-    	if(loginCheckData!=null){
-    		list = (List)request.getAttribute("list"); 
-    	}
     %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>발주 취소</title>
+<title>정산 처리</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/main.css?ver=22">
@@ -27,58 +28,62 @@
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="/js/main.js?ver=10" ></script>
 <script type="text/javascript">
-/*	var preNum = 0;
-	function getAllWorkInfo(orderCode,iNum) {
-		window.name="parentForm";
-		document.getElementById("workInfoList"+preNum).style.display = "none";
-		document.getElementById('delBtn'+preNum).disabled = true;
-		document.getElementById("workInfoList"+iNum).innerHTML = "<iframe src=\"getOrderInfo.do?orderCode="+orderCode+"\" id=\"workAllInfo\" name=\"workAllInfo\"></iframe><br />";
-		document.getElementById("workInfoList"+iNum).style.display = "inline";
-		document.getElementById('delBtn'+iNum).disabled = false;
-		preNum = iNum;
- 		$("#workAllInfo").contents().find("#BtnAct");
-	} */
-	function delFunc(codeNum) {
-		var checkConfirm = confirm('발주를 취소 하시겠습니까?');
-		if(checkConfirm==true){
-			location.href='delAct.do?orderCode='+codeNum;
-		}else {
-			alert('취소하셨습니다.');
-			return false;
-		}
-	}
-	function loadOn() {
-		var loginCheckData = '<%=loginCheckData%>';
-		loginCheck(loginCheckData);
-		var delOrderSuccess = <%=request.getAttribute("delOrderSuccess")%>;
-		if(delOrderSuccess==null){
-			
-		}else {
-			if(delOrderSuccess==0){
-				alert('정상적으로 삭제되지 않았습니다. 다시 시도해주세요.');
-			}else if(delOrderSuccess==1){
-				alert('정상적으로 삭제되었습니다.');
-			}else{
-				alert('정상적인 요청이 아닙니다.');
-			}
-			location.href='delOrder.do';
-		}
-	}
-	
-	$(document).ready(function(){
-		var currentPosition = parseInt($("#floating_btn").css("top"));
-		$(window).scroll(function() {
-			var position = $(window).scrollTop();
-			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
-		});
+function loadOn() {
+	var loginCheckData = '<%=loginCheckData%>';
+	loginCheck(loginCheckData);
+}
+$(document).ready(function(){
+	var currentPosition = parseInt($("#floating_btn").css("top"));
+	$(window).scroll(function() {
+		var position = $(window).scrollTop();
+		$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
 	});
-
-	function view_iframe(code) {
-		document.getElementById('orderInfo').setAttribute('src','getOrderInfo.do?orderCode='+code);
+});
+function loadOn() {
+	var calRlt = <%=request.getAttribute("calRlt")%>;
+	if(calRlt!=null){
+		switch (calRlt) {
+		case 0:
+			alert('정상적으로 처리되지 않았습니다.');
+			break;
+		case 1:
+			var con_val = confirm('정산처리가 완료 되었습니다.\n해당 영수증을 출력 혹은 다운로드 하시겠습니까?');
+			if(con_val==true){
+				show_receipt('<%=request.getAttribute("wCode")%>');
+			}
+			break;
+		default:
+			alert('정상적인 요청이 아닙니다.');
+			break;
+		}
+		location.href='calculate.doclassType='+<%=request.getAttribute("classType")%>;
 	}
+}
+/* function view_iframe(code) {
+	document.getElementById('receiptInfo').setAttribute('src','receipt.jsp');
+} */
+function confirm_check(workCode) {
+	var con_var = confirm('정산처리 하시겠습니까?\n\n※경고※\n허위 정산처리는 법적 조치를 취할 수 있으니 \n충분한 유의를 바랍니다.');
+	switch (con_var) {
+	case true:
+		location.href="calculateAct.do?workCode="+workCode+"&classType=assUsRn";
+		break;
+	case false:
+		alert('취소했습니다.');
+		break;
+	default:
+		alert('정상적인 접근이 아닙니다.');
+		location.href="calculate.do?classType="+<%=request.getAttribute("classType")%>;
+		break;
+	}
+}
+function show_receipt(workCode) {
+	window.name="parentForm";
+	window.open("receipt.do?classType=assUsRn&wCode="+workCode,"chkForm","width=950,height=1250,resizable=no,scrollbars=no");
+}
 </script>
 <style>
-.mainDiv{
+	.mainDiv{
   width: 100%;
   height: 100%;
 }
@@ -109,7 +114,7 @@
 }
 .div2_1 {
   width: 80%;
-  height: 40%;
+  height: 80%;
   overflow: auto;
   margin : 0 auto 30px auto;
 }
@@ -162,7 +167,7 @@
 }
 .div2_2 {
   width: 85%;
-  height: 60%;
+  height: 20%;
   margin : 0 auto 0 auto;
   border-top: 0.5px solid black;
 }
@@ -172,7 +177,7 @@
 }
 .div2_2_2 {
   width: 100%;
-  height: 10%;
+  height: 100%;
   padding-left: 3px;
   padding-top: 5px;
   
@@ -221,10 +226,6 @@ p {
 	color: red;
 	font-weight: bold;
 }
-#orderInfo {
-	width: 100%;
-	height: 75%;
-}
 .check_btn{
 	display : inline-block;
 	margin : 0 auto;
@@ -247,6 +248,10 @@ p {
 	background: #517D65;
 	color: red;
 }
+/* #receiptInfo {
+	width: 950px;
+	height: 1250px;
+} */
 </style>
 <%
 	Object userClassData = session.getAttribute("userClass");
@@ -377,91 +382,77 @@ p {
 			<li><a href="checkIdentity.jsp">내정보</a></li>
 		</ul>
 	</nav>
-	<main>
+		<main>
 		<div class="mainDiv">
 			<div class="div1">
 				<div class="div1_textArea">
-					<h2>발주 정보</h2>
+					<h2>정산 처리</h2>
 				</div>
 			</div>
 			<div class="div2">
 				<div class="div_2_back">
 					<div class="div2_1">
 						<div class="div2_1_1">
-							<h2 id="div2_1_1_h2">발주 목록</h2>
+							<h2 id="div2_1_1_h2">정산처리 목록</h2>
 						</div>
 						<div class="div2_1_2">
 							<table id="inputTB">
-								<tr id="top_tr">
-									<th></th>
-									<th>현장명</th>
-									<th>현장 책임자</th>
-									<th>현장 연락처</th>
-									<th>현장 주소</th>
-									<th>현장 상세주소</th>
-									<th>작업 금액</th>
-									<th></th>
-								</tr>
-								<%
-									int amount = 0;
-									DecimalFormat formatter = new DecimalFormat("###,### 원");
-									if (list.size() == 0) {
-								%>
-								<tr>
-									<td colspan="9">작업이 없습니다.</td>
-								</tr>
-								<%
-									} else {
-										for (int i = 0; i < list.size(); i++) {
-								%>
-								<tr onclick="view_iframe('<%=list.get(i).getOrderCode()%>');"
-									style="cursor: pointer;">
-									<td><%=i + 1%></td>
-									<td><%=list.get(i).getWorkField()%></td>
-									<td><%=list.get(i).getFieldManager()%></td>
-									<td><%=list.get(i).getFieldManagerCell()%></td>
-									<td><%=list.get(i).getFieldAdd01()%></td>
-									<td><%=list.get(i).getFieldAdd02()%></td>
-									<td><%=formatter.format(list.get(i).getWorkAmount())%></td>
-									<td><input type="button" id="delBtn<%=i %>" name="delBtn<%=i %>" class="check_btn" onclick="delFunc('<%=list.get(i).getOrderCode() %>');" value="삭제"/></td>
-								</tr>
+							<tr id="top_tr">
+				            	<th></th>
+				            	<th>현장명</th>
+					 			<th>현장 책임자</th>
+					 			<th>현장 연락처</th>
+					 			<th>현장 주소</th>
+					 			<th>현장 상세주소</th>
+					 			<th>작업 금액</th>
+					 			<th></th>
+					 		</tr>
+					 		<%
+					 		int amount = 0;
+							DecimalFormat formatter = new DecimalFormat("###,### 원");
+							if(list.size()==0){%>
+							<tr>
+					 			<td colspan="8">작업이 없습니다.</td>
+					 		</tr>
+							<%}else{
+								for(int i = 0 ; i < list.size(); i++){%>
+								<tr style="cursor: pointer;">
+									<td><%=i+1 %></td>
+				                	<td><%=list.get(i).getWorkField() %></td>
+					                <td><%=list.get(i).getFieldManager() %></td>
+					                <td><%=list.get(i).getFieldManagerCell() %></td>
+					                <td><%=list.get(i).getFieldAdd01() %></td>
+					                <td><%=list.get(i).getFieldAdd02() %></td>
+					                <td><%=formatter.format(list.get(i).getWorkAmount()) %></td>
+					                <td><button class="check_btn" onclick="confirm_check('<%=list.get(i).getWorkCode()%>');">정산처리</button></td>
+				               </tr>
 								<!--  -->
-								<%
-									amount = amount + list.get(i).getWorkAmount();
-										}
-									}
-								%>
-								<tr id="btm_tr">
-									<th>
-										<%
-											if (list.size() == 0) {
-										%> 작업 없음 <%
-											} else {
-										%> 총 작업 : <%=list.size()%> <%}%>
-									</th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th><%=formatter.format(amount)%></th>
-									<th></th>
-								</tr>
+							<%}} %>
+				            <tr id="btm_tr">
+					 			<th>
+					 				<%if(list.size()==0){ %>
+					 				작업 없음
+					 				<%}else { %>
+					 				총 작업 : <%=list.size() %>
+					 				<%} %>
+					 			</th>
+					 			<th></th>
+					 			<th></th>
+					 			<th></th>
+					 			<th></th>
+					 			<th></th>
+					 			<th></th>
+					 			<th></th>
+					 		</tr>
 							</table>
 						</div>
 					</div>
 					<div class="div2_2">
-						<div class="div2_2_1">
-							<p>※ 상세보기를 원하시는 작업을 선택해주세요.</p>
-							<iframe src="" frameborder="0" id="orderInfo"></iframe>
-							<p>
-								※ 발주 취소 후 재발주가 가능합니다.
-							</p>
-						</div>
 						<div class="div2_2_2">
 							<div class="div2_2_2_btn">
-								<button onclick="location.href='workOrderInfo.do'">뒤로 가기</button>
-							</div>
+								<button onclick="location.href='#'">정산 완료 목록</button>
+<!-- 								<button onclick="location.href='#'">다운로드</button>
+ -->						</div>
 						</div>
 					</div>
 				</div>
@@ -486,16 +477,5 @@ p {
 			<p>HOME</p>
 		</div>
 	</main>
-<%-- 	<h1>발주 취소</h1>
-	<div id="allDiv" class="allDiv">
-		<%if(list==null||list.size()==0){ %>
-		<p>현재 진행 중 인 발주 목록이 없습니다.</p>
-	<%}else{for(int i = 0 ; i <list.size(); i++){ %>
-		<p onclick="getAllWorkInfo('<%=list.get(i).getOrderCode()%>',<%=i%>);"><%=i+1 %>. 거래처 : <%=list.get(i).getClientCpName() %> | 거래처 전화번호 : <%=list.get(i).getClientPhone() %> | 현장명 : <%=list.get(i).getWorkField() %> | 현장 주소 : <%=list.get(i).getFieldAdd01() %> , <%=list.get(i).getFieldAdd02() %> | 작업자 : <%=list.get(i).getUserName() %></p><input type="button" id="delBtn<%=i %>" name="delBtn<%=i %>" disabled="disabled" onclick="delFunc('<%=list.get(i).getOrderCode() %>');" value="삭제"/><br />
-		<div id="workInfoList<%=i%>" class="workInfoList<%=i%>" style="display: none;"></div>
-	<%}} %>
-	</div>
-	<input type="button" value="뒤로가기" onClick="location.href='workOrderInfo.do'"/>
-	 --%>
 </body>
 </html>

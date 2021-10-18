@@ -56,4 +56,8 @@ public interface WorkInfoService {
 
 	List<WorkInfo_ST2VO> getAllWorkInfo_st2_Ass(WorkInfo_ST2VO vo, HttpSession session);
 
+	void calculateAct(HttpServletRequest request, HttpSession session);
+
+	List<WorkInfoForAssVO> getWork_Ass_st2(HttpServletRequest request, HttpSession session);
+
 }

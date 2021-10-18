@@ -1,9 +1,9 @@
-package com.HEProject.he.workInfo;
+package com.HEProject.he.receipt;
 
 import java.io.Serializable;
 import java.sql.Date;
 
-public class WorkInfoForAssVO implements Serializable{
+public class Receipt_ViewVO implements Serializable{
 	private String workCode;
 	private String clientCode;
 	private String workField;
@@ -19,80 +19,75 @@ public class WorkInfoForAssVO implements Serializable{
 	private int st;
 	private String assUsRn;
 	private String indiUsRn;
-	private String 	workersData;
-	private String 	eqRn;
-	private String 	relative;
+	private String workersData;
+	private String eqRn;
+	private String relative;
 	private Date workDate;
 	private String rv;
-	private int appstatus;
-	private String clientBoNumber;
-	private String clientCeo;
-	private String clientManager;
-	private String clientPhone;
-	private String clientCell;
-	private String clientMail;
-	private String clientAdd01;
-	private String clientAdd02;
-	private String clientCpName;
-	private String indiName;
-	private String indiCell;
-	private String indiMail;
-	private String indiId;
-	private String equipnum;
-	private String equipoption;
-	private String equipclass;
-	private String equiptype;
-	private int de;
-	public WorkInfoForAssVO() {}
+	private String assBoNumber;
+	private String asscpName;
+	private String assboName;
+	private String assboadd01;
+	private String assboadd02;
+	private String asstop01;
+	private String asstop02;
+	private String indiBoNumber;
+	private String indicpName;
+	private String indiboName;
+	private String indiboadd01;
+	private String indiboadd02;
+	private String inditop01;
+	private String inditop02;
+	private int et;
+    private int aa;
+    private int es;
+	public Receipt_ViewVO() {}
 	@Override
 	public String toString() {
-		return "WorkInfoForAssVO [workCode=" + workCode + ", clientCode=" + clientCode + ", workField=" + workField
+		return "Receipt_ViewVO [workCode=" + workCode + ", clientCode=" + clientCode + ", workField=" + workField
 				+ ", fieldManager=" + fieldManager + ", fieldManagerPhone=" + fieldManagerPhone + ", fieldManagerCell="
 				+ fieldManagerCell + ", fieldManagerMail=" + fieldManagerMail + ", fieldAdd01=" + fieldAdd01
 				+ ", fieldAdd02=" + fieldAdd02 + ", workAmount=" + workAmount + ", workTime=" + workTime
 				+ ", workRequests=" + workRequests + ", st=" + st + ", assUsRn=" + assUsRn + ", indiUsRn=" + indiUsRn
 				+ ", workersData=" + workersData + ", eqRn=" + eqRn + ", relative=" + relative + ", workDate="
-				+ workDate + ", rv=" + rv + ", appstatus=" + appstatus + ", clientBoNumber=" + clientBoNumber
-				+ ", clientCeo=" + clientCeo + ", clientManager=" + clientManager + ", clientPhone=" + clientPhone
-				+ ", clientCell=" + clientCell + ", clientMail=" + clientMail + ", clientAdd01=" + clientAdd01
-				+ ", clientAdd02=" + clientAdd02 + ", clientCpName=" + clientCpName + ", indiName=" + indiName
-				+ ", indiCell=" + indiCell + ", indiMail=" + indiMail + ", indiId=" + indiId + ", equipnum=" + equipnum
-				+ ", equipoption=" + equipoption + ", equipclass=" + equipclass + ", equiptype=" + equiptype + ", de="
-				+ de + "]";
+				+ workDate + ", rv=" + rv + ", assBoNumber=" + assBoNumber + ", asscpName=" + asscpName + ", assboName="
+				+ assboName + ", assboadd01=" + assboadd01 + ", assboadd02=" + assboadd02 + ", asstop01=" + asstop01
+				+ ", asstop02=" + asstop02 + ", indiBoNumber=" + indiBoNumber + ", indicpName=" + indicpName
+				+ ", indiboName=" + indiboName + ", indiboadd01=" + indiboadd01 + ", indiboadd02=" + indiboadd02
+				+ ", inditop01=" + inditop01 + ", inditop02=" + inditop02 + ", et=" + et + ", aa=" + aa + ", es=" + es
+				+ "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + appstatus;
+		result = prime * result + aa;
+		result = prime * result + ((assBoNumber == null) ? 0 : assBoNumber.hashCode());
 		result = prime * result + ((assUsRn == null) ? 0 : assUsRn.hashCode());
-		result = prime * result + ((clientAdd01 == null) ? 0 : clientAdd01.hashCode());
-		result = prime * result + ((clientAdd02 == null) ? 0 : clientAdd02.hashCode());
-		result = prime * result + ((clientBoNumber == null) ? 0 : clientBoNumber.hashCode());
-		result = prime * result + ((clientCell == null) ? 0 : clientCell.hashCode());
-		result = prime * result + ((clientCeo == null) ? 0 : clientCeo.hashCode());
+		result = prime * result + ((assboName == null) ? 0 : assboName.hashCode());
+		result = prime * result + ((assboadd01 == null) ? 0 : assboadd01.hashCode());
+		result = prime * result + ((assboadd02 == null) ? 0 : assboadd02.hashCode());
+		result = prime * result + ((asscpName == null) ? 0 : asscpName.hashCode());
+		result = prime * result + ((asstop01 == null) ? 0 : asstop01.hashCode());
+		result = prime * result + ((asstop02 == null) ? 0 : asstop02.hashCode());
 		result = prime * result + ((clientCode == null) ? 0 : clientCode.hashCode());
-		result = prime * result + ((clientCpName == null) ? 0 : clientCpName.hashCode());
-		result = prime * result + ((clientMail == null) ? 0 : clientMail.hashCode());
-		result = prime * result + ((clientManager == null) ? 0 : clientManager.hashCode());
-		result = prime * result + ((clientPhone == null) ? 0 : clientPhone.hashCode());
-		result = prime * result + de;
 		result = prime * result + ((eqRn == null) ? 0 : eqRn.hashCode());
-		result = prime * result + ((equipclass == null) ? 0 : equipclass.hashCode());
-		result = prime * result + ((equipnum == null) ? 0 : equipnum.hashCode());
-		result = prime * result + ((equipoption == null) ? 0 : equipoption.hashCode());
-		result = prime * result + ((equiptype == null) ? 0 : equiptype.hashCode());
+		result = prime * result + es;
+		result = prime * result + et;
 		result = prime * result + ((fieldAdd01 == null) ? 0 : fieldAdd01.hashCode());
 		result = prime * result + ((fieldAdd02 == null) ? 0 : fieldAdd02.hashCode());
 		result = prime * result + ((fieldManager == null) ? 0 : fieldManager.hashCode());
 		result = prime * result + ((fieldManagerCell == null) ? 0 : fieldManagerCell.hashCode());
 		result = prime * result + ((fieldManagerMail == null) ? 0 : fieldManagerMail.hashCode());
 		result = prime * result + ((fieldManagerPhone == null) ? 0 : fieldManagerPhone.hashCode());
-		result = prime * result + ((indiCell == null) ? 0 : indiCell.hashCode());
-		result = prime * result + ((indiId == null) ? 0 : indiId.hashCode());
-		result = prime * result + ((indiMail == null) ? 0 : indiMail.hashCode());
-		result = prime * result + ((indiName == null) ? 0 : indiName.hashCode());
+		result = prime * result + ((indiBoNumber == null) ? 0 : indiBoNumber.hashCode());
 		result = prime * result + ((indiUsRn == null) ? 0 : indiUsRn.hashCode());
+		result = prime * result + ((indiboName == null) ? 0 : indiboName.hashCode());
+		result = prime * result + ((indiboadd01 == null) ? 0 : indiboadd01.hashCode());
+		result = prime * result + ((indiboadd02 == null) ? 0 : indiboadd02.hashCode());
+		result = prime * result + ((indicpName == null) ? 0 : indicpName.hashCode());
+		result = prime * result + ((inditop01 == null) ? 0 : inditop01.hashCode());
+		result = prime * result + ((inditop02 == null) ? 0 : inditop02.hashCode());
 		result = prime * result + ((relative == null) ? 0 : relative.hashCode());
 		result = prime * result + ((rv == null) ? 0 : rv.hashCode());
 		result = prime * result + st;
@@ -113,90 +108,62 @@ public class WorkInfoForAssVO implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		WorkInfoForAssVO other = (WorkInfoForAssVO) obj;
-		if (appstatus != other.appstatus)
+		Receipt_ViewVO other = (Receipt_ViewVO) obj;
+		if (aa != other.aa)
+			return false;
+		if (assBoNumber == null) {
+			if (other.assBoNumber != null)
+				return false;
+		} else if (!assBoNumber.equals(other.assBoNumber))
 			return false;
 		if (assUsRn == null) {
 			if (other.assUsRn != null)
 				return false;
 		} else if (!assUsRn.equals(other.assUsRn))
 			return false;
-		if (clientAdd01 == null) {
-			if (other.clientAdd01 != null)
+		if (assboName == null) {
+			if (other.assboName != null)
 				return false;
-		} else if (!clientAdd01.equals(other.clientAdd01))
+		} else if (!assboName.equals(other.assboName))
 			return false;
-		if (clientAdd02 == null) {
-			if (other.clientAdd02 != null)
+		if (assboadd01 == null) {
+			if (other.assboadd01 != null)
 				return false;
-		} else if (!clientAdd02.equals(other.clientAdd02))
+		} else if (!assboadd01.equals(other.assboadd01))
 			return false;
-		if (clientBoNumber == null) {
-			if (other.clientBoNumber != null)
+		if (assboadd02 == null) {
+			if (other.assboadd02 != null)
 				return false;
-		} else if (!clientBoNumber.equals(other.clientBoNumber))
+		} else if (!assboadd02.equals(other.assboadd02))
 			return false;
-		if (clientCell == null) {
-			if (other.clientCell != null)
+		if (asscpName == null) {
+			if (other.asscpName != null)
 				return false;
-		} else if (!clientCell.equals(other.clientCell))
+		} else if (!asscpName.equals(other.asscpName))
 			return false;
-		if (clientCeo == null) {
-			if (other.clientCeo != null)
+		if (asstop01 == null) {
+			if (other.asstop01 != null)
 				return false;
-		} else if (!clientCeo.equals(other.clientCeo))
+		} else if (!asstop01.equals(other.asstop01))
+			return false;
+		if (asstop02 == null) {
+			if (other.asstop02 != null)
+				return false;
+		} else if (!asstop02.equals(other.asstop02))
 			return false;
 		if (clientCode == null) {
 			if (other.clientCode != null)
 				return false;
 		} else if (!clientCode.equals(other.clientCode))
 			return false;
-		if (clientCpName == null) {
-			if (other.clientCpName != null)
-				return false;
-		} else if (!clientCpName.equals(other.clientCpName))
-			return false;
-		if (clientMail == null) {
-			if (other.clientMail != null)
-				return false;
-		} else if (!clientMail.equals(other.clientMail))
-			return false;
-		if (clientManager == null) {
-			if (other.clientManager != null)
-				return false;
-		} else if (!clientManager.equals(other.clientManager))
-			return false;
-		if (clientPhone == null) {
-			if (other.clientPhone != null)
-				return false;
-		} else if (!clientPhone.equals(other.clientPhone))
-			return false;
-		if (de != other.de)
-			return false;
 		if (eqRn == null) {
 			if (other.eqRn != null)
 				return false;
 		} else if (!eqRn.equals(other.eqRn))
 			return false;
-		if (equipclass == null) {
-			if (other.equipclass != null)
-				return false;
-		} else if (!equipclass.equals(other.equipclass))
+		if (es != other.es)
 			return false;
-		if (equipnum == null) {
-			if (other.equipnum != null)
-				return false;
-		} else if (!equipnum.equals(other.equipnum))
-			return false;
-		if (equipoption == null) {
-			if (other.equipoption != null)
-				return false;
-		} else if (!equipoption.equals(other.equipoption))
-			return false;
-		if (equiptype == null) {
-			if (other.equiptype != null)
-				return false;
-		} else if (!equiptype.equals(other.equiptype))
+		if (et != other.et)
 			return false;
 		if (fieldAdd01 == null) {
 			if (other.fieldAdd01 != null)
@@ -228,30 +195,45 @@ public class WorkInfoForAssVO implements Serializable{
 				return false;
 		} else if (!fieldManagerPhone.equals(other.fieldManagerPhone))
 			return false;
-		if (indiCell == null) {
-			if (other.indiCell != null)
+		if (indiBoNumber == null) {
+			if (other.indiBoNumber != null)
 				return false;
-		} else if (!indiCell.equals(other.indiCell))
-			return false;
-		if (indiId == null) {
-			if (other.indiId != null)
-				return false;
-		} else if (!indiId.equals(other.indiId))
-			return false;
-		if (indiMail == null) {
-			if (other.indiMail != null)
-				return false;
-		} else if (!indiMail.equals(other.indiMail))
-			return false;
-		if (indiName == null) {
-			if (other.indiName != null)
-				return false;
-		} else if (!indiName.equals(other.indiName))
+		} else if (!indiBoNumber.equals(other.indiBoNumber))
 			return false;
 		if (indiUsRn == null) {
 			if (other.indiUsRn != null)
 				return false;
 		} else if (!indiUsRn.equals(other.indiUsRn))
+			return false;
+		if (indiboName == null) {
+			if (other.indiboName != null)
+				return false;
+		} else if (!indiboName.equals(other.indiboName))
+			return false;
+		if (indiboadd01 == null) {
+			if (other.indiboadd01 != null)
+				return false;
+		} else if (!indiboadd01.equals(other.indiboadd01))
+			return false;
+		if (indiboadd02 == null) {
+			if (other.indiboadd02 != null)
+				return false;
+		} else if (!indiboadd02.equals(other.indiboadd02))
+			return false;
+		if (indicpName == null) {
+			if (other.indicpName != null)
+				return false;
+		} else if (!indicpName.equals(other.indicpName))
+			return false;
+		if (inditop01 == null) {
+			if (other.inditop01 != null)
+				return false;
+		} else if (!inditop01.equals(other.inditop01))
+			return false;
+		if (inditop02 == null) {
+			if (other.inditop02 != null)
+				return false;
+		} else if (!inditop02.equals(other.inditop02))
 			return false;
 		if (relative == null) {
 			if (other.relative != null)
@@ -419,124 +401,108 @@ public class WorkInfoForAssVO implements Serializable{
 	public void setRv(String rv) {
 		this.rv = rv;
 	}
-	public int getAppstatus() {
-		return appstatus;
+	public String getAssBoNumber() {
+		return assBoNumber;
 	}
-	public void setAppstatus(int appstatus) {
-		this.appstatus = appstatus;
+	public void setAssBoNumber(String assBoNumber) {
+		this.assBoNumber = assBoNumber;
 	}
-	public String getClientBoNumber() {
-		return clientBoNumber;
+	public String getAsscpName() {
+		return asscpName;
 	}
-	public void setClientBoNumber(String clientBoNumber) {
-		this.clientBoNumber = clientBoNumber;
+	public void setAsscpName(String asscpName) {
+		this.asscpName = asscpName;
 	}
-	public String getClientCeo() {
-		return clientCeo;
+	public String getAssboName() {
+		return assboName;
 	}
-	public void setClientCeo(String clientCeo) {
-		this.clientCeo = clientCeo;
+	public void setAssboName(String assboName) {
+		this.assboName = assboName;
 	}
-	public String getClientManager() {
-		return clientManager;
+	public String getAssboadd01() {
+		return assboadd01;
 	}
-	public void setClientManager(String clientManager) {
-		this.clientManager = clientManager;
+	public void setAssboadd01(String assboadd01) {
+		this.assboadd01 = assboadd01;
 	}
-	public String getClientPhone() {
-		return clientPhone;
+	public String getAssboadd02() {
+		return assboadd02;
 	}
-	public void setClientPhone(String clientPhone) {
-		this.clientPhone = clientPhone;
+	public void setAssboadd02(String assboadd02) {
+		this.assboadd02 = assboadd02;
 	}
-	public String getClientCell() {
-		return clientCell;
+	public String getAsstop01() {
+		return asstop01;
 	}
-	public void setClientCell(String clientCell) {
-		this.clientCell = clientCell;
+	public void setAsstop01(String asstop01) {
+		this.asstop01 = asstop01;
 	}
-	public String getClientMail() {
-		return clientMail;
+	public String getAsstop02() {
+		return asstop02;
 	}
-	public void setClientMail(String clientMail) {
-		this.clientMail = clientMail;
+	public void setAsstop02(String asstop02) {
+		this.asstop02 = asstop02;
 	}
-	public String getClientAdd01() {
-		return clientAdd01;
+	public String getIndiBoNumber() {
+		return indiBoNumber;
 	}
-	public void setClientAdd01(String clientAdd01) {
-		this.clientAdd01 = clientAdd01;
+	public void setIndiBoNumber(String indiBoNumber) {
+		this.indiBoNumber = indiBoNumber;
 	}
-	public String getClientAdd02() {
-		return clientAdd02;
+	public String getIndicpName() {
+		return indicpName;
 	}
-	public void setClientAdd02(String clientAdd02) {
-		this.clientAdd02 = clientAdd02;
+	public void setIndicpName(String indicpName) {
+		this.indicpName = indicpName;
 	}
-	public String getClientCpName() {
-		return clientCpName;
+	public String getIndiboName() {
+		return indiboName;
 	}
-	public void setClientCpName(String clientCpName) {
-		this.clientCpName = clientCpName;
+	public void setIndiboName(String indiboName) {
+		this.indiboName = indiboName;
 	}
-	public String getIndiName() {
-		return indiName;
+	public String getIndiboadd01() {
+		return indiboadd01;
 	}
-	public void setIndiName(String indiName) {
-		this.indiName = indiName;
+	public void setIndiboadd01(String indiboadd01) {
+		this.indiboadd01 = indiboadd01;
 	}
-	public String getIndiCell() {
-		return indiCell;
+	public String getIndiboadd02() {
+		return indiboadd02;
 	}
-	public void setIndiCell(String indiCell) {
-		this.indiCell = indiCell;
+	public void setIndiboadd02(String indiboadd02) {
+		this.indiboadd02 = indiboadd02;
 	}
-	public String getIndiMail() {
-		return indiMail;
+	public String getInditop01() {
+		return inditop01;
 	}
-	public void setIndiMail(String indiMail) {
-		this.indiMail = indiMail;
+	public void setInditop01(String inditop01) {
+		this.inditop01 = inditop01;
 	}
-	public String getIndiId() {
-		return indiId;
+	public String getInditop02() {
+		return inditop02;
 	}
-	public void setIndiId(String indiId) {
-		this.indiId = indiId;
+	public void setInditop02(String inditop02) {
+		this.inditop02 = inditop02;
 	}
-	public String getEquipnum() {
-		return equipnum;
+	public int getEt() {
+		return et;
 	}
-	public void setEquipnum(String equipnum) {
-		this.equipnum = equipnum;
+	public void setEt(int et) {
+		this.et = et;
 	}
-	public String getEquipoption() {
-		return equipoption;
+	public int getAa() {
+		return aa;
 	}
-	public void setEquipoption(String equipoption) {
-		this.equipoption = equipoption;
+	public void setAa(int aa) {
+		this.aa = aa;
 	}
-	public String getEquipclass() {
-		return equipclass;
+	public int getEs() {
+		return es;
 	}
-	public void setEquipclass(String equipclass) {
-		this.equipclass = equipclass;
+	public void setEs(int es) {
+		this.es = es;
 	}
-	public String getEquiptype() {
-		return equiptype;
-	}
-	public void setEquiptype(String equiptype) {
-		this.equiptype = equiptype;
-	}
-	public int getDe() {
-		return de;
-	}
-	public void setDe(int de) {
-		this.de = de;
-	}
-
 	
-	
-	
-	
-	
+    
 }

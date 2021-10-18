@@ -233,7 +233,17 @@ public class WorkInfoDAO {
 	}
 	///////////////ass work/////////////
 	List<WorkInfoForAssVO> getWork_Ass(String usRn){
-		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus from workInfoForAss where assUsrn='" + usRn + "' and (st!=2 and st!=3) and (nvl(appstatus,4)!=0)";
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where assUsrn='" + usRn + "' and (st!=2 and st!=3 and st!=5) and (nvl(appstatus,4)!=0)";
+		try {
+			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+	
+	List<WorkInfoForAssVO> getWork_Ass_st2(String type ,String usRn){
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where " + type + "='" + usRn + "' and st=2 and (nvl(appstatus,4)!=0) and nvl(de,0)=1";
 		try {
 			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
 		} catch (EmptyResultDataAccessException e) {
@@ -254,7 +264,7 @@ public class WorkInfoDAO {
 	}
 
 	List<WorkInfoForAssVO> getCancelWork_Ass(String usRn){
-		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus from workInfoForAss where assUsrn='" + usRn + "' and st=3";
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where assUsrn='" + usRn + "' and st=3";
 		try {
 			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
 		} catch (EmptyResultDataAccessException e) {
@@ -271,6 +281,17 @@ public class WorkInfoDAO {
 		} catch (EmptyResultDataAccessException e) {
 			System.err.println("work DAO 오류 : " + e);
 			return null;
+		}
+	}
+	
+	int calculateAct(String workCode, String usRn) {
+		String sql = "update workInfo set st=5 where workCode=? and assusrn=?";
+		try {
+			jdbcTemplate.update(sql,workCode,usRn);
+			return 1;
+		} catch (Exception e) {
+			System.err.println(e);
+			return 0;
 		}
 	}
 	
