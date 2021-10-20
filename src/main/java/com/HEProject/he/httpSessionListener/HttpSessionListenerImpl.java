@@ -26,6 +26,20 @@ private static final Map<String, HttpSession> oldSession = new ConcurrentHashMap
 		return rlt;
 	}
 	
+	//중복로그인 방지
+		public synchronized static String getSessionidCheck(String type, int index_data){
+			String usRn = String.valueOf(index_data);
+			String rlt = "";
+			for( String key : oldSession.keySet() ){
+				HttpSession session = oldSession.get(key);
+				if(session != null &&  session.getAttribute(type) != null && session.getAttribute(type).toString().equals(usRn) ){
+					rlt =  key.toString();
+				}
+			}
+			removeOldSession(rlt);
+			return rlt;
+		}
+	
 	private static void removeOldSession(String userId){    	
 		if(userId != null && userId.length() > 0){
 			oldSession.get(userId).invalidate();

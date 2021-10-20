@@ -33,6 +33,9 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 			return "login.jsp";
 		}else if(result.getUserID().equals(vo.getUserID())&&result.getUserPW().equals(vo.getUserPW())){
 			HttpSessionListenerImpl.getSessionidCheck("usRn", result.getUsRn());
+			HttpSessionListenerImpl.getSessionidCheck("userId", result.getUserID());
+			HttpSessionListenerImpl.getSessionidCheck("userClass", result.getUserClass());
+			HttpSessionListenerImpl.getSessionidCheck("userName", result.getUserName());
 			session.setAttribute("usRn", result.getUsRn());
 			session.setAttribute("userId", result.getUserID());
 			session.setAttribute("userClass", result.getUserClass());
