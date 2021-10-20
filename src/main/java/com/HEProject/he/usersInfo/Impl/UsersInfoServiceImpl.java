@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.HEProject.he.boInfo.BOInfoService;
 import com.HEProject.he.boInfo.BOInfoVO;
+import com.HEProject.he.httpSessionListener.HttpSessionListenerImpl;
 import com.HEProject.he.usersInfo.SearchInfoVO;
 import com.HEProject.he.usersInfo.UsersInfoService;
 import com.HEProject.he.usersInfo.UsersInfoVO;
@@ -32,11 +32,12 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 			request.setAttribute("loginST", 0);
 			return "login.jsp";
 		}else if(result.getUserID().equals(vo.getUserID())&&result.getUserPW().equals(vo.getUserPW())){
+			HttpSessionListenerImpl.getSessionidCheck("usRn", result.getUsRn());
 			session.setAttribute("usRn", result.getUsRn());
 			session.setAttribute("userId", result.getUserID());
 			session.setAttribute("userClass", result.getUserClass());
 			session.setAttribute("userName", result.getUserName());
-			session.setMaxInactiveInterval(-1);
+			session.setMaxInactiveInterval(60*60);
 			BOInfoVO boRS = boInfoService.getBOInfo(boVO, session);
 			if(boRS==null) {
 				session.setAttribute("boCheckIndex", "none");

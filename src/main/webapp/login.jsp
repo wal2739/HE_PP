@@ -10,16 +10,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>로그인</title>
 	<script type="text/javascript">
-	function loginST() {
-		var loginST = <%=request.getAttribute("loginST")%>
-		if(loginST==null){}
-		if(loginST==0){
+	function loginST() {		
+		switch (<%=request.getAttribute("loginST")%>) {
+		case null:
+			break;
+		case 0:
+			alert('존재 하지 않는 아이디 입니다.');
+			break;
+		case 1:
+			alert('이미 접속중인 아이디 입니다.\n계정당 한번의 로그인만 허용됩니다.');
+			location.href = 'login.jsp';
+			break;
+		case 2:
 			alert('아이디와 비밀번호를 확인해주세요.');
+			location.href = 'login.jsp';
+			break;
+		default:
+			alert('정상적인 요청이 아닙니다.');
+			break;
 		}
-		if(loginST==2){
-			alert('잘못된 접근입니다.');
-		}
-		
+
 		switch (<%=request.getAttribute("newUserRlt")%>) {
 		case null:
 			break;
