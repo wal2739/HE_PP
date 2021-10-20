@@ -13,20 +13,20 @@ public class HttpSessionListenerImpl implements HttpSessionListener{
 
 private static final Map<String, HttpSession> oldSession = new ConcurrentHashMap<String, HttpSession>();
 	
-	//중복로그인 지우기
-	public synchronized static String getSessionidCheck(String type, String compareId){
-		String result = "";
+	//중복로그인 방지
+	public synchronized static String getSessionidCheck(String type, String usRn){
+		String rlt = "";
 		for( String key : oldSession.keySet() ){
-			HttpSession hs = oldSession.get(key);
-			if(hs != null &&  hs.getAttribute(type) != null && hs.getAttribute(type).toString().equals(compareId) ){
-				result =  key.toString();
+			HttpSession session = oldSession.get(key);
+			if(session != null &&  session.getAttribute(type) != null && session.getAttribute(type).toString().equals(usRn) ){
+				rlt =  key.toString();
 			}
 		}
-		removeSessionForDoubleLogin(result);
-		return result;
+		removeOldSession(rlt);
+		return rlt;
 	}
 	
-	private static void removeSessionForDoubleLogin(String userId){    	
+	private static void removeOldSession(String userId){    	
 		if(userId != null && userId.length() > 0){
 			oldSession.get(userId).invalidate();
 			oldSession.remove(userId);    		

@@ -37,7 +37,7 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 			session.setAttribute("userId", result.getUserID());
 			session.setAttribute("userClass", result.getUserClass());
 			session.setAttribute("userName", result.getUserName());
-			session.setMaxInactiveInterval(60*60);
+			session.setMaxInactiveInterval(-1);
 			BOInfoVO boRS = boInfoService.getBOInfo(boVO, session);
 			if(boRS==null) {
 				session.setAttribute("boCheckIndex", "none");
