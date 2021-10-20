@@ -30,7 +30,6 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 		UsersInfoVO result = dao.getUser(vo);
 		if(result==null) {
 			request.setAttribute("loginST", 0);
-			return "login.jsp";
 		}else if(result.getUserID().equals(vo.getUserID())&&result.getUserPW().equals(vo.getUserPW())){
 			HttpSessionListenerImpl.getSessionidCheck("usRn", result.getUsRn());
 			HttpSessionListenerImpl.getSessionidCheck("userId", result.getUserID());
@@ -47,11 +46,12 @@ public class UsersInfoServiceImpl implements UsersInfoService{
 			}else {
 				session.setAttribute("boCheckIndex", "check");
 			}
-			return "main.do";
+			request.setAttribute("loginST", 1);
 		}else{
 			request.setAttribute("loginST", 2);
-			return "login.jsp";
 		}
+		return "login.jsp";
+
 	}
 	
 	@Override

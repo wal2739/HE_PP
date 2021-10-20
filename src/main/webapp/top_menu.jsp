@@ -1,14 +1,107 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-
-
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>메인 화면</title>
+<title>상단메뉴</title>
+</head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?ver=13"></script>
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/css/main.css?ver=15">
+<style>
+* { 
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
+	
+}
+
+
+body {
+  font-family: 'Rubik', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("/image/bg_body.png") repeat center;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: repeat;
+  height: 100vh;
+}
+
+a {
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.nav-area *{
+  z-index : 999;
+}
+.nav-area ul {float:right;}
+
+.nav-area {
+  position : static;
+  background: #262626;
+}
+
+
+.nav-area:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+.nav-area ul{
+  list-style: none;
+  margin: 0;
+
+}
+
+.nav-area > ul > li {
+  float: left;
+  position: relative;
+}
+
+.nav-area ul li a {
+  text-decoration: none;
+  color: #fff;
+  padding: 15px 20px;
+  display: block;
+
+}
+
+.nav-area ul li:hover a {
+  background: #34495a;
+}
+
+.nav-area ul ul {
+  position: absolute;
+  padding: 0;
+  min-width: 160px;
+  display: none;
+  top: 100%;
+  left: 0;
+}
+
+.nav-area ul li:hover > ul {
+  display: block;
+}
+
+.nav-area ul ul li:hover a {
+  background: #262626;
+
+}
+
+.nav-area ul ul li {
+  position: relative;
+}
+
+.nav-area ul ul ul {
+  top: 0;
+  left: 100%;
+}
+</style>
 <%
 
 	String loginCheckData = "";
@@ -96,57 +189,42 @@
 	}
 
 %>
-</head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?ver=13"></script>
-<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="/css/main.css?ver=14">
-<script type="text/javascript">
-	function loadOn() {
-		var checkData = '<%=checkData%>';
-		if(checkData=='성공'){
-			var loginCheckData = '<%=loginCheckData%>';
-		}else if(checkData=='실패'){
-			var loginCheckData = null;
-		}
-		loginChecknBreak(loginCheckData);
+<body>
+	<nav class="nav-area">
+			<ul>
+			<li><a href="main.do">Home</a></li>
+			<li><a href="about.html">About</a></li>
+			<li><a href="#"><%=menuInfo[0]%></a>
+				<ul>
+					<li><a href="<%=dropMenuLink[0]%>"><%=dropMenuInfo[0] %></a></li>
+					<li><a href="<%=dropMenuLink[1]%>"><%=dropMenuInfo[1] %></a></li>
+					<li><a href="<%=dropMenuLink[2]%>"><%=dropMenuInfo[2] %></a></li>
+					<% if(userClassData.equals(1)){%><li><a href="<%=dropMenuLink[3]%>"><%=dropMenuInfo[3] %></a></li><%} %>
 
-	}
-	function loadOn02() {
-		var boCheckIndex = '<%=boCheckIndex%>';
-		boIndexCheck(boCheckIndex);
-	}
-	$(document).ready(function(){
-		var currentPosition = parseInt($("#floating_btn").css("top"));
-		$(window).scroll(function() {
-			var position = $(window).scrollTop();
-			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
-		});
-	});
-</script>
-<style>
-</style>
-<body onload="loadOn();">
-	<jsp:include page="top_menu.jsp" />
-	<main> <!-- 4분할 or 3분할 or 2분할 필요 , 좌측 상단에 로고 영역 표시 필요--> 내용이 들어감
-		<div class="floating_btn" id="floating_btn">
-	    	<p id="floating_title"><b>리모컨</b></p>
-	    	<div class="floating_btn_img" onclick="show_top();">
-	    		<img src="/image/up_arrow.png" alt="상단 이동"/>
-	    	</div>
-	    	<p>맨위로</p>
-	    	<div class="floating_btn_img" onclick="link_call();">
-	    		<img src="/image/call_img.png" alt="상담 버튼"/>
-	    	</div>
-	    	<p>고객센터</p>
-	    	<div class="floating_btn_img" onclick="location.href='main.do'">
-	    		<img src="/image/home_btn.png" alt="상담 버튼"/>
-	    	</div>
-	    	<p>HOME</p>
-	    </div>
-	</main>
-	<%-- <a href="#">메세지 페이지로</a> --%>
+				</ul></li>
+			<li><a href="#"><%=menuInfo[1]%></a>
+				<ul>
+					<li><a href="<%=dropMenuLink[4]%>"><%=dropMenuInfo[4] %></a></li>
+					<li><a href="<%=dropMenuLink[5]%>"><%=dropMenuInfo[5] %></a></li>
+					<% if(userClassData.equals(2)){%><li><a href="<%=dropMenuLink[6]%>"><%=dropMenuInfo[6] %></a></li><%} %>
 
+				</ul></li>
+			<li><a href="#"><%=menuInfo[2]%></a>
+				<ul>
+					<li><a href="<%=dropMenuLink[8]%>"><%=dropMenuInfo[8] %></a></li>
+					<li><a href="<%=dropMenuLink[9]%>"><%=dropMenuInfo[9] %></a></li>
+
+				</ul></li>
+			<li><a href="#"><%=menuInfo[3]%></a>
+				<ul>
+					<li><a href="<%=dropMenuLink[13]%>"><%=dropMenuInfo[13] %></a></li>
+					<li><a href="<%=dropMenuLink[14]%>"><%=dropMenuInfo[14] %></a></li>
+					<li><a href="<%=dropMenuLink[15]%>"><%=dropMenuInfo[15] %></a></li>
+				</ul>
+			</li>
+			<li><a href="logOut.do">로그아웃</a></li>
+			<li><a href="checkIdentity.jsp">내정보</a></li>
+		</ul>
+	</nav>
 </body>
 </html>

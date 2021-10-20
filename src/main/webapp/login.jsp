@@ -18,8 +18,7 @@
 			alert('존재 하지 않는 아이디 입니다.');
 			break;
 		case 1:
-			alert('이미 접속중인 아이디 입니다.\n계정당 한번의 로그인만 허용됩니다.');
-			location.href = 'login.jsp';
+			location.href = 'main.do';
 			break;
 		case 2:
 			alert('아이디와 비밀번호를 확인해주세요.');
