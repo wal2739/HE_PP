@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.HEProject.he.receipt.Receipt_ViewVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -252,7 +254,10 @@ function afterPrint()
 	                        <th>비&nbsp;&nbsp;&nbsp;고</th>
 	                    </tr>
 	                    <tr>
-	                        <td><%=vo.getWorkDate() %></td>
+	                        <td>
+	                        	<%Date todayDate = new Date(); SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd"); %>
+	                        	<%=date.format(todayDate) %>
+	                        </td>
 	                        <td>&#8361;<%=formatter.format(vo.getWorkAmount()+vo.getAa()) %></td>
 	                        <td><%=vo.getRelative()==null ? "-" : vo.getRelative() %></td>
 	                    </tr>

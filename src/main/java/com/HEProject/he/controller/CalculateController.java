@@ -36,6 +36,14 @@ public class CalculateController {
 		return mav;
 	}
 	
+	@RequestMapping("finishedCalculate.do")
+	public ModelAndView finishedCalculate(ModelAndView mav, HttpSession session,HttpServletRequest request) {
+		System.out.println("완료 정산 조회");
+		mav.addObject("list",workInfoService.getWork_Ass_st5(request, session));
+		mav.setViewName("finishedCalculate.jsp");
+		return mav;
+	}
+	
 	@RequestMapping("receipt.do")
 	public ModelAndView receipt(ModelAndView mav, HttpSession session,HttpServletRequest request) {
 		System.out.println("영수증 확인");
@@ -43,5 +51,14 @@ public class CalculateController {
 		mav.setViewName("receipt.jsp");
 		return mav;
 	}
+	
+	@RequestMapping("getStatistics.do")
+	public ModelAndView getStatistics(ModelAndView mav, HttpSession session,HttpServletRequest request) {
+		System.out.println("그래프");
+		mav.addObject("list", workInfoService.getStatistics(request, session));
+		mav.setViewName("getStatistics.jsp");
+		return mav;
+	}
+	
 	
 }

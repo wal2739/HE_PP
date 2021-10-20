@@ -1,33 +1,137 @@
-<%@page import="com.HEProject.he.workInfo.WorkInfoForAssVO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.sql.Date"%>
+<%@page import="com.HEProject.he.workInfo.WorkInfoVO"%>
 <%@page import="java.util.List"%>
-<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-    <%
-		
+        <%
+    	Object userClassData = session.getAttribute("userClass");
 		String loginCheckData="";
 		try{
 			loginCheckData= (String)session.getAttribute("userId");
 		}catch(NullPointerException e){
 			System.err.println("비회원 아이디 에러 : "+e);
 		}
-		List<WorkInfoForAssVO> list = null;
+		List<WorkInfoVO> list = null;
 		if(loginCheckData!=null){
 			list = (List)request.getAttribute("list");
-		}	
+		}
+		Calendar cal = Calendar.getInstance();
+		boolean index_set=true;
+		int nowMonth= cal.get(Calendar.MONTH)+1; /* 이번 달 */
+		int[] work_Cnt = new int[6]; /* 월별 작업 수 */
+		int[] workAmount_Sum = new int[6]; /* 월별 총 수입 */
+		int[] workMaxAmount = new int[6]; /* 작업 최대 수당 */
+		for(int i = 0 ; i < list.size(); i++){
+			int monthDt = list.get(i).getWorkDate().getMonth()+1;/* 데이터의 월 구하기 */
+
+			if(nowMonth==monthDt){
+				workAmount_Sum[0] = workAmount_Sum[0] + list.get(i).getWorkAmount();
+				work_Cnt[0]=work_Cnt[0]+1;
+				workMaxAmount[0] = workMaxAmount[0]>=list.get(i).getWorkAmount() ? workMaxAmount[0] : list.get(i).getWorkAmount();
+				
+			}else if((nowMonth-1)==monthDt){
+				workAmount_Sum[1] = workAmount_Sum[1] + list.get(i).getWorkAmount();
+				work_Cnt[1]=work_Cnt[1]+1;
+				workMaxAmount[1] = workMaxAmount[1]>=list.get(i).getWorkAmount() ? workMaxAmount[1] : list.get(i).getWorkAmount();
+				
+			}else if((nowMonth-2)==monthDt){
+				workAmount_Sum[2] = workAmount_Sum[2] + list.get(i).getWorkAmount();
+				work_Cnt[2]=work_Cnt[2]+1;
+				workMaxAmount[2] = workMaxAmount[2]>=list.get(i).getWorkAmount() ? workMaxAmount[2] : list.get(i).getWorkAmount();
+
+			}else if((nowMonth-3)==monthDt){
+				workAmount_Sum[3] = workAmount_Sum[3] + list.get(i).getWorkAmount();
+				work_Cnt[3]=work_Cnt[3]+1;
+				workMaxAmount[3] = workMaxAmount[3]>=list.get(i).getWorkAmount() ? workMaxAmount[3] : list.get(i).getWorkAmount();
+
+			}else if((nowMonth-4)==monthDt){
+				workAmount_Sum[4] = workAmount_Sum[4] + list.get(i).getWorkAmount();
+				work_Cnt[4]=work_Cnt[4]+1;
+				workMaxAmount[4] = workMaxAmount[4]>=list.get(i).getWorkAmount() ? workMaxAmount[4] : list.get(i).getWorkAmount();
+
+			}else if((nowMonth-5)==monthDt){
+				workAmount_Sum[5] = workAmount_Sum[5] + list.get(i).getWorkAmount();
+				work_Cnt[5]=work_Cnt[5]+1;
+				workMaxAmount[5] = workMaxAmount[5]>=list.get(i).getWorkAmount() ? workMaxAmount[5] : list.get(i).getWorkAmount();
+
+			}
+		}
+		int[] work_avg = new int[6];
+		for(int i = 0; i < 6; i++){
+			if(workAmount_Sum[i]==0||work_Cnt[i]==0){
+				work_avg[i] = 0;
+			}else {
+				work_avg[i] = workAmount_Sum[i]/work_Cnt[i];
+			}
+		}
+		System.out.println(work_avg[3] + ", " + workAmount_Sum[3] + ", " + work_Cnt[3] + ", " + workMaxAmount[3]);
+		
+		
     %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>정산 처리</title>
+<title>현황/그래프</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/main.css?ver=22">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="/js/main.js?ver=10" ></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawVisualization01);
+function drawVisualization01() {
+    // Some raw data (not necessarily accurate)
+    var data01 = google.visualization.arrayToDataTable([
+      ['월', '월간 <%=userClassData.equals(1)?"작업량":"등록 작업량"%>'],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-5)%>',  <%=work_Cnt[5]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-4)%>',  <%=work_Cnt[4]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-3)%>',  <%=work_Cnt[3]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-2)%>',  <%=work_Cnt[2]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-1)%>',  <%=work_Cnt[1]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ nowMonth%>',  <%=work_Cnt[0]%>]
+    ]);
+
+    var options01 = {
+      title : '월간 <%=userClassData.equals(1)?"작업량":"등록 작업량"%>',
+      vAxis: {title: '<%=userClassData.equals(1)?"작업":"등록 작업량"%>'},
+      hAxis: {title: '월'},
+      seriesType: 'line',
+    };
+
+    var chart01 = new google.visualization.ComboChart(document.getElementById('chart_div01'));
+    chart01.draw(data01, options01);
+  }
+  google.charts.setOnLoadCallback(drawVisualization02);
+  function drawVisualization02() {
+    // Some raw data (not necessarily accurate)
+    var data02 = google.visualization.arrayToDataTable([
+      ['월', '월 <%=userClassData.equals(1)?"수입":"비용"%>', '건당 최고 <%=userClassData.equals(1)?"금액":"비용"%>', '작업당 평균 <%=userClassData.equals(1)?"수입":"비용"%>'],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-5)%>',  <%=workAmount_Sum[5]%>, <%=workMaxAmount[5]%>, <%=work_avg[5]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-4)%>',  <%=workAmount_Sum[4]%>, <%=workMaxAmount[4]%>, <%=work_avg[4]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-3)%>',  <%=workAmount_Sum[3]%>, <%=workMaxAmount[3]%>, <%=work_avg[3]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-2)%>',  <%=workAmount_Sum[2]%>, <%=workMaxAmount[2]%>, <%=work_avg[2]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ (nowMonth-1)%>',  <%=workAmount_Sum[1]%>, <%=workMaxAmount[1]%>, <%=work_avg[1]%>],
+      ['<%=cal.get(Calendar.YEAR)+"/"+ nowMonth%>',  <%=workAmount_Sum[0]%>, <%=workMaxAmount[0]%>, <%=work_avg[0]%>]
+    ]);
+
+    var options02 = {
+      title : '월간 통계 (단위 : 만)',
+      vAxis: {title: '<%=userClassData.equals(1)?"수입":"작업 비용"%>'},
+      hAxis: {title: '월'},
+      seriesType: 'bars',
+      series: {2: {type: 'line'}}
+    };
+
+    var chart01 = new google.visualization.ComboChart(document.getElementById('chart_div02'));
+    chart01.draw(data02, options02);
+  }
+
 function loadOn() {
 	var loginCheckData = '<%=loginCheckData%>';
 	loginCheck(loginCheckData);
@@ -39,48 +143,6 @@ $(document).ready(function(){
 		$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
 	});
 });
-function loadOn() {
-	var calRlt = <%=request.getAttribute("calRlt")%>;
-	if(calRlt!=null){
-		switch (calRlt) {
-		case 0:
-			alert('정상적으로 처리되지 않았습니다.');
-			break;
-		case 1:
-			var con_val = confirm('정산처리가 완료 되었습니다.\n해당 영수증을 출력 혹은 다운로드 하시겠습니까?');
-			if(con_val==true){
-				show_receipt('<%=request.getAttribute("wCode")%>');
-			}
-			break;
-		default:
-			alert('정상적인 요청이 아닙니다.');
-			break;
-		}
-		location.href='calculate.doclassType='+<%=request.getAttribute("classType")%>;
-	}
-}
-/* function view_iframe(code) {
-	document.getElementById('receiptInfo').setAttribute('src','receipt.jsp');
-} */
-function confirm_check(workCode) {
-	var con_var = confirm('정산처리 하시겠습니까?\n\n※경고※\n허위 정산처리는 법적 조치를 취할 수 있으니 \n충분한 유의를 바랍니다.');
-	switch (con_var) {
-	case true:
-		location.href="calculateAct.do?workCode="+workCode+"&classType=assUsRn";
-		break;
-	case false:
-		alert('취소했습니다.');
-		break;
-	default:
-		alert('정상적인 접근이 아닙니다.');
-		location.href="calculate.do?classType="+<%=request.getAttribute("classType")%>;
-		break;
-	}
-}
-function show_receipt(workCode) {
-	window.name="parentForm";
-	window.open("receipt.do?classType=assUsRn&wCode="+workCode,"chkForm","width=950,height=1250,resizable=no,scrollbars=no");
-}
 </script>
 <style>
 	.mainDiv{
@@ -108,13 +170,13 @@ function show_receipt(workCode) {
 .div_2_back {
 	display : inline-block;
 	width: 70%;
-	height: 90%;
+	height: auto;
 	background: rgba(255,255,255,.75);
 	
 }
 .div2_1 {
   width: 80%;
-  height: 80%;
+  height: auto;
   overflow: auto;
   margin : 0 auto 30px auto;
 }
@@ -129,7 +191,12 @@ function show_receipt(workCode) {
 .div2_1_2 {
   width: 100%;
   height: calc(100% - 50px);
-  overflow: auto;
+  overflow: hidden;
+  text-align: center;
+}
+
+#chart_div01, #chart_div02{
+	display: inline-block;
 }
 
 .inpuTBDiv {
@@ -167,7 +234,7 @@ function show_receipt(workCode) {
 }
 .div2_2 {
   width: 85%;
-  height: 20%;
+  height: auto;
   margin : 0 auto 0 auto;
   border-top: 0.5px solid black;
 }
@@ -254,7 +321,6 @@ p {
 } */
 </style>
 <%
-	Object userClassData = session.getAttribute("userClass");
 	String menuInfo[] = new String[4];
 	String dropMenuInfo[] = new String[16];
 	String dropMenuLink[] = new String[16];
@@ -386,73 +452,26 @@ p {
 		<div class="mainDiv">
 			<div class="div1">
 				<div class="div1_textArea">
-					<h2>정산 처리</h2>
+					<h2>통계</h2>
 				</div>
 			</div>
 			<div class="div2">
 				<div class="div_2_back">
 					<div class="div2_1">
 						<div class="div2_1_1">
-							<h2 id="div2_1_1_h2">정산처리 목록</h2>
+							<h2 id="div2_1_1_h2">통계 및 현황</h2>
 						</div>
 						<div class="div2_1_2">
-							<table id="inputTB">
-							<tr id="top_tr">
-				            	<th></th>
-				            	<th>현장명</th>
-					 			<th>현장 책임자</th>
-					 			<th>현장 연락처</th>
-					 			<th>현장 주소</th>
-					 			<th>현장 상세주소</th>
-					 			<th>작업 금액</th>
-					 			<th></th>
-					 		</tr>
-					 		<%
-					 		int amount = 0;
-							DecimalFormat formatter = new DecimalFormat("###,### 원");
-							if(list.size()==0||list==null){%>
-							<tr>
-					 			<td colspan="8">작업이 없습니다.</td>
-					 		</tr>
-							<%}else{
-								for(int i = 0 ; i < list.size(); i++){%>
-								<tr style="cursor: pointer;">
-									<td><%=i+1 %></td>
-				                	<td><%=list.get(i).getWorkField() %></td>
-					                <td><%=list.get(i).getFieldManager() %></td>
-					                <td><%=list.get(i).getFieldManagerCell() %></td>
-					                <td><%=list.get(i).getFieldAdd01() %></td>
-					                <td><%=list.get(i).getFieldAdd02() %></td>
-					                <td><%=formatter.format(list.get(i).getWorkAmount()) %></td>
-					                <td><button class="check_btn" onclick="confirm_check('<%=list.get(i).getWorkCode()%>');">정산처리</button></td>
-				               </tr>
-								<!--  -->
-							<%}} %>
-				            <tr id="btm_tr">
-					 			<th>
-					 				<%if(list.size()==0){ %>
-					 				작업 없음
-					 				<%}else { %>
-					 				총 작업 : <%=list.size() %>
-					 				<%} %>
-					 			</th>
-					 			<th></th>
-					 			<th></th>
-					 			<th></th>
-					 			<th></th>
-					 			<th></th>
-					 			<th></th>
-					 			<th></th>
-					 		</tr>
-							</table>
+							    <div id="chart_div01" style="width: 1000px; height: 500px;"></div>
+   								<div id="chart_div02" style="width: 1000px; height: 500px;"></div>
 						</div>
 					</div>
 					<div class="div2_2">
 						<div class="div2_2_2">
 							<div class="div2_2_2_btn">
-								<button onclick="location.href='finishedCalculate.do?classType=assusrn'">정산 완료 목록</button>
-<!-- 								<button onclick="location.href='#'">다운로드</button>
- -->						</div>
+								<p>※ 취소 작업을 제외한 모든 작업(미발주 포함)을 기반으로 그래프가 생성되오니, 참고 부탁드립니다.</p>
+								<p>※ 통계 자료는 참고용으로만 이용 해주세요.</p>
+							</div>
 						</div>
 					</div>
 				</div>

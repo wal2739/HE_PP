@@ -277,6 +277,14 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	}
 	
 	@Override
+	public List<WorkInfoForAssVO> getWork_Ass_st5(HttpServletRequest request, HttpSession session) {
+		String usRn = (String)session.getAttribute("usRn");
+		String type = request.getParameter("classType");
+		request.setAttribute("classType", type);
+		return dao.getWork_Ass_st5(type ,usRn);
+	}
+	
+	@Override
 	public WorkInfoForAssVO getWorkInfo_Ass(HttpServletRequest request, HttpSession session) {
 		String usRn = (String)session.getAttribute("usRn");
 		String workCode = (String)request.getParameter("wCode");
@@ -315,6 +323,10 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 			break;
 		}
 	}
-
+	
+	@Override
+	public List<WorkInfoVO> getStatistics(HttpServletRequest request, HttpSession session){
+		return dao.getStatistics(request.getParameter("classType"), (String)session.getAttribute("usRn"));
+	}
 	
 }

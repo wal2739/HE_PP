@@ -60,4 +60,8 @@ public interface WorkInfoService {
 
 	List<WorkInfoForAssVO> getWork_Ass_st2(HttpServletRequest request, HttpSession session);
 
+	List<WorkInfoForAssVO> getWork_Ass_st5(HttpServletRequest request, HttpSession session);
+
+	List<WorkInfoVO> getStatistics(HttpServletRequest request, HttpSession session);
+
 }

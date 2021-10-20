@@ -1,6 +1,6 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="com.HEProject.he.workInfo.WorkInfoForAssVO"%>
 <%@page import="java.util.List"%>
-<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
     <%
@@ -20,7 +20,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>정산 처리</title>
+<title>정산 완료 조회</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/main.css?ver=22">
@@ -39,47 +39,9 @@ $(document).ready(function(){
 		$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
 	});
 });
-function loadOn() {
-	var calRlt = <%=request.getAttribute("calRlt")%>;
-	if(calRlt!=null){
-		switch (calRlt) {
-		case 0:
-			alert('정상적으로 처리되지 않았습니다.');
-			break;
-		case 1:
-			var con_val = confirm('정산처리가 완료 되었습니다.\n해당 영수증을 출력 혹은 다운로드 하시겠습니까?');
-			if(con_val==true){
-				show_receipt('<%=request.getAttribute("wCode")%>');
-			}
-			break;
-		default:
-			alert('정상적인 요청이 아닙니다.');
-			break;
-		}
-		location.href='calculate.doclassType='+<%=request.getAttribute("classType")%>;
-	}
-}
-/* function view_iframe(code) {
-	document.getElementById('receiptInfo').setAttribute('src','receipt.jsp');
-} */
-function confirm_check(workCode) {
-	var con_var = confirm('정산처리 하시겠습니까?\n\n※경고※\n허위 정산처리는 법적 조치를 취할 수 있으니 \n충분한 유의를 바랍니다.');
-	switch (con_var) {
-	case true:
-		location.href="calculateAct.do?workCode="+workCode+"&classType=assUsRn";
-		break;
-	case false:
-		alert('취소했습니다.');
-		break;
-	default:
-		alert('정상적인 접근이 아닙니다.');
-		location.href="calculate.do?classType="+<%=request.getAttribute("classType")%>;
-		break;
-	}
-}
 function show_receipt(workCode) {
 	window.name="parentForm";
-	window.open("receipt.do?classType=assUsRn&wCode="+workCode,"chkForm","width=950,height=1250,resizable=no,scrollbars=no");
+	window.open("receipt.do?classType=<%=request.getAttribute("classType")%>&wCode="+workCode,"chkForm","width=950,height=1250,resizable=no,scrollbars=no");
 }
 </script>
 <style>
@@ -405,18 +367,17 @@ p {
 					 			<th>현장 주소</th>
 					 			<th>현장 상세주소</th>
 					 			<th>작업 금액</th>
-					 			<th></th>
 					 		</tr>
 					 		<%
 					 		int amount = 0;
 							DecimalFormat formatter = new DecimalFormat("###,### 원");
-							if(list.size()==0||list==null){%>
+							if(list==null||list.size()==0){%>
 							<tr>
 					 			<td colspan="8">작업이 없습니다.</td>
 					 		</tr>
 							<%}else{
 								for(int i = 0 ; i < list.size(); i++){%>
-								<tr style="cursor: pointer;">
+								<tr style="cursor: pointer;" onclick="show_receipt('<%=list.get(i).getWorkCode()%>')">
 									<td><%=i+1 %></td>
 				                	<td><%=list.get(i).getWorkField() %></td>
 					                <td><%=list.get(i).getFieldManager() %></td>
@@ -424,19 +385,17 @@ p {
 					                <td><%=list.get(i).getFieldAdd01() %></td>
 					                <td><%=list.get(i).getFieldAdd02() %></td>
 					                <td><%=formatter.format(list.get(i).getWorkAmount()) %></td>
-					                <td><button class="check_btn" onclick="confirm_check('<%=list.get(i).getWorkCode()%>');">정산처리</button></td>
 				               </tr>
 								<!--  -->
 							<%}} %>
 				            <tr id="btm_tr">
 					 			<th>
-					 				<%if(list.size()==0){ %>
+									<%if(list==null||list.size()==0){%>
 					 				작업 없음
 					 				<%}else { %>
 					 				총 작업 : <%=list.size() %>
 					 				<%} %>
 					 			</th>
-					 			<th></th>
 					 			<th></th>
 					 			<th></th>
 					 			<th></th>
@@ -450,9 +409,8 @@ p {
 					<div class="div2_2">
 						<div class="div2_2_2">
 							<div class="div2_2_2_btn">
-								<button onclick="location.href='finishedCalculate.do?classType=assusrn'">정산 완료 목록</button>
-<!-- 								<button onclick="location.href='#'">다운로드</button>
- -->						</div>
+								<p>※정산 확인증(영수증) 을 확인 하시려면 해당 작업을 클릭 해주세요.</p>
+							</div>
 						</div>
 					</div>
 				</div>

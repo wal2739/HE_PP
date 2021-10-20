@@ -58,8 +58,8 @@
 			dropMenuLink[5] = "finishedWorkList.do";
 			dropMenuLink[6] = "";
 			dropMenuLink[7] = "";
-			dropMenuLink[8] = "";
-			dropMenuLink[9] = "";
+			dropMenuLink[8] = "finishedCalculate.do?classType=indiusrn";
+			dropMenuLink[9] = "getStatistics.do?classType=indiusrn";
 			dropMenuLink[10] = "";
 			dropMenuLink[11] = "";
 			dropMenuLink[12] = "";
@@ -94,7 +94,7 @@
 			dropMenuLink[6] = "finishedWorkList_Ass.do";
 			dropMenuLink[7] = "";
 			dropMenuLink[8] = "calculate.do?classType=assUsRn";
-			dropMenuLink[9] = "";
+			dropMenuLink[9] = "getStatistics.do?classType=assUsRn";
 			dropMenuLink[10] = "";
 			dropMenuLink[11] = "";
 			dropMenuLink[12] = "";

@@ -252,6 +252,16 @@ public class WorkInfoDAO {
 		}
 	}
 	
+	List<WorkInfoForAssVO> getWork_Ass_st5(String type ,String usRn){
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where " + type + "='" + usRn + "' and st=5 and (nvl(appstatus,4)!=0) and nvl(de,0)=1";
+		try {
+			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+	
 	WorkInfoForAssVO getWorkInfo_Ass(String usRn, String workCode){
 		String sql = "select * from workInfoForAss where assUsrn=?  and workCode='" + workCode + "' and (nvl(appstatus,4)!=0)";
 		Object[] args = {usRn};
@@ -292,6 +302,16 @@ public class WorkInfoDAO {
 		} catch (Exception e) {
 			System.err.println(e);
 			return 0;
+		}
+	}
+	
+	List<WorkInfoVO> getStatistics(String type, String usRn) {
+		String sql = "select workAmount,workdate from workInfo where (st=2 or st=5 or st=1) and " + type + "='" + usRn +"' and workdate between to_char(add_months(TRUNC(SYSDATE, 'MM'),-6),'yyyy-mm-dd') and LAST_DAY(SYSDATE)";
+		try {
+			return jdbcTemplate.query(sql, new StatisticsRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
 		}
 	}
 	
