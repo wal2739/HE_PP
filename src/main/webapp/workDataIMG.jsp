@@ -76,6 +76,7 @@ body:after {
 }
 </style>
 <body onload="">
+	<jsp:include page="boCheck_module.jsp" />
 	<!-- 추후 사이즈 조정 필요함-->
 	<h1>증빙자료 보기/다운로드</h1>
 	<div class="imgDIV" id="imgDIV">

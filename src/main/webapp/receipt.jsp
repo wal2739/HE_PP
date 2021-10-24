@@ -23,34 +23,8 @@ $(document).ready(function(){
 	});
 });
 function capture() {
-	
-}
-
-var div;
-var initBody;
-function capture() {
 	   window.print();
 }
-
-/* function capture()
-{
-   div = document.getElementById('main_div');
-    
-   window.onbeforeprint = beforePrint;
-   window.onafterprint = afterPrint;
-   window.print();
-}
-
-function beforePrint()
-{
-   initBody = document.body.innerHTML;
-   document.body.innerHTML = div.innerHTML;
-}
-
-function afterPrint()
-{
-   document.body.innerHTML = initBody;
-} */
 </script>
 <style>
 	* { 
@@ -178,6 +152,7 @@ function afterPrint()
 	}
 </style>
 <body>
+	<jsp:include page="boCheck_module.jsp" />
 	<div class="top_div">
 		<div class="btm_btn">
 	    	<button onclick="capture();">다운로드/<br />프린트</button>
@@ -192,9 +167,6 @@ function afterPrint()
 	                            <div class="div1"><p class="div1_p">분류 번호 : <%=vo.getWorkCode() %> </p></div>
 	                            <div class="div2"><P class="div2_p">정산 확인서</P></div>
 	                            <div class="div3"><p class="div3_p"><%=request.getAttribute("classType").equals("assUsRn") ? vo.getAssboName() : vo.getIndiboName()%> 귀하</p></div>
-	                            <!-- <div class="div1"><p style="float: left; margin-left: 5px;">분류 번호 : W99999999 </p></div>
-	                            <div class="div2"><P style="font-size: 30px;">영수증</P></div>
-	                            <div class="div3"><p style="float: right; margin-right: 5px;">귀하</p></div> -->
 	                        </th>
 	                    </tr>
 	                    <tr> 

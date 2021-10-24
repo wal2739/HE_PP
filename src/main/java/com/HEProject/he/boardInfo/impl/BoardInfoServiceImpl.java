@@ -67,8 +67,9 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 		default:
 			break;
 		}
-		
-		return dao.getBoard(vo);
+		BoardInfoVO rlt_vo = dao.getBoard(vo);
+		request.setAttribute("classType", rlt_vo.getBoardClass());
+		return rlt_vo;
 	}
 
 	@Override

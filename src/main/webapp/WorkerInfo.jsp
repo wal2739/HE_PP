@@ -6,20 +6,6 @@
     <%
     	List<WorkersInfoVO> vo = (List)request.getAttribute("wokersInfo"); 
 
-		String loginCheckData="";
-    	String checkData="";
-		String boCheckIndex = "";
-		try{
-			loginCheckData= (String)session.getAttribute("usRn");
-			if(loginCheckData==null){
-				checkData="실패";
-			}else{
-				boCheckIndex = (String)session.getAttribute("boCheckIndex");
-				checkData="성공";
-			}
-		}catch(NullPointerException e){
-			System.err.println("비회원 아이디 에러 : "+e);
-		}
     %>
 <!DOCTYPE html>
 <html>
@@ -197,34 +183,18 @@
 		}
 	}
 	function deleteCheck() {
-		var checkData = '<%=checkData%>';
-		console.log(checkData);
-		if(checkData=='성공'){
-			var loginCheckData = '<%=loginCheckData%>';
-		}else if(checkData=='실패'){
-			var loginCheckData = null;
+			
+		var deleteCheck = <%=request.getAttribute("deleteCheck")%>
+		if(deleteCheck==null){}
+		if(deleteCheck==0){
+			alert('대리작업자 삭제가 정상적으로 이루어지지 않았습니다. 다시 시도해주세요.');
 		}
-		console.log(loginCheckData);
-		var checkNum=loginChecknBreak(loginCheckData)*1;
-		if(checkNum==0){
-			return location.href='login.jsp';
+		if(deleteCheck==1){
+			alert('대리작업자 삭제가 완료되었습니다.');
+			location.href="WorkerInfo.do";
 		}
+			
 		
-		var boCheckIndex = '<%=boCheckIndex%>';
-		boIndexCheck(boCheckIndex);
-		if(boCheckIndex!='none'){
-			
-			var deleteCheck = <%=request.getAttribute("deleteCheck")%>
-			if(deleteCheck==null){}
-			if(deleteCheck==0){
-				alert('대리작업자 삭제가 정상적으로 이루어지지 않았습니다. 다시 시도해주세요.');
-			}
-			if(deleteCheck==1){
-				alert('대리작업자 삭제가 완료되었습니다.');
-				location.href="WorkerInfo.do";
-			}
-			
-		}
 	}
 
 </script>
@@ -280,13 +250,7 @@ $('document').ready(function() {
 
 
     });
-	$(document).ready(function(){
-		var currentPosition = parseInt($("#floating_btn").css("top"));
-		$(window).scroll(function() {
-			var position = $(window).scrollTop();
-			$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
-		});
-	});
+
 </script>
 <style>
 .mainDiv{
@@ -452,131 +416,124 @@ p {
 </style>
 <body onload="deleteCheck();workerCheck();">
 	<input type="hidden" id="workerCode" readonly="readonly"/>
-	<jsp:include page="top_menu.jsp" />
+    <jsp:include page="top_menu.jsp" />
+    <jsp:include page="floating_module.jsp" />
+    <jsp:include page="boCheck_module.jsp" />
 	<main>
-    <div class="mainDiv">
-      <div class="div1">
-        <div class="div1_textArea"><h2>대리 작업자 등록/삭제</h2></div>
-      </div>
-      <div class="div2">
-        <div class="div_2_back">
-        	<div class="div2_1">
-          <div class="div2_1_1">
-            <h2 id="div2_1_1_h2">대리작업자 등록</h2>
-          </div>
-          <div class="div2_1_2">
-          <form action="newWorker.do" name="forms" id="forms" onsubmit="return validate();">
-            <table id="inputTB">
-              <tr>
-                <th>비밀번호</th>
-                <td><input type="text" name="workerPW" id="workerPW" maxlength="10"/></td>
-                <th>비밀번호 확인</th>
-                <td><input type="text" name="workerPWCheck" id="workerPWCheck" maxlength="10"/></td>
-              </tr>
-              <tr>
-                <th>작업자 성명</th>
-                <td><input type="text" name="workerName" id="workerName" maxlength="6"/></td>
-                <th>주민등록번호</th>
-                <td>
-                	<input type="text" name="workerRRN01" id="workerRRN01" maxlength="6" style="width: 70px;"/> -
-		 			<input type="text" name="workerRRN02" id="workerRRN02" maxlength="7" style="width: 70px;"/>
-		 			<input type="hidden" id="workerRRN" name="workerRRN"/>
-		 		</td>
-              </tr>
-              <tr>
-                <th>전화번호</th>
-                <td>
-		 			<input type="text" name="workerPhone01" id="workerPhone01" maxlength="3" style="width: 30px;"/> -
-		 			<input type="text" name="workerPhone02" id="workerPhone02" maxlength="4" style="width: 50px;"/> -
-		 			<input type="text" name="workerPhone03" id="workerPhone03" maxlength="4" style="width: 50px;"/>
-		 			<input type="hidden" name="workerPhone" id="workerPhone"/>
-		 		</td>
-                <th>핸드폰번호</th>
-                <td>
-		 			<input type="text" name="workerCell01" id="workerCell01" maxlength="3" style="width: 30px;"/> -
-		 			<input type="text" name="workerCell02" id="workerCell02" maxlength="4" style="width: 50px;"/> -
-		 			<input type="text" name="workerCell03" id="workerCell03" maxlength="4" style="width: 50px;"/>
-		 			<input type="hidden" name="workerCell" id="workerCell"/>
-		 		</td>
-              </tr>
-              <tr>
-                <th>주소</th>
-                <td>
-                <input type="hidden" name="workerAdd01" id="workerAdd01"/>
-                <select name="sido1" id="sido1"></select>
-                <select name="gugun1" id="gugun1"></select>
-                </td>
-                <th>상세 주소</th>
-                <td><input type="text" name="workerAdd02" id="workerAdd02"/></td>
-              </tr>
-            </table>
-            <div class="btnDiv">
-              <input type="submit" class="btn" value="등록" />
-              <input type="button" class="btn" value="초기화" onClick="allClear()"/>
-            </div>
-            </form>
-          </div>
-          
-        </div>
-        <div class="div2_2">
-          <div class="div2_2_1">
-            <table id="inputTB">
-              <tr id="top_tr">
-                <th></th>
-                <th>아이디</th>
-                <th>비밀번호</th>
-                <th>작업자 성명</th>
-                <th>주민등록번호</th>
-                <th>전화번호</th>
-                <th>핸드폰번호</th>
-                <th>주소</th>
-                <th>상세 주소</th>
-                <th></th>
-              </tr>
-              <%if(vo==null){%>
-              <tr>
-              	<td colspan="10">대리 작업자가 없습니다.</td>
-              </tr>
-              <%}else{for(int i = 0 ; i < vo.size(); i++){ %>
-              <tr>
-                <th><b><%=i+1 %></b></th>
-                <td><%=vo.get(i).getWorkerCode() %></td>
-                <td><%=vo.get(i).getWorkerPW() %></td>
-                <td><%=vo.get(i).getWorkerName() %></td>
-                <td><%=vo.get(i).getWorkerRRN() %></td>
-                <td><%=vo.get(i).getWorkerPhone() %></td>
-                <td><%=vo.get(i).getWorkerCell() %></td>
-                <td><%=vo.get(i).getWorkerAdd01() %></td>
-                <td><%=vo.get(i).getWorkerAdd02() %></td>
-                <td><button id="btn_offer" onclick="deleteWorker.do?workerCode=<%=vo.get(i).getWorkerCode() %>">삭제</button></td>
-              </tr>
-              <%}} %>
-            </table>
-          </div>
-          <p>※ 아이디는 자동 생성됩니다.</p>
-          <p>※ 생성된 대리 작업자 정보는 수정이 불가능 합니다. 삭제 후 재등록 해주세요.</p>
-        </div>
-        </div>
-      </div>
-      <div class="div3">
-      </div>
-    </div>
-        <div class="floating_btn" id="floating_btn">
-    	<p id="floating_title"><b>리모컨</b></p>
-    	<div class="floating_btn_img" onclick="show_top();">
-    		<img src="/image/up_arrow.png" alt="상단 이동"/>
-    	</div>
-    	<p>맨위로</p>
-    	<div class="floating_btn_img" onclick="link_call();">
-    		<img src="/image/call_img.png" alt="상담 버튼"/>
-    	</div>
-    	<p>고객센터</p>
-    	<div class="floating_btn_img" onclick="location.href='main.do'">
-    		<img src="/image/home_btn.png" alt="상담 버튼"/>
-    	</div>
-    	<p>HOME</p>
-    </div>
-  </main>
+		<div class="mainDiv">
+			<div class="div1">
+				<div class="div1_textArea">
+					<h2>대리 작업자 등록/삭제</h2>
+				</div>
+			</div>
+			<div class="div2">
+				<div class="div_2_back">
+					<div class="div2_1">
+						<div class="div2_1_1">
+							<h2 id="div2_1_1_h2">대리작업자 등록</h2>
+						</div>
+						<div class="div2_1_2">
+							<form action="newWorker.do" name="forms" id="forms"
+								onsubmit="return validate();">
+								<table id="inputTB">
+									<tr>
+										<th>비밀번호</th>
+										<td><input type="text" name="workerPW" id="workerPW"
+											maxlength="10" /></td>
+										<th>비밀번호 확인</th>
+										<td><input type="text" name="workerPWCheck"
+											id="workerPWCheck" maxlength="10" /></td>
+									</tr>
+									<tr>
+										<th>작업자 성명</th>
+										<td><input type="text" name="workerName" id="workerName"
+											maxlength="6" /></td>
+										<th>주민등록번호</th>
+										<td><input type="text" name="workerRRN01" id="workerRRN01"
+											maxlength="6" style="width: 70px;" /> - <input type="text"
+											name="workerRRN02" id="workerRRN02" maxlength="7"
+											style="width: 70px;" /> <input type="hidden" id="workerRRN"
+											name="workerRRN" /></td>
+									</tr>
+									<tr>
+										<th>전화번호</th>
+										<td><input type="text" name="workerPhone01"
+											id="workerPhone01" maxlength="3" style="width: 30px;" /> - <input
+											type="text" name="workerPhone02" id="workerPhone02"
+											maxlength="4" style="width: 50px;" /> - <input type="text"
+											name="workerPhone03" id="workerPhone03" maxlength="4"
+											style="width: 50px;" /> <input type="hidden"
+											name="workerPhone" id="workerPhone" /></td>
+										<th>핸드폰번호</th>
+										<td><input type="text" name="workerCell01"
+											id="workerCell01" maxlength="3" style="width: 30px;" /> - <input
+											type="text" name="workerCell02" id="workerCell02"
+											maxlength="4" style="width: 50px;" /> - <input type="text"
+											name="workerCell03" id="workerCell03" maxlength="4"
+											style="width: 50px;" /> <input type="hidden" name="workerCell"
+											id="workerCell" /></td>
+									</tr>
+									<tr>
+										<th>주소</th>
+										<td><input type="hidden" name="workerAdd01"
+											id="workerAdd01" /> <select name="sido1" id="sido1"></select>
+											<select name="gugun1" id="gugun1"></select></td>
+										<th>상세 주소</th>
+										<td><input type="text" name="workerAdd02" id="workerAdd02" /></td>
+									</tr>
+								</table>
+								<div class="btnDiv">
+									<input type="submit" class="btn" value="등록" /> <input
+										type="button" class="btn" value="초기화" onClick="allClear()" />
+								</div>
+							</form>
+						</div>
+	
+					</div>
+					<div class="div2_2">
+						<div class="div2_2_1">
+							<table id="inputTB">
+								<tr id="top_tr">
+									<th></th>
+									<th>아이디</th>
+									<th>비밀번호</th>
+									<th>작업자 성명</th>
+									<th>주민등록번호</th>
+									<th>전화번호</th>
+									<th>핸드폰번호</th>
+									<th>주소</th>
+									<th>상세 주소</th>
+									<th></th>
+								</tr>
+								<%if(vo==null){%>
+								<tr>
+									<td colspan="10">대리 작업자가 없습니다.</td>
+								</tr>
+								<%}else{for(int i = 0 ; i < vo.size(); i++){ %>
+								<tr>
+									<th><b><%=i+1 %></b></th>
+									<td><%=vo.get(i).getWorkerCode() %></td>
+									<td><%=vo.get(i).getWorkerPW() %></td>
+									<td><%=vo.get(i).getWorkerName() %></td>
+									<td><%=vo.get(i).getWorkerRRN() %></td>
+									<td><%=vo.get(i).getWorkerPhone() %></td>
+									<td><%=vo.get(i).getWorkerCell() %></td>
+									<td><%=vo.get(i).getWorkerAdd01() %></td>
+									<td><%=vo.get(i).getWorkerAdd02() %></td>
+									<td><button id="btn_offer"
+											onclick="deleteWorker.do?workerCode=<%=vo.get(i).getWorkerCode() %>">삭제</button></td>
+								</tr>
+								<%}} %>
+							</table>
+						</div>
+						<p>※ 아이디는 자동 생성됩니다.</p>
+						<p>※ 생성된 대리 작업자 정보는 수정이 불가능 합니다. 삭제 후 재등록 해주세요.</p>
+					</div>
+				</div>
+			</div>
+			<div class="div3"></div>
+		</div>
+	</main>
 
 </body>
 </html>

@@ -20,17 +20,6 @@
 	}
 	
 	function loadOn() {
-		<%
-		String loginCheckData="";
-		try{
-			loginCheckData= (String)session.getAttribute("userId");
-		}catch(NullPointerException e){
-			System.err.println("비회원 아이디 에러 : "+e);
-		}
-		%>
-		var loginCheckData = '<%=loginCheckData%>';
-		loginCheck(loginCheckData);
-		
 		var uploadChk = <%=request.getAttribute("uploadChk")%>;
 		switch (uploadChk) {
 		case null:
@@ -146,6 +135,7 @@ p {
 
 </style>
 <body onload="loadOn();">
+	<jsp:include page="boCheck_module.jsp" />
 	<form action="WorkDataUpload.do" method="post" enctype="multipart/form-data" onsubmit="return check_file();">
 		<h1>증빙 자료 등록</h1>
 		<div class="btnArea">
