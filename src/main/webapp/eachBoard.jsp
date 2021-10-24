@@ -343,9 +343,7 @@
 	                </div>
 	            </div>
 	            <div class="div2_2">
-	                <pre style="font-size: 13px;"><b>※ 부적절한 제목/내용의 게시글은 관리자에 의해 삭제될 수 있습니다.
-	※ 점검을 위해 사진 업로드 기능을 일시적으로 비활성화 했습니다. 양해 부탁드립니다.
-	※ 글 등록 시 특수문자가 등록되지 않는 버그가 발견되어 현재 수정 중입니다.</b></pre>
+	                <pre style="font-size: 13px;"><b>※ 부적절한 제목/내용의 게시글은 관리자에 의해 삭제될 수 있습니다.</b></pre>
 	                <input type="image" src="/image/my writing.png" class="etcBtn" id="my_writing" name="my_writing" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&mw=1'">
 	                <input type="image" src="/image/list.png" class="etcBtn" id="list" name="list" onclick="location.href='eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>'">
 	                <input type="image" src="/image/writing.png" class="etcBtn" id="writing" name="writing" 	onclick="location.href='insertBoardForFree.do?boardClass=<%=request.getAttribute("classType")%>'">

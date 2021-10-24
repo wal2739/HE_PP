@@ -65,6 +65,7 @@ button:active {
 }
 </style>
 <body>
+	<jsp:include page="boCheck_module.jsp" />
 	<h1 style="display: inline-block; margin: auto;">차량 확인</h1>
 	<div>
 		<table>

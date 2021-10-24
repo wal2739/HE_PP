@@ -12,7 +12,7 @@
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="/css/main.css?ver=15">
 <script type="text/javascript">
-	window.onload = function loadOn() {
+	window.addEventListener('load',function loadOn() {
 		<%
 		String loginCheckData="";
 		String boCheckIndex = "";
@@ -28,7 +28,7 @@
 		
 		var boCheckIndex = '<%=boCheckIndex%>';
 		boIndexCheck(boCheckIndex);
-	}
+	});
 
 </script>
 <body>

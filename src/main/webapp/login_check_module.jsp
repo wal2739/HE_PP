@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/css/main.css?ver=14">
 <script type="text/javascript">
 
-	window.onload = function loadOn() {
+	window.addEventListener('load',function loadOn() {
 		<%
 		String loginCheckData="";
 		try{
@@ -24,7 +24,7 @@
 		%>
 		var loginCheckData = '<%=loginCheckData%>';
 		loginCheck(loginCheckData);
-	}
+	});
 </script>
 <body>
 </body>

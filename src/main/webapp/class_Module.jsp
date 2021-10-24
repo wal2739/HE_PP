@@ -29,7 +29,7 @@ public void cast_ob(HttpSession session){
 	중계 사용자 = 2
 */
 %>
-window.onload = function loadOn() {
+window.addEventListener('load',function loadOn() {
 	<%
 	cast_ob(session);
 	String loginCheckData="";
@@ -56,7 +56,7 @@ window.onload = function loadOn() {
 			location.href='main.do';
 		}
 	}
-}
+});
 </script>
 <body>
 
