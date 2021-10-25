@@ -262,5 +262,10 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 		return "eachBoard.do?boardClassNum=" + boardClass;
 	}
 	
+	@Override
+	public List<BoardInfoVO> getAllBoard_main(){
+		return dao.getAllBoard_main();
+	}
+	
 	
 }

@@ -27,6 +27,8 @@ public interface BoardInfoService {
 	UsersInfoVO insertBoardForFree(UsersInfoVO vo,HttpServletRequest request,HttpSession session);
 
 	String deleteBoard(HttpServletRequest request);
+
+	List<BoardInfoVO> getAllBoard_main();
 	
 	
 }

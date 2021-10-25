@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.HEProject.he.boInfo.BOInfoService;
 import com.HEProject.he.boInfo.BOInfoVO;
+import com.HEProject.he.boardInfo.BoardInfoService;
+import com.HEProject.he.boardInfo.BoardInfoVO;
 import com.HEProject.he.clientInfo.ClientInfoService;
 import com.HEProject.he.clientInfo.ClientInfoVO;
 import com.HEProject.he.groupAssInfo.GroupAssInfoService;
@@ -67,9 +69,14 @@ public class MainController {
 	@Autowired
 	GrouperEquipInfoService grouperEquipInfoService;
 	
+	@Autowired
+	BoardInfoService boardInfoService;
+	
 	@RequestMapping("main.do")
-	public String main() {
-		return "main.jsp";
+	public ModelAndView main(ModelAndView mav) {
+		mav.addObject("list",boardInfoService.getAllBoard_main());
+		mav.setViewName("main.jsp");
+		return mav;
 	}
 	
 	@RequestMapping("RegiForIndividual.do")

@@ -14,7 +14,6 @@
 <style>
 * { 
 	font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
-	
 }
 
 
@@ -27,7 +26,6 @@ body {
   background-size: cover;
   background-position: center center;
   background-repeat: repeat;
-  height: 100vh;
 }
 
 a {
@@ -121,6 +119,12 @@ a {
 	menuInfo[2] = "정산";
 	menuInfo[3] = "기타";
 	if (userClass==0) {
+		dropMenuInfo[13] = "개인 사용자 전용";
+		dropMenuInfo[14] = "자유 게시판";
+		dropMenuInfo[15] = "공지 사항";
+		dropMenuLink[13] = "eachBoard.do?boardClassNum=1";
+		dropMenuLink[14] = "eachBoard.do?boardClassNum=0";
+		dropMenuLink[15] = "eachBoard.do?boardClassNum=3";
 	} else if (userClass==1) {
 		menuInfo[0] = "등록";
 		dropMenuInfo[0] = "사업자 정보";

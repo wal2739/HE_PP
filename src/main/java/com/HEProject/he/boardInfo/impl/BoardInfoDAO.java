@@ -103,4 +103,15 @@ public class BoardInfoDAO {
 		}
 	}
 	
+	List<BoardInfoVO> getAllBoard_main(){
+		String sql = "select * from (select * from boardInfo where boardClass=3 Order by writeDate desc) where rowNum <= 10";
+		try {
+			return jdbcTemplate.query(sql, new BoardInfoRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println(e);
+			return null;
+		}
+		
+	}
+	
 }

@@ -14,7 +14,6 @@
 		
 		List<BoardInfoVO> list = null;
     	String classType = "";
-    	int userClass = 9999;
     	String backPath = "";
     	list = (List)request.getAttribute("list");
 		if(request.getAttribute("classType").equals(0)){
@@ -28,7 +27,18 @@
     	}else {
     		classType = "에러 - classType - jsp";
     	}
+
     %>
+    <%!
+	int userClass=0;
+	public void cast_ob(HttpSession session){
+		String userClass_t = String.valueOf(session.getAttribute("userClass"));
+		if(userClass_t.equals("null")){
+			userClass_t = "1";
+		}
+		userClass = Integer.parseInt(userClass_t);
+	}
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,11 +53,14 @@
 <script type="text/javascript">
 
 	function checkNotice() {		
+		<%
+			cast_ob(session);
+		%>
 		var typeClass = <%=request.getAttribute("classType")%>;
-		var classUser = <%=userClass%>;
+		var userClass = <%=userClass%>;
 		if(typeClass==3){
 			document.getElementById("my_writing").style.display = "none";	
-			if(classUser!=0){
+			if(userClass!=0){
 				document.getElementById("writing").style.display = "none";	
 			}
 		}

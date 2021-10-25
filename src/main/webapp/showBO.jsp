@@ -334,23 +334,7 @@ caption {
 				</div>
 			</div>
 		</div>
-		
-	</div>
-	    <div class="floating_btn" id="floating_btn">
-    	<p id="floating_title"><b>리모컨</b></p>
-    	<div class="floating_btn_img" onclick="show_top();">
-    		<img src="/image/up_arrow.png" alt="상단 이동"/>
-    	</div>
-    	<p>맨위로</p>
-    	<div class="floating_btn_img" onclick="link_call();">
-    		<img src="/image/call_img.png" alt="상담 버튼"/>
-    	</div>
-    	<p>고객센터</p>
-    	<div class="floating_btn_img" onclick="location.href='main.do'">
-    		<img src="/image/home_btn.png" alt="상담 버튼"/>
-    	</div>
-    	<p>HOME</p>
-    </div>
+
 	</main>
 </body>
 </html>

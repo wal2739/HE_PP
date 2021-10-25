@@ -33,19 +33,14 @@ window.addEventListener('load',function loadOn() {
 	<%
 	cast_ob(session);
 	String loginCheckData="";
-	String boCheckIndex = "";
 	try{
 		loginCheckData= (String)session.getAttribute("userId");
-		boCheckIndex = (String)session.getAttribute("boCheckIndex");
 	}catch(NullPointerException e){
 		System.err.println("비회원 아이디 에러 : "+e);
 	}
 	%>
 	var loginCheckData = '<%=loginCheckData%>';
 	loginCheck(loginCheckData);
-	
-	var boCheckIndex = '<%=boCheckIndex%>';
-	boIndexCheck(boCheckIndex);
 	<%
 	boolean index_1 = request.getAttribute("classType").equals(1);
 	boolean index_2 = request.getAttribute("classType").equals(2);
