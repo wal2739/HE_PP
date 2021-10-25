@@ -62,7 +62,7 @@ function capture() {
     .sub_div{
         display: flex;
         width: 80%;
-        height: 90%;
+        height: 100%;
         border: 1px solid black;
         margin: auto;
         background: white;

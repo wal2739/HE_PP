@@ -457,13 +457,16 @@ body {
 	color: white;
 	text-decoration: none;
 } */
-
-.footer_div1>p>a:visited {
+#tag_a{
+	color: white;
+	text-decoration: none;
+}
+#tag_a:visited {
 	color: white;
 	text-decoration: none;
 }
 
-.footer_div1>p>a:hover {
+#tag_a:hover {
 	text-decoration: underline;
 }
 
@@ -617,11 +620,11 @@ body {
 	</div>
 	<footer class="footer">
 		<div class="footer_div1">
-			<p><a href="about.html">회사소개</a></p>
-			<p><a href="#">제휴제안</a></p>
-			<p><a href="#">이용약관</a></p>
-			<p><a href="#">개인정보 처리방침</a></p>
-			<p><a href="#" onclick="alert('고객센터 연결');">고객센터</a></p>
+			<p><a id="tag_a" href="about.html">회사소개</a></p>
+			<p><a id="tag_a" href="#">제휴제안</a></p>
+			<p><a id="tag_a" href="#">이용약관</a></p>
+			<p><a id="tag_a" href="#">개인정보 처리방침</a></p>
+			<p><a id="tag_a" href="#" onclick="alert('고객센터 연결');">고객센터</a></p>
 			<br />
 			<br />
 			<p>사업자 번호 : 000-00-00000</p>
