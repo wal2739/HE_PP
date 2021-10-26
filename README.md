@@ -33,6 +33,8 @@
 
 <h4 align="center">개발 환경</h4>
 
+<div align="center">
+
 |  <center></center> |  <center>사용 기술</center> |  <center>비고</center> |
 |:--------|:--------:|--------:|
 |**Develop Tools** | <center> Eclipse v4.12.0 , SQL Developer v19.2.0.206 , Visual Studio Code v1.56.2 </center> |*-* |
@@ -41,6 +43,10 @@
 |**Data Base** | <center> Oracle Database 11g v11.2.0.1.0 </center> |*-* |
 |**Server** | <center> Apache Tomcat v9.0 </center> |*기존에 8.0버전 사용* |
 |**Web** | <center> Chrome v95.0.4638.5 , Microsoft Edge v95.0.1020.30 </center> |*-* |
+  
+</div>
+
+
 
 
 <h2 align="center">아쉬운 점</h1>
