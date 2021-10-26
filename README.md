@@ -14,4 +14,4 @@ readMe test
 
 ~~readMe test~~
 
-<h1>readMe test</h1>
+<h1 align="center">readMe test</h1>
