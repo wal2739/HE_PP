@@ -35,12 +35,12 @@
 
 |  <center></center> |  <center>사용 기술</center> |  <center>비고</center> |
 |:--------|:--------:|--------:|
-|**Develop Tools** | <center> Eclipse v4.12.0 , SQL Developer v19.2.0.206 , Visual Studio Code v1.56.2 </center> |*cell 1x3* |
-|**Develop Language For Front end** | <center> HTML5 , JSP , JavaScript , jQuery v3.4.1 , Bootstrap v4.3.1 </center> |*cell 2x3* |
-|**Develop Language For Back end** | <center> java v1.6 , Spring Framework v3.1.1 , OJDBC v6 , ~JUnit v4.7~ </center> |*cell 2x3* |
-|**Data Base** | <center> Oracle Database 11g v11.2.0.1.0 </center> |*cell 3x3* |
-|**Server** | <center> Apache Tomcat v9.0 </center> |*cell 3x3* |
-|**Web** | <center> Chrome v95.0.4638.5 , Microsoft Edge v95.0.1020.30 </center> |*cell 3x3* |
+|**Develop Tools** | <center> Eclipse v4.12.0 , SQL Developer v19.2.0.206 , Visual Studio Code v1.56.2 </center> |*-* |
+|**Develop Language For Front end** | <center> HTML5 , JSP , JavaScript , jQuery v3.4.1 , Bootstrap v4.3.1 </center> |*-* |
+|**Develop Language For Back end** | <center> java v1.6 , Spring Framework v3.1.1 , OJDBC v6 , ~JUnit v4.7~ </center> |*JUnit은 거의 사용 안함* |
+|**Data Base** | <center> Oracle Database 11g v11.2.0.1.0 </center> |*-* |
+|**Server** | <center> Apache Tomcat v9.0 </center> |*기존에 8.0버전 사용* |
+|**Web** | <center> Chrome v95.0.4638.5 , Microsoft Edge v95.0.1020.30 </center> |*-* |
 
 
 <h2 align="center">아쉬운 점</h1>
