@@ -31,13 +31,13 @@
 
 <h2 align="center">소개</h1>
 
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=wal2739&&show_icons=true&theme=dark)
-
+<h4 align="center">개발 환경</h4>
 |  <center></center> |  <center>사용 기술</center> |  <center>Header3</center> |
 |:--------|:--------:|--------:|
-|**cell 1x1** | <center>cell 1x2 </center> |*cell 1x3* |
-|**cell 2x1** | <center>cell 2x2 </center> |*cell 2x3* |
-|**cell 3x1** | <center>cell 3x2 </center> |*cell 3x3* |
+|**Develope Tools** | <center>cell 1x2 </center> |*cell 1x3* |
+|**Develop Language** | <center>cell 2x2 </center> |*cell 2x3* |
+|**Data Base** | <center>cell 3x2 </center> |*cell 3x3* |
+|**etc.** | <center>cell 3x2 </center> |*cell 3x3* |
 
 
 <h2 align="center">아쉬운 점</h1>
