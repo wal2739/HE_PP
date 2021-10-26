@@ -29,8 +29,9 @@
 >>3. [기능 설명](#기능-설명)
 >>4. [코드 설명](#코드-설명)
 
+<h2 align="center">소개</h1>
 
-
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=wal2739&&show_icons=true&theme=dark)]
 
 <h2 align="center">아쉬운 점</h1>
 
