@@ -31,22 +31,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <h2 align="center">아쉬운 점</h1>
-<h2 align="center">총평</h1>
+
 
 
 
