@@ -77,7 +77,7 @@
 
 ---
 
-<h3 align="center">기능 및 코드 </h3>
+<h3 align="center">기능 및 코드 설명</h3>
 
 
 
