@@ -57,7 +57,7 @@
 
 <div align="center">
 
-|  <center></center> |  <center>사용 기술</center> |  <center>비고</center> |
+|  <center>개발 환경 분류</center> |  <center>사용 기술</center> |  <center>비고</center> |
 |:--------|:--------:|--------:|
 |**Develop Tools** | <center> Eclipse v4.12.0  &nbsp;  SQL Developer v19.2.0.206  &nbsp;   Visual Studio Code v1.56.2 </center> |*-* |
 |**Develop Language For Front end** | <center> HTML5  &nbsp;  JSP &nbsp;   JavaScript  &nbsp;  jQuery v3.4.1  &nbsp;  Bootstrap v4.3.1 </center> |*-* |
