@@ -70,5 +70,7 @@
   
 </div>
 
+<h4 align="center">DB 구성도(ER Diagram)</h4>
 
+![Relational_2](https://user-images.githubusercontent.com/14798713/138958779-dd8b1df2-d39d-4651-800e-6598dafcef8f.png)
 
