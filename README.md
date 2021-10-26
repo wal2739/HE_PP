@@ -23,30 +23,11 @@
 ---
 
 >목차
->>0. [소개](#소개)
->>1. [아쉬운점](#아쉬운-점)
+>>0. [아쉬운점](#아쉬운-점)
+>>1. [소개](#소개)
 >>2. [개인적인 포트폴리오 평가](#총평)
 >>3. [기능 설명](#기능-설명)
 >>4. [코드 설명](#코드-설명)
-
-<h2 align="center">소개</h1>
-
-<h4 align="center">개발 환경</h4>
-
-<div align="center">
-
-|  <center></center> |  <center>사용 기술</center> |  <center>비고</center> |
-|:--------|:--------:|--------:|
-|**Develop Tools** | <center> Eclipse v4.12.0  &nbsp;  SQL Developer v19.2.0.206  &nbsp;   Visual Studio Code v1.56.2 </center> |*-* |
-|**Develop Language For Front end** | <center> HTML5  &nbsp;  JSP &nbsp;   JavaScript  &nbsp;  jQuery v3.4.1  &nbsp;  Bootstrap v4.3.1 </center> |*-* |
-|**Develop Language For Back end** | <center> java v1.6  &nbsp;  Spring Framework v3.1.1 &nbsp;   OJDBC v6  &nbsp;  ~JUnit v4.7~ </center> |*JUnit은 거의 사용 안함* |
-|**Data Base** | <center> Oracle Database 11g v11.2.0.1.0 </center> |*-* |
-|**Server** | <center> Apache Tomcat v9.0 </center> |*기존에 8.0버전 사용* |
-|**Web** | <center> Chrome v95.0.4638.5  &nbsp;  Microsoft Edge v95.0.1020.30 </center> |*-* |
-  
-</div>
-
-
 
 
 <h2 align="center">아쉬운 점</h1>
@@ -71,6 +52,23 @@
 >>>그러다 마음을 다잡고 시작하여 약 4개월만에 포트폴리오 작업을 끝내고, 1개월간 수정/보완 그리고 검수 작업을 진행 했습니다.
 >>>만약 제가 제대로 마음을 먹고 작업을 시작했다면 더 빨리 끝낼 수 있지 않았을까 하는 아쉬움이 생깁니다.
 
+
+<h2 align="center">소개</h1>
+
+<h4 align="center">개발 환경</h4>
+
+<div align="center">
+
+|  <center></center> |  <center>사용 기술</center> |  <center>비고</center> |
+|:--------|:--------:|--------:|
+|**Develop Tools** | <center> Eclipse v4.12.0  &nbsp;  SQL Developer v19.2.0.206  &nbsp;   Visual Studio Code v1.56.2 </center> |*-* |
+|**Develop Language For Front end** | <center> HTML5  &nbsp;  JSP &nbsp;   JavaScript  &nbsp;  jQuery v3.4.1  &nbsp;  Bootstrap v4.3.1 </center> |*-* |
+|**Develop Language For Back end** | <center> java v1.6  &nbsp;  Spring Framework v3.1.1 &nbsp;   OJDBC v6  &nbsp;  ~JUnit v4.7~ </center> |*JUnit은 거의 사용 안함* |
+|**Data Base** | <center> Oracle Database 11g v11.2.0.1.0 </center> |*-* |
+|**Server** | <center> Apache Tomcat v9.0 </center> |*기존에 8.0버전 사용* |
+|**Web** | <center> Chrome v95.0.4638.5  &nbsp;  Microsoft Edge v95.0.1020.30 </center> |*-* |
+  
+</div>
 
 
 
