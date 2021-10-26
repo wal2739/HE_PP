@@ -35,7 +35,7 @@
 
 |  <center></center> |  <center>사용 기술</center> |  <center>Header3</center> |
 |:--------|:--------:|--------:|
-|**Develop Tools** | <center>[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counter&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Eclipse+ver4.12.0&edge_flat=false)](https://hits.seeyoufarm.com)</center> |*cell 1x3* |
+|**Develop Tools** | <center>[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fwal2739%2FHE_PP&count_bg=%23FFFFFF&title_bg=%2364B051&icon=riseup.svg&icon_color=%23E7E7E7&title=Eclipse+ver4.12.0&edge_flat=false)](https://hits.seeyoufarm.com)</center> |*cell 1x3* |
 |**Develop Language** | <center>cell 2x2 </center> |*cell 2x3* |
 |**Data Base** | <center>cell 3x2 </center> |*cell 3x3* |
 |**etc.** | <center>cell 3x2 </center> |*cell 3x3* |
