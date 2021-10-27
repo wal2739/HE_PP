@@ -71,11 +71,22 @@
   
 </div>
 
+pie title Pets adopted by volunteers
+    "JAVA" : 200
+    "JSP" : 140
+    "JS/jQuery" : 160
+    "DB/Query" : 80
+    "HTML" : 10
+    "etc." : 15
+
+
 <h3 align="center">DB 구성도(ER Diagram)</h3>
 
 ![Relational_2](https://user-images.githubusercontent.com/14798713/138958779-dd8b1df2-d39d-4651-800e-6598dafcef8f.png)
 
 ---
+
+
 
 <h3 align="center">기능 및 코드 설명</h3>
 
