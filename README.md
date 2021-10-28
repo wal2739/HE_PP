@@ -74,7 +74,7 @@
 <h3 align="center">기능 및 코드 설명</h3>
 
 ><h4 align="center">Back end</h4>
-
+>>Back end 의 경우 스프링 프레임워크와 OJDBC를 사용하여 기본적인 데이터 CRUD 기능을 구현하였습니다. 제가 구성한
 
 ><h4 align="center">Front end</h4>
 
