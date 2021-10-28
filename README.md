@@ -84,7 +84,8 @@
 
 <h3 align="center">DB 구성도(ER Diagram)</h3>
 
-![Relational_2](https://user-images.githubusercontent.com/14798713/138958779-dd8b1df2-d39d-4651-800e-6598dafcef8f.png)
+>클릭하셔서 확대하시면 자세히 확인 할 수 있습니다.
+>![Relational_2](https://user-images.githubusercontent.com/14798713/138958779-dd8b1df2-d39d-4651-800e-6598dafcef8f.png)
 
 ---
 
