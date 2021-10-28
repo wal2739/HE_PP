@@ -73,9 +73,10 @@
 
 <h3 align="center">기능 및 코드 설명</h3>
 
+>1-1. <strong>Back end</strong>
 
 
-
+>1-2. <strong>Front end</strong>
 
 
 ---
