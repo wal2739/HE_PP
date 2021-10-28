@@ -58,7 +58,7 @@
 
 <h3 align="center">프로그램 소개/사용법</h3>
 
->[![Video Label](https://user-images.githubusercontent.com/14798713/139207878-5119c549-3040-4104-9593-97fc2e648760.png)](https://youtu.be/RKVCRUdEEPQ)
+>[![Video Label](https://user-images.githubusercontent.com/14798713/139208844-03ad2730-2482-49d4-ab1f-beb0067801d9.png)](https://youtu.be/RKVCRUdEEPQ)
 >위 사진을 클릭하시면 유튜브 페이지로 넘어갑니다.
 
 
