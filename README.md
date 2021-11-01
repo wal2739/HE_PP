@@ -62,7 +62,8 @@
 ><h4 align="center">Back end</h4>
 
 >>Back end 의 경우 스프링 프레임워크와 OJDBC를 사용하여 데이터 CRUD 기능을 구현하였습니다. 아래는 기본적인 CRUD 코드로, 로그인 페이지에서 아이디와 비밀번호를 입력했을 때 동작하는 코드들입니다. 약 70%의 CRUD 기능은 아래와 비슷한 방식으로 구성되어 있어 코드를 생략하겠습니다.
-```
+
+```JAVA
 //login 에 해당하는 컨트롤러 중 일부
 
 @Controller //어노테이션을 통한 Controller 선언
@@ -81,14 +82,16 @@ public class UsersController {
 >> 객체 지향 프로그래밍을 위해 service 를 ~Service라는 이름의 interface 와 해당 interface를 상속받는  ~ServiceImpl 이라는 class로 구현했습다.
 >> 아래는 해당 코드입니다.
 
-~~~
+```JAVA
+
 //위 컨트롤러에서 호출된 interface 중 
 public interface UsersInfoService {
 	UsersInfoVO getUser(UsersInfoVO vo, HttpSession session);
 }
-~~~
+```
 
-~~~
+```JAVA
+
 //위 interface를 상속받은 UsersInfoServiceImpl 클래스
 @Repository //@service 로 사용 해야하지만 테스트를 위해 @Repository로 구현
 public class UsersInfoServiceImpl implements UsersInfoService{ //UsersInfoService 상속
@@ -143,7 +146,7 @@ public class UsersInfoServiceImpl implements UsersInfoService{ //UsersInfoServic
 		return "login.jsp"; // 이동할 페이지 정보 반환
 
 	}
-~~~
+```
 
 >> 정보 저장과 중복 로그인 방지등의 코드들을 보면, 쿠키를 사용하지 않고 세션을 사용했습니다.
 >> 왜냐하면 쿠키는 안전성이 부족하다고 판단했기 때문입니다. 회원 정보 중 usRn은 고유 회원 번호와 같이 개인 정보가 세션에 저장되는데 안전성이 떨어지는 쿠키에
@@ -151,7 +154,8 @@ public class UsersInfoServiceImpl implements UsersInfoService{ //UsersInfoServic
 >> 물론 사용자가 많은 상황에서 세션은 서버에 많은 부하를 주게 되지만, 이는 하드웨어적인 해결이 가능하다고 생각했기 때문에 세션을 선택하게 되었습니다.
 >> 아래는 세션의 삭제 및 중복 로그인 방지 기능을 정의 한 클래스입니다.
 
-~~~
+```JAVA
+
 //serviceImpl 에서 호출한 session 관련 
 
 @WebListener //어노테이션 선언
@@ -196,10 +200,9 @@ private static final Map<String, HttpSession> oldSession = new ConcurrentHashMap
 			oldSession.remove(userId);    		
 		}
 	}
-~~~
+```
 
-
-~~~
+```JAVA
 //ServiceImpl 에서 호출한 DAO 클래스
 
 @Repository
@@ -217,7 +220,9 @@ public class UserInfoDAO {
 			return null;
 		}
 	}
-~~~
+```
+
+
 
 ><h4 align="center">Front end</h4>
 
