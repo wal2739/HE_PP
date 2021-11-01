@@ -65,13 +65,14 @@
 ~~~
 @Controller
 public class UsersController {
+	//login.jsp 에서 입력된 id, pw 의 값을 포함하여 login.do 로 연결을 시도하였을때 동작되는 Controller 로직
 	
-	@Autowired
-	UsersInfoService usersInfoService;
+	@Autowired // 어노테이션을 통해 해당 타입의 Bean 주입
+	UsersInfoService usersInfoService; // Interface 
 
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST) //어노테이션을 사용하여, 해당 value 값과 해당 method 타입으로 접속을 시도할 경우 아래 메서드 동작함
 	public String login_Post(HttpSession session,BOInfoVO boVO, UsersInfoVO vo,HttpServletRequest request) {
-		return usersInfoService.getUser(boVO, vo, session, request);
+		return usersInfoService.getUser(boVO, vo, session, request); //ID값의 일치 및 session 생성을 담당하는 메서드 호출
 	}
 ~~~
 
