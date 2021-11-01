@@ -63,7 +63,9 @@
 
 >>Back end 의 경우 스프링 프레임워크와 OJDBC를 사용하여 데이터 CRUD 기능을 구현하였습니다. 아래는 기본적인 CRUD 코드로, 로그인 페이지에서 아이디와 비밀번호를 입력했을 때 동작하는 코드들입니다. 약 70%의 CRUD 기능은 아래와 비슷한 방식으로 구성되어 있어 코드를 생략하겠습니다.
 ~~~
-@Controller
+//login 에 해당하는 컨트롤러 중 일부
+
+@Controller //어노테이션을 통한 Controller 선언
 public class UsersController {
 	//login.jsp 에서 입력된 id, pw 의 값을 포함하여 login.do 로 연결을 시도하였을때 동작되는 Controller 로직
 	
@@ -73,6 +75,60 @@ public class UsersController {
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST) //어노테이션을 사용하여, 해당 value 값과 해당 method 타입으로 접속을 시도할 경우 아래 메서드 동작함
 	public String login_Post(HttpSession session,BOInfoVO boVO, UsersInfoVO vo,HttpServletRequest request) {
 		return usersInfoService.getUser(boVO, vo, session, request); //ID값의 일치 및 session 생성을 담당하는 메서드 호출
+	}
+~~~
+
+>> 객체 지향 프로그래밍을 위해 service 를 ~Service라는 이름의 interface 와 해당 interface를 상속받는  ~ServiceImpl 이라는 class로 구현했습다.
+>> 아래는 해당 코드입니다.
+
+~~~
+//위 컨트롤러에서 호출된 interface 중 
+public interface UsersInfoService {
+	UsersInfoVO getUser(UsersInfoVO vo, HttpSession session);
+}
+~~~
+
+~~~
+//위 interface를 상속받은 UsersInfoServiceImpl 클래스
+@Repository //@service 로 사용 해야하지만 테스트를 위해 @Repository로 구현
+public class UsersInfoServiceImpl implements UsersInfoService{ //UsersInfoService 상속
+	
+	@Autowired
+	private UserInfoDAO dao; //dao 선언
+	
+	@Autowired
+	private BOInfoService boInfoService; // BOInfoService 선언 (로직이 거의 비슷하므로 해당 코드는 생략)
+	
+	@Override //재정의 선언
+	public String getUser(BOInfoVO boVO, UsersInfoVO vo, HttpSession session,HttpServletRequest request) { 
+	//request를 통해 jsp 에서 입력받은 ID와 PW를 가져오며, session을 통해 주요 정보와 로그인 정보를 등록함
+		vo.setUserID(request.getParameter("userId"));
+		UsersInfoVO result = dao.getUser(vo); //dao의 getUser 메서드를 호출하여 변수(result)에 저장
+		if(result==null) {// 호출한 메서드의 반환 값이 없을 경우
+			request.setAttribute("loginST", 0);// request에 값(0) 저장
+		}else if(result.getUserID().equals(vo.getUserID())&&result.getUserPW().equals(vo.getUserPW())){
+			// 호출한 메서드의 반환 값이 입력 값과 같을 경우
+			HttpSessionListenerImpl.getSessionidCheck("usRn", result.getUsRn());
+			HttpSessionListenerImpl.getSessionidCheck("userId", result.getUserID());
+			HttpSessionListenerImpl.getSessionidCheck("userClass", result.getUserClass());
+			HttpSessionListenerImpl.getSessionidCheck("userName", result.getUserName());
+			session.setAttribute("usRn", result.getUsRn());
+			session.setAttribute("userId", result.getUserID());
+			session.setAttribute("userClass", result.getUserClass());
+			session.setAttribute("userName", result.getUserName());
+			session.setMaxInactiveInterval(-1);
+			BOInfoVO boRS = boInfoService.getBOInfo(boVO, session);
+			if(boRS==null) {
+				session.setAttribute("boCheckIndex", "none");
+			}else {
+				session.setAttribute("boCheckIndex", "check");
+			}
+			request.setAttribute("loginST", 1);
+		}else{
+			request.setAttribute("loginST", 2);
+		}
+		return "login.jsp";
+
 	}
 ~~~
 
