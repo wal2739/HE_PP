@@ -62,7 +62,7 @@
 ><h4 align="center">Back end</h4>
 
 >>Back end 의 경우 스프링 프레임워크와 OJDBC를 사용하여 데이터 CRUD 기능을 구현하였습니다. 아래는 기본적인 CRUD 코드로, 로그인 페이지에서 아이디와 비밀번호를 입력했을 때 동작하는 코드들입니다. 약 70%의 CRUD 기능은 아래와 비슷한 방식으로 구성되어 있어 코드를 생략하겠습니다.
-~~~
+```
 //login 에 해당하는 컨트롤러 중 일부
 
 @Controller //어노테이션을 통한 Controller 선언
@@ -76,7 +76,7 @@ public class UsersController {
 	public String login_Post(HttpSession session,BOInfoVO boVO, UsersInfoVO vo,HttpServletRequest request) {
 		return usersInfoService.getUser(boVO, vo, session, request); //ID값의 일치 및 session 생성을 담당하는 메서드 호출
 	}
-~~~
+```
 
 >> 객체 지향 프로그래밍을 위해 service 를 ~Service라는 이름의 interface 와 해당 interface를 상속받는  ~ServiceImpl 이라는 class로 구현했습다.
 >> 아래는 해당 코드입니다.
