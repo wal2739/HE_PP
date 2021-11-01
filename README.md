@@ -77,6 +77,7 @@ public class UsersController {
 	public String login_Post(HttpSession session,BOInfoVO boVO, UsersInfoVO vo,HttpServletRequest request) {
 		return usersInfoService.getUser(boVO, vo, session, request); //ID값의 일치 및 session 생성을 담당하는 메서드 호출
 	}
+}
 ```
 
 >> 객체 지향 프로그래밍을 위해 service 를 ~Service라는 이름의 interface 와 해당 interface를 상속받는  ~ServiceImpl 이라는 class로 구현했습다.
@@ -146,6 +147,7 @@ public class UsersInfoServiceImpl implements UsersInfoService{ //UsersInfoServic
 		return "login.jsp"; // 이동할 페이지 정보 반환
 
 	}
+}
 ```
 
 >> 정보 저장과 중복 로그인 방지등의 코드들을 보면, 쿠키를 사용하지 않고 세션을 사용했습니다.
@@ -200,6 +202,7 @@ private static final Map<String, HttpSession> oldSession = new ConcurrentHashMap
 			oldSession.remove(userId);    		
 		}
 	}
+}
 ```
 
 ```JAVA
@@ -220,14 +223,35 @@ public class UserInfoDAO {
 			return null;
 		}
 	}
+}
 ```
 >> 이렇게 로그인 파트에 해당하는 Back end 로직이 종료됩니다. 
 >> <cite>Controller 호출 > Service(interface) 메서드 호출 > 상속하여 메서드를 정의한 ServiceImpl > DB와의 연동 및 데이터를 가져옴 > VO에 데이터 저장을 기반으로 ServiceImpl에서 세션에 정보 저장 및 이동 페이지 반환값 반환 > Controller에서 반환값을 받아 이동</cite> 순으로 처리가 이루어지며, 반환값이 이동 경로가 아니라 데이터가 반환이 된다면 mav(ModelAndView)를 통해 이동 경로와
 >> Front end로의 전송을 동작하게 됩니다. 프로그램 구성 코드 중 하나를 예를 들어 보여드리겠습니다.
 
+>> 아래는 메인 화면에 구성되어 있는 공지 게시판 미리보기 기능의 데이터를 DB에서 추출하여 프론트로 전송하는 로직입니다.
 ```JAVA
 
+//컨트롤러 중 일부
+
+@Controller
+public class MainController {
+	
+	@Autowired
+	BoardInfoService boardInfoService;
+	
+	@RequestMapping("main.do")
+	public ModelAndView main(ModelAndView mav) {
+		mav.addObject("list",boardInfoService.getAllBoard_main());
+		//boardInfoService.getAllBoard_main() 메서드를 이용하여 최근 10개의 공지글을 가져오며, list 라는 키값으로 mav에 저장
+		mav.setViewName("main.jsp"); // 이동경로 값 mav에 저장
+		return mav; //저장된 이동경로로 이동하면서, addObject를 통해 저장된 데이터 역시 같이 전송
+	}
+}
+
 ```
+
+
 
 ><h4 align="center">Front end</h4>
 
