@@ -105,30 +105,117 @@ public class UsersInfoServiceImpl implements UsersInfoService{ //UsersInfoServic
 		vo.setUserID(request.getParameter("userId"));
 		UsersInfoVO result = dao.getUser(vo); //dao의 getUser 메서드를 호출하여 변수(result)에 저장
 		if(result==null) {// 호출한 메서드의 반환 값이 없을 경우
-			request.setAttribute("loginST", 0);// request에 값(0) 저장
+			request.setAttribute("loginST", 0);// request에 0(계정 정보 없음) 저장
 		}else if(result.getUserID().equals(vo.getUserID())&&result.getUserPW().equals(vo.getUserPW())){
 			// 호출한 메서드의 반환 값이 입력 값과 같을 경우
+			
 			HttpSessionListenerImpl.getSessionidCheck("usRn", result.getUsRn());
 			HttpSessionListenerImpl.getSessionidCheck("userId", result.getUserID());
 			HttpSessionListenerImpl.getSessionidCheck("userClass", result.getUserClass());
 			HttpSessionListenerImpl.getSessionidCheck("userName", result.getUserName());
+			// getSessionidCheck 메서드를 통해 로그인 정보가 session에 이미 등록되어 있는지 확인 ( 중복 로그인 확인 )
+			
 			session.setAttribute("usRn", result.getUsRn());
 			session.setAttribute("userId", result.getUserID());
 			session.setAttribute("userClass", result.getUserClass());
 			session.setAttribute("userName", result.getUserName());
+			// 세션에 로그인 정보 등록
+			
 			session.setMaxInactiveInterval(-1);
+			// 세션 유지 시간을 -1(무한)으로 설정
 			BOInfoVO boRS = boInfoService.getBOInfo(boVO, session);
+			// 사업자 정보 등록 여부를 알기 위해 해당 데이터를 조회하는 메서드 호출
+			
+			
 			if(boRS==null) {
 				session.setAttribute("boCheckIndex", "none");
 			}else {
 				session.setAttribute("boCheckIndex", "check");
 			}
+			// 사업자 정보 등록 여부를 session에 저장
+			
 			request.setAttribute("loginST", 1);
+			//request에 1(로그인 성공) 저장
 		}else{
 			request.setAttribute("loginST", 2);
+			//계정 정보와 입력한 정보가 다를 경우 request에 2(id or pw 불일치) 저장
 		}
-		return "login.jsp";
+		return "login.jsp"; // 이동할 페이지 정보 반환
 
+	}
+~~~
+
+>> 정보 저장과 중복 로그인 방지등의 코드들을 보면, 쿠키를 사용하지 않고 세션을 사용했습니다.
+>> 왜냐하면 쿠키는 안전성이 부족하다고 판단했기 때문입니다. 회원 정보 중 usRn은 고유 회원 번호와 같이 개인 정보가 세션에 저장되는데 안전성이 떨어지는 쿠키에
+>> 해당 데이터를 저장하게 되면 악용의 가능성이 있다고 생각했기 때문입니다.
+>> 물론 사용자가 많은 상황에서 세션은 서버에 많은 부하를 주게 되지만, 이는 하드웨어적인 해결이 가능하다고 생각했기 때문에 세션을 선택하게 되었습니다.
+>> 아래는 세션의 삭제 및 중복 로그인 방지 기능을 정의 한 클래스입니다.
+
+~~~
+//serviceImpl 에서 호출한 session 관련 
+
+@WebListener //어노테이션 선언
+public class HttpSessionListenerImpl implements HttpSessionListener{// HttpSessionListener 상속
+
+private static final Map<String, HttpSession> oldSession = new ConcurrentHashMap<String, HttpSession>();
+	
+	//중복로그인 방지 (String)
+	public synchronized static String getSessionidCheck(String type, String usRn){
+		String rlt = ""; // 반환값을 담은 변수 선언 및 초기화
+		for( String key : oldSession.keySet() ){
+			HttpSession session = oldSession.get(key);
+			if(session != null &&  session.getAttribute(type) != null && session.getAttribute(type).toString().equals(usRn) ){
+				rlt =  key.toString();
+			}
+		}
+		removeOldSession(rlt);
+		// key 값을 통해 기존 session에 저장 된 값을 조회하고, 해당 값이 현재 로그인을 시도하는 회원의 정보와 중복되는지 확인 하는 루프
+		// 또한 중복된 값이 존재한다면 기존 값을 삭제(removeOldSession) 함
+		return rlt;
+	}
+	
+	//중복로그인 방지 (int)
+		public synchronized static String getSessionidCheck(String type, int index_data){
+			String usRn = String.valueOf(index_data); //int > String 형변환
+			String rlt = ""; // 반환값을 담은 변수 선언 및 초기화
+			for( String key : oldSession.keySet() ){
+				HttpSession session = oldSession.get(key);
+				if(session != null &&  session.getAttribute(type) != null && session.getAttribute(type).toString().equals(usRn) ){
+					rlt =  key.toString();
+				}
+			}
+			removeOldSession(rlt);
+			// key 값을 통해 기존 session에 저장 된 값을 조회하고, 해당 값이 현재 로그인을 시도하는 회원의 정보와 중복되는지 확인 하는 루프
+			// 또한 중복된 값이 존재한다면 기존 값을 삭제(removeOldSession) 함
+			return rlt;
+		}
+	
+	private static void removeOldSession(String userId){   // 기존 session 값 제거 	
+		if(userId != null && userId.length() > 0){
+			oldSession.get(userId).invalidate();
+			oldSession.remove(userId);    		
+		}
+	}
+~~~
+
+
+~~~
+//ServiceImpl 에서 호출한 DAO 클래스
+
+@Repository
+public class UserInfoDAO {
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate; //jdbcTemplate 선언
+	
+	public UsersInfoVO getUser(UsersInfoVO vo) { 
+		String sql = "select * from usersInfo where USERID = ? and st=0"; // query
+		Object[] args = {vo.getUserID()}; 
+		try {
+			return jdbcTemplate.queryForObject(sql, args, new UsersInfoRowmapper()); // jdbcTemplate을 통한 DB 조회
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 ~~~
 
