@@ -62,7 +62,7 @@
 ><h4 align="center">Back end</h4>
 
 >>Back end 의 경우 스프링 프레임워크와 OJDBC를 사용하여 데이터 CRUD 기능을 구현하였습니다. 아래는 기본적인 CRUD 코드로, 로그인 페이지에서 아이디와 비밀번호를 입력했을 때 동작하는 코드들입니다.
-~~~
+>>~~~
 @Controller
 public class UsersController {
 	
@@ -73,7 +73,7 @@ public class UsersController {
 	public String login_Post(HttpSession session,BOInfoVO boVO, UsersInfoVO vo,HttpServletRequest request) {
 		return usersInfoService.getUser(boVO, vo, session, request);
 	}
-~~~
+>>~~~
 
 ><h4 align="center">Front end</h4>
 
