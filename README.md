@@ -156,7 +156,7 @@ public class UsersInfoServiceImpl implements UsersInfoService{ //UsersInfoServic
 
 ```JAVA
 
-//serviceImpl 에서 호출한 session 관련 
+//serviceImpl 에서 호출한 session 관련 클래스 중 일부
 
 @WebListener //어노테이션 선언
 public class HttpSessionListenerImpl implements HttpSessionListener{// HttpSessionListener 상속
@@ -203,7 +203,7 @@ private static final Map<String, HttpSession> oldSession = new ConcurrentHashMap
 ```
 
 ```JAVA
-//ServiceImpl 에서 호출한 DAO 클래스
+//ServiceImpl 에서 호출한 DAO 클래스 중 일부
 
 @Repository
 public class UserInfoDAO {
@@ -221,7 +221,9 @@ public class UserInfoDAO {
 		}
 	}
 ```
-
+>> 이렇게 로그인 파트에 해당하는 Back end 로직이 종료됩니다. 
+>> <cite>Controller 호출 > Service(interface) 메서드 호출 > 상속하여 메서드를 정의한 ServiceImpl > DB와의 연동 및 데이터를 가져옴 > VO에 데이터 저장을 기반으로 ServiceImpl에서 세션에 정보 저장 및 이동 페이지 반환값 반환 > Controller에서 반환값을 받아 이동</cite> 순으로 처리가 이루어지며, 반환값이 이동 경로가 아니라 데이터가 반환이 된다면 mav(ModelAndView)를 통해 이동 경로와
+>> Front end로의 전송을 동작하게 됩니다. 프로그램 구성 코드 중 하나를 예를 들어 보여드리겠습니다.
 
 
 ><h4 align="center">Front end</h4>
