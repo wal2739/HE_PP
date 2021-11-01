@@ -225,6 +225,9 @@ public class UserInfoDAO {
 >> <cite>Controller 호출 > Service(interface) 메서드 호출 > 상속하여 메서드를 정의한 ServiceImpl > DB와의 연동 및 데이터를 가져옴 > VO에 데이터 저장을 기반으로 ServiceImpl에서 세션에 정보 저장 및 이동 페이지 반환값 반환 > Controller에서 반환값을 받아 이동</cite> 순으로 처리가 이루어지며, 반환값이 이동 경로가 아니라 데이터가 반환이 된다면 mav(ModelAndView)를 통해 이동 경로와
 >> Front end로의 전송을 동작하게 됩니다. 프로그램 구성 코드 중 하나를 예를 들어 보여드리겠습니다.
 
+```JAVA
+
+```
 
 ><h4 align="center">Front end</h4>
 
