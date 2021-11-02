@@ -386,10 +386,14 @@ public class BoardInfoDAO {
 	
 	int insertBoard(BoardInfoVO vo) {
 		String sql = "insert into boardInfo(BOARDCODE,BOARDCLASS,BOARDTITLE,BOARDCONTENTS,USRN,USERNAME,VIEWS) values(LPAD(LPAD(auserrn_sq.nextVal, '8', '0'),'9','N'),?,?,?,?,?,0)";
-		try {
+		
+		//LPAD(LPAD(auserrn_sq.nextVal, '8', '0'),'9','N') 을 query에 포함하여 boardCode를 자동으로 생성함 예)N00000001 에서 계속 증가함
+		
+		try { // 예외 처리
 			jdbcTemplate.update(sql,vo.getBoardClass(),vo.getBoardTitle(),vo.getBoardContents(),vo.getUsRn(),vo.getUserName());
-			return 1;
-		} catch (Exception e) {
+			//jdbcTemplate.update()를 사용하여 query에 포함된 물음표 안에 순서대로 값을 삽입함
+			return 1; //정상 처리 시 1 반환
+		} catch (Exception e) { // Exception 발생 시 0 반환
 			System.err.println(e);
 			return 0;
 		}
@@ -397,6 +401,7 @@ public class BoardInfoDAO {
 	
 	int modifyBoard(BoardInfoVO vo) {
 		String sql = "update boardInfo set BOARDTITLE=?,BOARDCONTENTS=?,fixDate=sysdate where boardCode=?";
+		//쿼리에 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		try {
 			jdbcTemplate.update(sql,vo.getBoardTitle(),vo.getBoardContents(),vo.getBoardCode());
 			return 1;
