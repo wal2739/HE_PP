@@ -217,9 +217,9 @@ public class UserInfoDAO {
 	public UsersInfoVO getUser(UsersInfoVO vo) { 
 		String sql = "select * from usersInfo where USERID = ? and st=0"; // query
 		Object[] args = {vo.getUserID()}; 
-		try {
+		try { //예외 처리
 			return jdbcTemplate.queryForObject(sql, args, new UsersInfoRowmapper()); // jdbcTemplate을 통한 DB 조회
-		} catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) { //데이터가 없을 경우 null을 반환
 			return null;
 		}
 	}
@@ -251,7 +251,177 @@ public class MainController {
 
 ```
 
+```JAVA
+//Service 중 일부
+public interface BoardInfoService {
+	List<BoardInfoVO> getAllBoard_main();
+}
+```
 
+
+```JAVA
+//ServiceImpl 중 일부
+@Repository
+public class BoardInfoServiceImpl implements BoardInfoService{
+	@Override
+	public List<BoardInfoVO> getAllBoard_main(){
+		return dao.getAllBoard_main();
+	}
+}
+```
+
+
+```JAVA
+@Repository
+public class BoardInfoDAO {
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+	
+	List<BoardInfoVO> getAllBoard_main(){
+		String sql = "select * from (select * from boardInfo where boardClass=3 Order by writeDate desc) where rowNum <= 10"; 
+		//최근 공지글(boardClass 가 3일 경우 공지글) 중 최근 10개의 데이터만 조회하는 query
+		try { //예외처리
+			return jdbcTemplate.query(sql, new BoardInfoRowMapper());
+		} catch (EmptyResultDataAccessException e) { //데이터가 없을 경우 null 반환
+			System.err.println(e);
+			return null;
+		}
+	}
+}
+```
+
+>>위의 코드가 CRUD 기능 중 조회를 담당하는 로직이며, ModelAndView를 사용하여 해당 이동 경로와 해당 경로에 데이터를 전송 하였습니다.
+>>마지막으로 데이터의 삭제와 수정을 보여드리겠습니다.
+>>삽입과 수정, 삭제는 해당 동작을 수행 한 후 ServiceImpl 클래스에서 DAO의 반환값을 request 영역에 저장하여 정상처리 유무를 프론트에 전송하게 되어있습니다.
+>>( 예. 정상처리 : 1, 오류 : 2, 정상적이지 않은 값 : 3 )
+>>그 외 Service 인터페이스, Controller 클래스 등은 조회와 동일 하므로, DAO 클래스와 ServiceImpl 클래스만 보여드리겠습니다.
+
+```JAVA
+//ServiceImpl 중 일부
+
+@Repository
+public class BoardInfoServiceImpl implements BoardInfoService{
+
+
+	@Autowired
+	BoardInfoDAO dao;
+	
+	@Autowired
+	UsersInfoService usersInfoService;
+
+	@Override
+	public void insertBoard(BoardInfoVO vo,HttpServletRequest request,HttpSession session) { //게시글 등록
+		vo.setBoardClass(Integer.parseInt(request.getParameter("boardClass")));
+		vo.setBoardTitle(request.getParameter("boardTitle"));
+		String boardContents = request.getParameter("boardContents");
+		if(boardContents=="") { // 게시글 내용이 없으면 해당 내용에는 [내용 없음] 이 추가 됨
+			boardContents = "내용 없음";
+		}
+		vo.setBoardContents(boardContents);
+		vo.setUsRn(request.getParameter("usRn"));
+		vo.setUserName(request.getParameter("userName"));
+		// 게시글 정보 VO에 저장
+		
+		int result = dao.insertBoard(vo);
+		//dao.insertBoard() 호출
+		
+		if(result==1) {
+			request.setAttribute("insertBoardSF", 1);
+		}else {
+			request.setAttribute("insertBoardSF", 0);
+		}
+		// 데이터 정상 삽입 여부에 따라 request영역에 결과값 저장
+	}
+	
+	@Override
+	public String modifyBoard(BoardInfoVO vo, HttpServletRequest request, HttpSession session) { //게시글 수정
+		String boardCode = request.getParameter("boardCode");
+		vo.setBoardCode(boardCode);
+		vo.setBoardTitle(request.getParameter("boardTitle"));
+		vo.setBoardContents(request.getParameter("boardContents"));
+		int result = dao.modifyBoard(vo);
+		if(result==1) {
+			request.setAttribute("MBCheck", 1);
+		}else {
+			request.setAttribute("MBCheck", 0);
+		}
+		return "getBoard.do?boardCode=" + boardCode + "&statusNum=0";
+	}
+
+	@Override
+	public String deleteBoard(HttpServletRequest request) { //게시글 삭제
+		String boardCode = request.getParameter("boardCode");
+		int rltNum = dao.deleteBoard(boardCode);
+		String boardClass = request.getParameter("boardClass");
+		switch (rltNum) {
+		case 0:
+			request.setAttribute("deleteRlt", 0);
+			request.setAttribute("badClass", boardClass);
+			break;
+		case 1:
+			request.setAttribute("deleteRlt", 1);
+			request.setAttribute("badClass", boardClass);
+			break;
+
+
+		default:
+			request.setAttribute("deleteRlt", 2);
+			request.setAttribute("badClass", boardClass);
+			break;
+		}
+		
+		//삭제의 경우 삭제 후 [게시글 전체 보기] 페이지로 이동해야 하기 때문에, 접속 경로를 변수(boardClass)에 저장 해두었다가 그에 해당하는 게시판 목록으로 이동함
+		return "eachBoard.do?boardClassNum=" + boardClass;
+	}	
+}
+```
+
+```JAVA
+//DAO 중 일부
+
+@Repository
+public class BoardInfoDAO {
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+	
+	int insertBoard(BoardInfoVO vo) {
+		String sql = "insert into boardInfo(BOARDCODE,BOARDCLASS,BOARDTITLE,BOARDCONTENTS,USRN,USERNAME,VIEWS) values(LPAD(LPAD(auserrn_sq.nextVal, '8', '0'),'9','N'),?,?,?,?,?,0)";
+		try {
+			jdbcTemplate.update(sql,vo.getBoardClass(),vo.getBoardTitle(),vo.getBoardContents(),vo.getUsRn(),vo.getUserName());
+			return 1;
+		} catch (Exception e) {
+			System.err.println(e);
+			return 0;
+		}
+	}
+	
+	int modifyBoard(BoardInfoVO vo) {
+		String sql = "update boardInfo set BOARDTITLE=?,BOARDCONTENTS=?,fixDate=sysdate where boardCode=?";
+		try {
+			jdbcTemplate.update(sql,vo.getBoardTitle(),vo.getBoardContents(),vo.getBoardCode());
+			return 1;
+		} catch (Exception e) {
+			System.err.println(e);
+			return 0;
+		}
+	}
+
+	public int deleteBoard(String boardCode) {
+		String sql = "delete from boardInfo where boardCode = ?";
+		try {
+			jdbcTemplate.update(sql,boardCode);
+			return 1;
+		} catch (Exception e) {
+			System.err.println(e);
+			return 0;
+		}
+	}
+}
+```
+
+<div align="center">
+	이렇게 DB 데이터의 CRUD와 프론트와의 데이터 전송 로직을 보여드렸습니다.
+</div>
 
 ><h4 align="center">Front end</h4>
 
