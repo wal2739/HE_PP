@@ -346,6 +346,7 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 			request.setAttribute("MBCheck", 0);
 		}
 		return "getBoard.do?boardCode=" + boardCode + "&statusNum=0";
+		//데이터 수정 후 해당 게시글로 이동해야 하기 해당 게시글의 코드(boardCode)를 포함한 이동경로를 지정하여 반환함
 	}
 
 	@Override
@@ -391,7 +392,7 @@ public class BoardInfoDAO {
 		
 		try { // 예외 처리
 			jdbcTemplate.update(sql,vo.getBoardClass(),vo.getBoardTitle(),vo.getBoardContents(),vo.getUsRn(),vo.getUserName());
-			//jdbcTemplate.update()를 사용하여 query에 포함된 물음표 안에 순서대로 값을 삽입함
+			//query 구문에 데이터가 들어가야 하는 위치에 물음표(?)를 넣고 jdbcTemplate을 통해 해당 위치에 데이터를 삽입 함
 			return 1; //정상 처리 시 1 반환
 		} catch (Exception e) { // Exception 발생 시 0 반환
 			System.err.println(e);
@@ -401,7 +402,6 @@ public class BoardInfoDAO {
 	
 	int modifyBoard(BoardInfoVO vo) {
 		String sql = "update boardInfo set BOARDTITLE=?,BOARDCONTENTS=?,fixDate=sysdate where boardCode=?";
-		//쿼리에 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		try {
 			jdbcTemplate.update(sql,vo.getBoardTitle(),vo.getBoardContents(),vo.getBoardCode());
 			return 1;
@@ -425,7 +425,7 @@ public class BoardInfoDAO {
 ```
 
 <div align="center">
-	이렇게 DB 데이터의 CRUD와 프론트와의 데이터 전송 로직을 보여드렸습니다.
+	이렇게 DB 데이터의 CRUD와 프론트와의 데이터 전송의 기본 로직을 보여드렸습니다.
 </div>
 
 ><h4 align="center">Front end</h4>
