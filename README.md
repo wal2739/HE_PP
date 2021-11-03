@@ -423,9 +423,11 @@ public class BoardInfoDAO {
 	}
 }
 ```
-
 <div align="center">
-	이렇게 DB 데이터의 CRUD와 프론트와의 데이터 전송의 기본 로직을 보여드렸습니다.
+이렇게 DB 데이터의 CRUD와 프론트와의 데이터 전송의 기본 로직을 보여드렸습니다.
+삭제 기능의 경우 일부 해당 데이터와 연동되어 있는(fk) 데이터들을 보호하고,
+
+
 </div>
 
 ><h4 align="center">Front end</h4>
