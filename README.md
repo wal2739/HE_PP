@@ -434,8 +434,10 @@ public class BoardInfoDAO {
 물론 방법은 많습니다만 제가 생각한 대안은 다음과 같습니다.  
 	  
 	1. DataBase에서 각 기능마다의 view 를 생성한다.  
+	
 	2. Back end 중 DAO(데이터를 직접적으로 추출하는 class)에서의 query를 
 	기능에 맞게 원하는 데이터만 추출 할 수 있도록 작성한다.  
+	
 	3. Back end 중 ServiceImpl(interface를 상속받은 class)에서 
 	DAO를 통해 받은 데이터를 원하는 데이터만 재추출 하여 전송한다.  
 
