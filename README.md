@@ -457,6 +457,34 @@ public class BoardInfoDAO {
 실제 적용 코드를 보여드리겠습니다.
 </div>
 
+```oracle
+-- 작업 정보와 작업 테이블에 간소화 되어 입력된 다른 테이블의 데이터들을(FK) 통해 다른 테이블의 정보까지 뷰로 생성함 (ex. 작업 차량 및 회원 정보 등등)
+-- 해당 뷰의 목적은 중계 회원의 모든 작업의 조회 기능을 위해 생성됨( 개인 회원의 일부 기능들도 사용함 )
+  CREATE OR REPLACE FORCE VIEW "WAL2739"."WORKINFOFORASS" ("WORKCODE", "CLIENTCODE", "WORKFIELD", "FIELDMANAGER", "FIELDMANAGERPHONE", "FIELDMANAGERCELL", "FIELDMANAGERMAIL", "FIELDADD01", "FIELDADD02", "WORKAMOUNT", "WORKTIME", "WORKREQUESTS", "ST", "ASSUSRN", "INDIUSRN", "WORKERSDATA", "EQRN", "RELATIVE", "WORKDATE", "RV", "CLIENTBONUMBER", "CLIENTCEO", "CLIENTMANAGER", "CLIENTPHONE", "CLIENTCELL", "CLIENTMAIL", "CLIENTADD01", "CLIENTADD02", "CLIENTCPNAME", "INDINAME", "INDICELL", "INDIMAIL", "INDIID", "EQUIPNUM", "EQUIPOPTION", "EQUIPCLASS", "EQUIPTYPE", "APPSTATUS", "DE") AS 
+  (
+select wi."WORKCODE",wi."CLIENTCODE",wi."WORKFIELD",wi."FIELDMANAGER",wi."FIELDMANAGERPHONE",wi."FIELDMANAGERCELL",wi."FIELDMANAGERMAIL",wi."FIELDADD01",wi."FIELDADD02",wi."WORKAMOUNT",wi."WORKTIME",wi."WORKREQUESTS",wi."ST",wi."ASSUSRN",wi."INDIUSRN",wi."WORKERSDATA",wi."EQRN",wi."RELATIVE",wi."WORKDATE",wi."RV",
+ci.CLIENTBONUMBER,
+ci.CLIENTCEO,
+ci.CLIENTMANAGER,
+ci.CLIENTPHONE,
+ci.CLIENTCELL,
+ci.CLIENTMAIL,
+ci.CLIENTADD01,
+ci.CLIENTADD02,
+ci.CLIENTCPNAME,
+ui.username indiName,
+ui.usercell indiCell,
+ui.useremail indiMail,
+ui.userId indiId,
+ei.equipnum,
+ei.equipoption,
+ei.equipclass,
+ei.equiptype,
+oi.appstatus,
+wdi.de from workInfo wi left join orderInfo oi on wi.workCode=oi.workcode left join clientinfo ci on wi.clientcode=ci.clientcode left join usersInfo ui on wi.indiusrn=ui.usrn left join equipinfo ei on wi.eqrn=ei.eqrn left join workdataInfo wdi on wi.workCode=wdi.workCode where nvl(oi.appstatus,5)!=2
+);
+```
+
 ><h4 align="center">Front end</h4>
 
 
