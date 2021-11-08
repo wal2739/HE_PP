@@ -12,9 +12,13 @@
 ---
 
 >목차
-
+>>1. [소개](#소개)<br/>
+>>2. [기능 및 코드 설명](#기능-및-코드-설명)<br/>
+>>3. [마침](#마침)<br/>
 
 ---
+
+# 소개
 
 <h2 align="center">소개</h1>
 
@@ -53,7 +57,7 @@
 
 
 
-<h3 align="center">기능 및 코드 설명</h3>
+# 기능 및 코드 설명
 
 ><h4 align="center">Back end</h4>
 
@@ -483,7 +487,53 @@ ei.equiptype,
 oi.appstatus,
 wdi.de from workInfo wi left join orderInfo oi on wi.workCode=oi.workcode left join clientinfo ci on wi.clientcode=ci.clientcode left join usersInfo ui on wi.indiusrn=ui.usrn left join equipinfo ei on wi.eqrn=ei.eqrn left join workdataInfo wdi on wi.workCode=wdi.workCode where nvl(oi.appstatus,5)!=2
 );
+-- 마지막 줄의 appstatus 란 해당 작업을 중계 회원이 발주 했을 경우 개인 회원의 수락/거절 유무를 뜻하며
+-- appstatus 가 2의 경우 아직 수락/거절을 하지 않은 대기 상태를 뜻함
+-- orderInfo 테이블은 workInfo 의 workCode를 FK로 설정해두었지만 PK(orderCode)는 따로 존재하므로 하나의 작업을 여러번 발주가 가능함
+-- 만약 한명의 개인 회원이 작업을 수락하면, 자동으로 다른 발주들은 삭제됨
 ```
+
+```JAVA
+//해당 뷰를 조회하는 Back end (DAO)
+
+@Repository
+public class WorkInfoDAO {
+	
+	List<WorkInfoForAssVO> getWork_Ass(String usRn){ // 기본 조회
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where assUsrn='" + usRn + "' and (st!=2 and st!=3 and st!=5) and (nvl(appstatus,4)!=0)";
+		// 취소 완료 등등이 아닌 등록만 되어 있는 작업(st값을 통해 구분)과 만약 발주를 했다면 거절 상태가 아닌 작업들을 조회함
+		try {
+			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+	
+	List<WorkInfoForAssVO> getWork_Ass_st2(String type ,String usRn){
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where " + type + "='" + usRn + "' and st=2 and (nvl(appstatus,4)!=0) and nvl(de,0)=1";
+		//type과 usRn이라는 매개변수를 통해 조회를 시도하는 회원이 개인 회원인지, 중계 회원인지에 대한 데이터를 받고 해당 회원의 회원 코드를 받아서 query에 삽입
+		try {
+			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+	
+	List<WorkInfoForAssVO> getWork_Ass_st5(String type ,String usRn){
+		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where " + type + "='" + usRn + "' and st=5 and (nvl(appstatus,4)!=0) and nvl(de,0)=1";
+		try {
+			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("work DAO 오류 : " + e);
+			return null;
+		}
+	}
+}
+//비슷한 맥락이므로 이하 메서드 생략 
+```
+
 
 ><h4 align="center">Front end</h4>
 
