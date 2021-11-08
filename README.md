@@ -71,6 +71,7 @@
 Back end 의 경우 스프링 프레임워크와 OJDBC를 사용하여 데이터 CRUD 기능을 구현하였습니다. 아래는 기본적인 CRUD 코드로,
 로그인 페이지에서 아이디와 비밀번호를 입력했을 때 동작하는 코드들입니다. 약 70%의 CRUD 기능은 아래와 비슷한 방식으로 구성되어 있어 코드를 생략하겠습니다.	
 </div>
+
 ```JAVA
 //login 에 해당하는 컨트롤러 중 일부
 
@@ -87,6 +88,7 @@ public class UsersController {
 	}
 }
 ```
+
 <div align="center">
 객체 지향 프로그래밍을 위해 service 를 ~Service라는 이름의 interface 와 해당 interface를 상속받는  ~ServiceImpl 이라는 class로 구현했습니다.
 아래는 해당 코드입니다.	
@@ -159,6 +161,7 @@ public class UsersInfoServiceImpl implements UsersInfoService{ //UsersInfoServic
 	}
 }
 ```
+
 <div align="center">
 정보 저장과 중복 로그인 방지등의 코드들을 보면, 쿠키를 사용하지 않고 세션을 사용했습니다.
 왜냐하면 쿠키는 안전성이 부족하다고 판단했기 때문입니다. 회원 정보 중 usRn은 고유 회원 번호와 같이 개인 정보가 세션에 저장되는데 안전성이 떨어지는 쿠키에
@@ -237,6 +240,7 @@ public class UserInfoDAO {
 	}
 }
 ```
+
 <div align="center">
 이렇게 로그인 파트에 해당하는 Back end 로직이 종료됩니다. 
 Controller 호출 > Service(interface) 메서드 호출 > 상속하여 메서드를 정의한 ServiceImpl > DB와의 연동 및 데이터를 가져옴 > 
@@ -308,6 +312,7 @@ public class BoardInfoDAO {
 	}
 }
 ```
+
 <div align="center">
 위의 코드가 CRUD 기능 중 조회를 담당하는 로직이며, ModelAndView를 사용하여 해당 이동 경로와 해당 경로에 데이터를 전송 하였습니다.
 마지막으로 데이터의 삭제와 수정을 보여드리겠습니다.
@@ -443,6 +448,7 @@ public class BoardInfoDAO {
 	}
 }
 ```
+
 <div align="center">
 지금까지 Back end에서의 CRUD를 구현하여, 원하는 데이터를 DB로 부터 추출하여 front end로 전송하는 로직을 보여드렸습니다.  
 하지만 데이터의 이동을 목적으로 Back end 를 구현하게 된다면, 디테일한 기능들을 구현 하는데에 한계가 생길 것 입니다.  
