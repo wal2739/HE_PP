@@ -19,7 +19,11 @@
 ---
 
 
-<h2 align="center">소개</h1>
+<h2 align="center">소개</h2>
+
+1. [프로그램 소개/사용법](#프로그램-소개/사용법)<br/>
+2. [개발 환경](#개발-환경)<br/>
+3. [DB 구성도](#DB-구성도)<br/>
 
 <h3 align="center">프로그램 소개/사용법</h3>
 
@@ -56,7 +60,7 @@
 
 
 
-# 기능 및 코드 설명
+<h2 align="center">기능 및 코드 설명</h2>
 
 ><h4 align="center">Back end</h4>
 
