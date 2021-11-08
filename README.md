@@ -536,7 +536,7 @@ public class WorkInfoDAO {
 		}
 	}
 	
-	List<WorkInfoForAssVO> getWork_Ass_st2(String type ,String usRn){
+	List<WorkInfoForAssVO> getWork_Ass_st2(String type ,String usRn){ // 
 		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where " + type + "='" + usRn + "' and st=2 and (nvl(appstatus,4)!=0) and nvl(de,0)=1";
 		//type과 usRn이라는 매개변수를 통해 조회를 시도하는 회원이 개인 회원인지, 중계 회원인지에 대한 데이터를 받고 해당 회원의 회원 코드를 받아서 query에 삽입
 		try {
@@ -547,8 +547,9 @@ public class WorkInfoDAO {
 		}
 	}
 	
-	List<WorkInfoForAssVO> getWork_Ass_st5(String type ,String usRn){
+	List<WorkInfoForAssVO> getWork_Ass_st5(String type ,String usRn){ // 정산 완료 된 작업만 조회
 		String sql = "select WORKCODE,CLIENTCODE,WORKFIELD,FIELDMANAGER,FIELDMANAGERPHONE,FIELDMANAGERCELL,FIELDADD01,FIELDADD02,WORKAMOUNT,st,appstatus,de from workInfoForAss where " + type + "='" + usRn + "' and st=5 and (nvl(appstatus,4)!=0) and nvl(de,0)=1";
+		// 위 메서드와 st값을 제외하고 거의 동일
 		try {
 			return jdbcTemplate.query(sql, new WorkInfoForAss_OneRowMapper());
 		} catch (EmptyResultDataAccessException e) {
@@ -560,6 +561,25 @@ public class WorkInfoDAO {
 //비슷한 맥락이므로 이하 메서드 생략 
 ```
 
+<div align="center">
+중장비 서비스 프로그램에서는 필요한 데이터들만 추출하기 위해 위와 같이 구현하려고 하는 기능과 
+유사한 기능들의 필요 데이터들의 합집합을 구성하여 뷰를 생성하고, 
+DAO 클래스에서 해당 뷰에서 필요한 데이터들만 추출하도록 구현 하였습니다.
+
+그렇다면
+	ServiceImpl 클래스(interface를 상속받은 클래스)는 단순 데이터 전송의 기능밖에 없는가?
+의 질문이 나올 수 도 있습니다. 물론 당연히 아닙니다. 데이터의 추출을 DAO에서 담당했다면,
+ServiceImpl 클래스에서는 위에서 말씀드린 
+	" 2차 가공 "
+을 담당합니다.
+	
+제가 말씀드리는 2차 가공이란, DAO를 통해 추출한 데이터들과 코딩을 통해 새로운 기능을 구현하도록 하는 것 입니다.
+제가 표현한 뜻이 통하는 다른 단어가 있을 수 도 있지만, 제가 잘 몰라서 그냥 이러한 작업을 2차 가공이라고 부르겠습니다.
+	
+대표적인 예로는 게시판 기능 중 하나인 페이징 기능이 있습니다.
+아래는 중장비 서비스 프로그램의 게시판의 구현 및 페이징 로직입니다.
+
+</div>
 
 ><h4 align="center">Front end</h4>
 
