@@ -516,7 +516,7 @@ wdi.de from workInfo wi left join orderInfo oi on wi.workCode=oi.workcode left j
 -- 마지막 줄의 appstatus 란 해당 작업을 중계 회원이 발주 했을 경우 개인 회원의 수락/거절 유무를 뜻하며
 -- appstatus 가 2의 경우 아직 수락/거절을 하지 않은 대기 상태를 뜻함
 -- orderInfo 테이블은 workInfo 의 workCode를 FK로 설정해두었지만 PK(orderCode)는 따로 존재하므로 하나의 작업을 여러번 발주가 가능함
--- 만약 한명의 개인 회원이 작업을 수락하면, 자동으로 다른 발주들은 삭제됨
+-- 만약 한명의 개인 회원이 작업을 수락하면, 자동 삭제 메서드가 실행되어 다른 발주들은 삭제됨
 ```
 
 ```JAVA
