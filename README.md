@@ -774,6 +774,12 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 }
 ```
 
+<div align="center">
+이렇게 Back end 의 페이징 로직이 마무리 됩니다.
+
+지금까지 주요 Back end 로직 설명을 마무리 하겠습니다. 아래는 Front end의 주요 코드들을 리뷰해드리겠습니다.
+맥락을 위해 Front end에서 페이징 데이터를 받아 처리하는 로직을 이어서 설명 하겠습니다.
+</div>
 
 ><h4 align="center">Front end</h4>
 
