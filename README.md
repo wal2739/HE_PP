@@ -700,7 +700,7 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 		
 		int boardCnt = list.size();// 게시글 수
 		if(boardCnt<=20) {
-			// 게시글이 20개 이하일 경우에는 페이징을 할 필요가 없기 때문에 데이터를 그대로 반환한다.
+			// 총 게시글이 20개 이하일 경우에는 페이징을 할 필요가 없기 때문에 데이터를 그대로 반환한다.
 			request.setAttribute("pagingCntRlt", 0);
 			request.setAttribute("pageNum", 0);
 			request.setAttribute("boardCnt", boardCnt);
@@ -719,42 +719,55 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 			int forNum02 = 0;//마지막 게시글 숫자
 			if(pagingCnt-(int) pagingCnt!=0) {
 				pagingCnt = (int)pagingCnt + 1;
-			}//만약 게시글수/20의 결과가 0이 아니라면(소수점이 발생한다면 페이지 +1)
+			}//소수점이 발생한다면 페이지 +1
+			
 			int pagingCntRlt = (int) Math.floor(pagingCnt); // 페이지 수를 다시 정수로 변환
 			
-			//전체게시물에 20을 나눈 몫 / 시작 게시물에 20을 나눈 몫 이 같다면 == 마지막 페이지
-			// 마지막 페이지는 전체 게시글에 1을 뺀 값  == 마지막 게시물
+			// 전체 게시글에 20을 나눈 몫 / 시작 게시글에 20을 나눈 몫 이 같다면 == 마지막 페이지
+			// 마지막 페이지는 전체 게시글에 1을 뺀 값  == 마지막 게시글
 			
-			if((int) Math.floor(boardCnt/20.0)!=pageNum) {//딱 20개의 게시물을 보여줄 경우 ex) 20 20 30 40
+			if((int) Math.floor(boardCnt/20.0)!=pageNum) { //마지막 페이지가 아닐경우
+				// 현재 if문은 현재 접속한 페이지가 마지막 페이지인지 아닌지를 확인하는 구문임
+				// 만약 64개의 게시글이 있고 현재 접속한 페이지가 3이라면 20개(보여줄 게시글의 최대치)를 보여줘야하며
+				// 만약 접속한 페이지가 4라면 Math.floor(64/20.0)와 같기 때문에 else 구문이 실행 된다.
+				// 쉽게 말하면, 마지막 페이지인가 아닌가를 구분하는 구문이다.
+				
 				forNum02 = forNum01 + 19;
-			}else {// 20개미만의 게시글을 보여줄 경우 ex) 15 17 69 38
+				// 현재 페이지에 마지막으로 보여줘야 할 데이터 넘버링(forNum02) = 현재 페이지에 첫 게시글 넘버링 + 19 (한 페이지에 총 20개를 보여줘야 하므로)
+			}else {//마지막 페이지 일 경우
 				if(boardCnt-forNum01==20) {
-					forNum02 = forNum01 + 19;
+					// 마지막 페이지에 총 게시글의 수가 20개이라면 실행되는 구문
+					forNum02 = forNum01 + 19; 
+					// 현재 페이지에 마지막으로 보여줘야 할 데이터 넘버링(forNum02) = 현재 페이지에 첫 게시글 넘버링 + 19 (한 페이지에 총 20개를 보여줘야 하므로)
+					// 결론적으로 0번째 부터 19번째 게시글을 보여줘야 함
 				}else {
+					// 마지막 페이지에 총 게시글 수가 20개 아니라면(20개 미만이라면)
 					forNum02 = boardCnt-1;
+					// 현재 페이지에 마지막으로 보여줘야 할 데이터 넘버링(forNum02) = 전체 게시글 - 1
 				}
 			}
-	
-			List<BoardInfoVO> listRlt = new ArrayList<BoardInfoVO>();// 데이터 전체 추출 값
-			if(forNum01==forNum02) {
+			
+			List<BoardInfoVO> listRlt = new ArrayList<BoardInfoVO>();
+			// 결과를 담을 list형 변수 선언
+			if(forNum01==forNum02) { 
+				// 현재 페이지에서 보여줘야 하는 첫번째 게시글 넘버링 = 마지막 게시글 넘버링 ( 게시글이 하나라면 )
 				listRlt.add(0,list.get(forNum01));
+				// 게시글 하나만 결과값에 저장 
 			}else {
 				for(int i = 0 ; forNum01<=forNum02; i++,forNum01++) {
+					// 루프 횟수만큼 i 를 증가 시키고, 리스트의 index값에 i 값을 넣음
 					listRlt.add(i,list.get(forNum01));
+					// 첫 게시글 넘버링(forNum01)에 해당하는 index를 보유한 value값을 결과값에 저장함
 
 				}
 				
 			}
 
-			//페이징 수가 10 초과인지 아닌지 판단
-			//초과가 아니라면 그냥 출력 [ double Arrow x ]
-			//초과라면 현재 페이지*0.1 의 몫에 따라 보여줄 페이지 설정
-			//현재 페이지 jsp 로 전송
 			
-			request.setAttribute("pagingCntRlt", pagingCntRlt);
-			request.setAttribute("pageNum", pageNum);
-			request.setAttribute("boardCnt", boardCnt);
-			return listRlt;
+			request.setAttribute("pagingCntRlt", pagingCntRlt); // 총 페이지 수
+			request.setAttribute("pageNum", pageNum); // 현재 페이지 값
+			request.setAttribute("boardCnt", boardCnt); // 전체 게시글 수
+			return listRlt; // 결과 값 반환
 		}
 		
 	}
