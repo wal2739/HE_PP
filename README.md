@@ -783,6 +783,133 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 
 ><h4 align="center">Front end</h4>
 
+<div align="center">
+프론트 엔드의 거의 모든 페이지는 JSP를 사용하여 구현 되었습니다.
+원 계획에서는 ajax를 통해 유동적인 데이터 수신을 구현하면서, 빠르게 동작하는 동적 페이지를 구현하고 싶었지만 
+프로젝트를 시작 할 당시 익숙하지도 않고 잘 사용하지 못 했는데, 저에게는 이부분이 아직까지도 아쉬운 부분 중 하나입니다.
+하여 현재 프로젝트에서는 JSP를 통해 데이터를 받고, 페이지를 구성하였습니다.
+	
+그러면 이어서 게시판 화면 구성을 jQuery, JS, CSS(style), HTML5 로 나누어 보여드리겠습니다.
+</div>
+
+```javaScript
+function checkNotice() {		
+	<%
+		cast_ob(session);
+	%>
+	var typeClass = <%=request.getAttribute("classType")%>;
+	var userClass = <%=userClass%>;
+	if(typeClass==3){
+		document.getElementById("my_writing").style.display = "none";	
+		if(userClass!=0){
+			document.getElementById("writing").style.display = "none";	
+		}
+	}
+	
+	switch (<%=request.getAttribute("deleteRlt")%>) {
+	case 0:
+		alert('삭제가 정상적으로 처리되지 않았습니다. 다시 시도해주세요.');
+		location.href='eachBoard.do?boardClassNum=' + <%=request.getAttribute("badClass")%>;
+		break;
+	case 1:
+		alert('삭제가 완료되었습니다.');
+		location.href='eachBoard.do?boardClassNum=' + <%=request.getAttribute("badClass")%>;
+		break;
+	default:
+		break;
+	}
+	
+	
+	var searchIDX = '<%=searchIDX%>';
+	var searchIDXCON = '<%=searchIDXCON%>';
+	
+	switch (searchIDX) {
+	case 'null':
+		break;
+	default:
+		document.getElementById("searchBox").value = searchIDX;
+		switch (searchIDXCON) {
+		case 'boardTitle':
+			$("#searchCond option:eq(0)").prop("selected",true);
+			break;
+		case 'boardCode':
+			$("#searchCond option:eq(1)").prop("selected",true);
+			break;
+		case 'userName':
+			$("#searchCond option:eq(2)").prop("selected",true);
+			break;
+		default:
+			break;
+		}
+		break;
+	}
+	
+}
+
+function pagingFun() {
+	var pagingCnt = <%=request.getAttribute("pagingCntRlt")%>;//총 페이지 수
+	var pageNum = <%=request.getAttribute("pageNum")%>;//현재 페이지boardCnt
+	var boardCnt = <%=request.getAttribute("boardCnt")%>;// 총 게시물 수
+	var rltCnt = Math.floor(pageNum*0.1);//현재 페이지 / 10
+	var pagingCntRlt = Math.floor(pagingCnt*0.1); // 총 페이지 / 10
+	var pTagInner = document.getElementById('pTagInner');
+	//현재 페이지가 처음과 끝인지 확인
+	if(pageNum==0){
+		//처음 페이지라면 좌측 Arrow를 생성하지않음
+		document.getElementById("arrBtn01").setAttribute('type','hidden');
+		document.getElementById("arrBtn02").setAttribute('type','hidden');
+		
+	}else if(pageNum==pagingCnt-1){
+		//마지막 페이지라면 우측 Arrow를 생성하지않음
+		document.getElementById("arrBtn03").setAttribute('type','hidden');
+		document.getElementById("arrBtn04").setAttribute('type','hidden');			
+	}
+	
+	//20 이하인지 구분
+	if(pagingCnt<9){
+		//20 이하 일 경우 double Arrow를 생성하지 않는다.
+		document.getElementById("arrBtn01").setAttribute('type','hidden');			
+		document.getElementById("arrBtn02").setAttribute('type','hidden');			
+		document.getElementById("arrBtn03").setAttribute('type','hidden');			
+		document.getElementById("arrBtn04").setAttribute('type','hidden');	
+	}
+	//20 이상 첫 페이지
+	switch (pagingCntRlt) {
+		case 0:
+		//첫 페이지 [10 이하]
+		for(var i = 0; i < pagingCnt; i++){
+			if(pageNum==i){
+				pTagInner.innerHTML += i + 1 + '&nbsp;&nbsp;';
+			}else {
+				pTagInner.innerHTML += '<a href="eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=' + i + '" style="width: 30px; height: 30px; font-size: 17px;">' + (i+1) + '</a>&nbsp;&nbsp;';
+			}
+		}
+		break;	
+	default:
+	//마지막 페이지
+		if(Math.floor((pagingCnt-1)*0.1)==Math.floor(pageNum*0.1)){
+			for(var i = rltCnt*10; i < pagingCnt; i++){
+				if(pageNum==i){
+					pTagInner.innerHTML += i + 1 + '&nbsp;&nbsp;';
+				}else {
+					pTagInner.innerHTML += '<a href="eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=' + i + '" style="width: 30px; height: 30px; font-size: 17px;">' + (i+1) + '</a>&nbsp;&nbsp;';
+				}
+			}
+		}else {
+			//기존 페이지
+			for(var i = rltCnt*10; i < rltCnt*10+10; i++){
+				if(pageNum==i){
+					pTagInner.innerHTML += i + 1 + '&nbsp;&nbsp;';
+				}else {
+					pTagInner.innerHTML += '<a href="eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=' + i + '" style="width: 30px; height: 30px; font-size: 17px;">' + (i+1) + '</a>&nbsp;&nbsp;';
+				}
+			}
+		}
+		break;
+	}
+}
+
+```
 
 ---
 
