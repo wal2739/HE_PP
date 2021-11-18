@@ -1161,6 +1161,255 @@ function pagingFun() {
 
 ```
 
+<h4 align="center">결과 화면</h4>
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 게시판 결과 화면 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+
+<div align="center">
+이렇게 게시판 페이지의 프론트엔드 코드와 결과 화면을 보여드렸습니다.
+그렇다면 아마 이해가 안 되시는 부분이 몇가지 보이실 겁니다.
+
+
+맞습니다.
+
+제가 보여드린 코드와 결과 화면이 아무리 봐도 다른 것 같아 보이실텐데요.
+그 이유는 제가 모듈화 한 코드들은 보여드리지 않아서 입니다.
+그렇다면 어떤 부분을 모듈화 했는지 지금부터 보여드리겠습니다.
+	
+먼저 제가 사용한 라이브러리 목록입니다.
+</div>
+
+```jsp
+
+<%-- jQuery --%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<%-- 공용 JS(모든 페이지 공용으로 사용될 JS코드만 따로 파일화) --%>
+<script type="text/javascript" src="/js/main.js?ver=1" ></script>
+
+<%-- CSS --%>
+<link rel="stylesheet" href="/css/main.css?ver=18">
+
+<%-- 폰트 --%>
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
+	rel='stylesheet' type='text/css'>
+```
+
+
+<div align="center">
+이제 제가 설계한 모듈을 하나씩 설명 드리겠습니다.
+
+먼저 상단 고정 메뉴(글로벌 네비) 입니다.
+해당 메뉴는 모든 페이지 공통으로 들어가는 메뉴이므로, 같은 코드를 여러번 반복하여 사용하는 것 보다
+해당 코드를 모듈화하여 include를 통해 사용하는 것이 효과적이라 생각했습니다.
+	
+아래는 상단 메뉴(top_menu.jsp)의 코드 입니다.
+전체적으로 보여드리고 싶지만, 분량을 생각하여 일부만 보여드리겠습니다.
+</div>
+
+```JSP
+<style> //상단 네비 
+* { 
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
+}
+body {
+  font-family: 'Rubik', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("/image/bg_body.png") repeat center;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: repeat;
+}
+a {
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.nav-area *{
+  z-index : 999;
+}
+.nav-area ul {float:right;}
+.nav-area {
+  position : static;
+  background: #262626;
+}
+.nav-area:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.nav-area ul{
+  list-style: none;
+  margin: 0;
+}
+.nav-area > ul > li {
+  float: left;
+  position: relative;
+}
+.nav-area ul li a {
+  text-decoration: none;
+  color: #fff;
+  padding: 15px 20px;
+  display: block;
+}
+.nav-area ul li:hover a {
+  background: #34495a;
+}
+.nav-area ul ul {
+  position: absolute;
+  padding: 0;
+  min-width: 160px;
+  display: none;
+  top: 100%;
+  left: 0;
+}
+.nav-area ul li:hover > ul {
+  display: block;
+}
+.nav-area ul ul li:hover a {
+  background: #262626;
+}
+.nav-area ul ul li {
+  position: relative;
+}
+.nav-area ul ul ul {
+  top: 0;
+  left: 100%;
+}
+</style>
+<%!
+	//회원 분류 형변환
+	int userClass=0;
+	
+	public void cast_ob(HttpSession session){
+		String userClass_t = String.valueOf(session.getAttribute("userClass"));
+		if(userClass_t.equals("null")){
+			userClass_t = "1";
+		}
+		userClass = Integer.parseInt(userClass_t);
+	}
+%>
+<%
+	//위 형변환 메서드를 이용하여 가져온 회원 분류를 통해
+	//분류 마다 다른 메뉴를 보여주기 
+	cast_ob(session);
+	String menuInfo[] = new String[4];
+	String dropMenuInfo[] = new String[16];
+	String dropMenuLink[] = new String[16];
+	menuInfo[1] = "작업";
+	menuInfo[2] = "정산";
+	menuInfo[3] = "기타";
+	if (userClass==0) {//관리자
+		//관리자 기능은 아직 개발중인 기능이므로, 테스트를 위해 게시판만 확인 가능함
+		
+		dropMenuInfo[13] = "개인 사용자 전용";
+		dropMenuInfo[14] = "자유 게시판";
+		dropMenuInfo[15] = "공지 사항";
+		dropMenuLink[13] = "eachBoard.do?boardClassNum=1";
+		dropMenuLink[14] = "eachBoard.do?boardClassNum=0";
+		dropMenuLink[15] = "eachBoard.do?boardClassNum=3";
+		
+	} else if (userClass==1) {// 개인 회원
+		menuInfo[0] = "등록";
+		dropMenuInfo[0] = "사업자 정보";
+		dropMenuInfo[1] = "대리 작업자";
+		dropMenuInfo[2] = "차량 정보";
+		dropMenuInfo[3] = "그룹 정보";
+		dropMenuInfo[4] = "작업 목록";
+		dropMenuInfo[5] = "완료 작업";
+		dropMenuInfo[8] = "정산 조회";
+		dropMenuInfo[9] = "현황/그래프";
+		dropMenuInfo[10] = "";
+		dropMenuInfo[11] = "";
+		dropMenuInfo[12] = "그룹 공지";
+		dropMenuInfo[13] = "개인 사용자 전용";
+		dropMenuInfo[14] = "자유 게시판";
+		dropMenuInfo[15] = "공지 사항";
+		//////////
+		dropMenuLink[0] = "showBO.do";
+		dropMenuLink[1] = "WorkerInfo.do";
+		dropMenuLink[2] = "showVehicleInfo.do";
+		dropMenuLink[3] = "showMyGroup.do";
+		dropMenuLink[4] = "workInfoForIndi.do?uClass=indiUsrn";
+		dropMenuLink[5] = "finishedWorkList.do";
+		dropMenuLink[8] = "finishedCalculate.do?classType=indiusrn";
+		dropMenuLink[9] = "getStatistics.do?classType=indiusrn";
+		dropMenuLink[13] = "eachBoard.do?boardClassNum=1";
+		dropMenuLink[14] = "eachBoard.do?boardClassNum=0";
+		dropMenuLink[15] = "eachBoard.do?boardClassNum=3";
+		
+	} else if (userClass==2) { //중계 회원
+		menuInfo[0] = "설정";
+		dropMenuInfo[0] = "사업자 정보";
+		dropMenuInfo[1] = "회원 관리";
+		dropMenuInfo[2] = "거래처 관리";
+		dropMenuInfo[4] = "작업 관리";
+		dropMenuInfo[5] = "작업 발주";
+		dropMenuInfo[6] = "완료 작업";
+		dropMenuInfo[8] = "정산 처리";
+		dropMenuInfo[9] = "현황/그래프";
+		dropMenuInfo[13] = "중계 사용자 전용";
+		dropMenuInfo[14] = "자유 게시판";
+		dropMenuInfo[15] = "공지 사항";
+		//////////
+		dropMenuLink[0] = "showBO.do";
+		dropMenuLink[1] = "showGrouper.do";
+		dropMenuLink[2] = "showClient.do";
+		dropMenuLink[4] = "workInfo.do";
+		dropMenuLink[5] = "workOrderInfo.do";
+		dropMenuLink[6] = "finishedWorkList_Ass.do";
+		dropMenuLink[8] = "calculate.do?classType=assUsRn";
+		dropMenuLink[9] = "getStatistics.do?classType=assUsRn";
+		dropMenuLink[13] = "eachBoard.do?boardClassNum=2";
+		dropMenuLink[14] = "eachBoard.do?boardClassNum=0";
+		dropMenuLink[15] = "eachBoard.do?boardClassNum=3";
+		
+	} else if (userClass==3) { //대리작업자 (개발중)
+	}
+%>
+<body>
+	<nav class="nav-area">
+			<ul>
+			<li><a href="main.do">Home</a></li>
+			<li><a href="about.html">About</a></li>
+			<li><a href="#"><%=menuInfo[0]%></a>
+				<ul>
+					<li><a href="<%=dropMenuLink[0]%>"><%=dropMenuInfo[0] %></a></li>
+					<li><a href="<%=dropMenuLink[1]%>"><%=dropMenuInfo[1] %></a></li>
+					<li><a href="<%=dropMenuLink[2]%>"><%=dropMenuInfo[2] %></a></li>
+					<% if(userClass==1){%><li><a href="<%=dropMenuLink[3]%>"><%=dropMenuInfo[3] %></a></li><%} %>
+
+				</ul></li>
+			<li><a href="#"><%=menuInfo[1]%></a>
+				<ul>
+					<li><a href="<%=dropMenuLink[4]%>"><%=dropMenuInfo[4] %></a></li>
+					<li><a href="<%=dropMenuLink[5]%>"><%=dropMenuInfo[5] %></a></li>
+					<% if(userClass==2){%><li><a href="<%=dropMenuLink[6]%>"><%=dropMenuInfo[6] %></a></li><%} %>
+
+				</ul></li>
+			<li><a href="#"><%=menuInfo[2]%></a>
+				<ul>
+					<li><a href="<%=dropMenuLink[8]%>"><%=dropMenuInfo[8] %></a></li>
+					<li><a href="<%=dropMenuLink[9]%>"><%=dropMenuInfo[9] %></a></li>
+
+				</ul></li>
+			<li><a href="#"><%=menuInfo[3]%></a>
+				<ul>
+					<li><a href="<%=dropMenuLink[13]%>"><%=dropMenuInfo[13] %></a></li>
+					<li><a href="<%=dropMenuLink[14]%>"><%=dropMenuInfo[14] %></a></li>
+					<li><a href="<%=dropMenuLink[15]%>"><%=dropMenuInfo[15] %></a></li>
+				</ul>
+			</li>
+			<li><a href="logOut.do">로그아웃</a></li>
+			<li><a href="checkIdentity.jsp">내정보</a></li>
+		</ul>
+	</nav>
+</body>
+```
+
+
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 상단 메뉴 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+
 ---
 
 <h2 align="center">마침</h1>
