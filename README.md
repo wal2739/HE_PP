@@ -1410,6 +1410,54 @@ a {
 
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 상단 메뉴 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
 
+<div align="center">
+다음은 회원 분류 모듈입니다. (class_Module.jsp)
+이 모듈은 각 회원 구분에 따라 사용 할 기능들을 다른 회원들이 사용하지 못하게 막는 기능을 가진 모듈입니다.
+또한 해당 모듈은 위에서 보여드린 형변환 메서드(cast_ob())와 JavaScript으로만 구현하였습니다.
+하여 형변환 메서드는 생략하고 JavaScript만 보여드리겠습니다.
+</div>
+
+```jsp
+<script type="text/javascript">
+window.addEventListener('load',function loadOn() {
+
+	// 모듈을 포함하는 페이지에서 body 태그에 onload 속성을 사용 할 수 있으므로,
+	// addEventListener() 를 통해 여러개의 이벤트 핸들러를 등록함
+	
+	<%
+	cast_ob(session);
+	// 회원 구분 형변환
+	
+	// 비회원을 구분하는 코드
+	String loginCheckData="";
+	try{
+		loginCheckData= (String)session.getAttribute("userId");
+	}catch(NullPointerException e){
+		System.err.println("비회원 아이디 에러 : "+e);
+	}
+	%>
+	var loginCheckData = '<%=loginCheckData%>';
+	loginCheck(loginCheckData);
+	// main.js 파일에 loginCheck() 메서드를 통해 비회원을 구분함
+	
+	
+	//현재 페이지의 접속 권한(classType)이 정확한지 확인 하여 변수에 값을 할당
+	<%
+	boolean index_1 = request.getAttribute("classType").equals(1);
+	boolean index_2 = request.getAttribute("classType").equals(2);
+	boolean index_3 = request.getAttribute("classType").equals(userClass);
+	%>
+	if(<%=index_1%>||<%=index_2%>){
+		// 현재 페이지의 접속 권환 확인이 정상적으로 이루어졌다면 실행하는 구문
+		if(<%=index_3%>==false){
+			// 현재 페이지의 접속 권한이 회원 분류(접속 권한)이 맞지 않다면, 메인화면으로 이동
+			location.href='main.do';
+		}
+	}
+});
+</script>
+```
+
 ---
 
 <h2 align="center">마침</h1>
