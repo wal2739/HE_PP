@@ -789,23 +789,81 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 프로젝트를 시작 할 당시 익숙하지도 않고 잘 사용하지 못 했는데, 저에게는 이부분이 아직까지도 아쉬운 부분 중 하나입니다.
 하여 현재 프로젝트에서는 JSP를 통해 데이터를 받고, 페이지를 구성하였습니다.
 	
-그러면 이어서 게시판 화면 구성을 jQuery, JS, CSS(style), HTML5 로 나누어 보여드리겠습니다.
+그러면 이어서 게시판 화면 구성(eachBoard.jsp)을 jQuery, JS, CSS(style), HTML5 로 나누어 보여드리겠습니다.
 </div>
 
+```jsp
+    <%
+	String searchIDX = ""; // 검색 분류
+	String searchIDXCON = ""; // 검색 내용
+	//예외 처리를 통해 이전에 검색한 내용이 있는지 분류 하고, 있다면 해당 변수에 값을 할당함
+	try{
+		searchIDX = (String) request.getAttribute("searchIDX");
+		searchIDXCON = (String) request.getAttribute("searchIDXCON");
+	}catch (NullPointerException e){
+		System.err.println("검색 인덱스 값 없음 : "+e);
+	}
+	
+	List<BoardInfoVO> list = null; // 게시글 정보
+    	String classType = ""; // 게시판 분류(회원 구분)
+    	String backPath = ""; // 이전 페이지 정보(사용 x)
+	
+    	list = (List)request.getAttribute("list"); // request영역에서 게시글 정보를 List 타입으로 불러옴
+	
+	// 게시판 분류 구문
+	if(request.getAttribute("classType").equals(0)){
+    		classType = "자유 게시판";
+    	}else if(request.getAttribute("classType").equals(1)){
+    		classType = "개인 사용자 게시판";
+    	}else if(request.getAttribute("classType").equals(2)){
+    		classType = "중계 사용자 게시판";
+    	}else if(request.getAttribute("classType").equals(3)){
+    		classType = "공지 게시판";
+    	}else {
+    		classType = "에러 - classType - jsp";
+    	}
+    %>
+    <%!
+    	//session 영역에서 가져오는 userClass(회원 분류)를 정수(int)타입으로 변경해주는 메서드
+	int userClass=0;//default 값을 0으로 고정
+	public void cast_ob(HttpSession session){
+		String userClass_t = String.valueOf(session.getAttribute("userClass"));
+		if(userClass_t.equals("null")){
+			userClass_t = "1";
+		}
+		//예외처리 대신 if문을 사용한 이유는 session에서 불러온 값이 Object 타입으로 들어오기 때문에
+		//형변환 할 변수(userClass_t)를 String 타입으로 지정했으므로, null일 경우 String타입의 null이 들어옴
+		//하여 예외처리 시 exception이 발생하지 않기에 if문을 사용함
+		
+		userClass = Integer.parseInt(userClass_t);
+		//마지막으로 필드에 형변환한 값을 다시 넣어줌
+	}
+    %>
+```
+
 ```javaScript
+// 페이지 로드 시 자동 호출되는 함수
 function checkNotice() {		
-	<%
+	<% 
+		//회원 구분(userClass)의 형변환
 		cast_ob(session);
 	%>
-	var typeClass = <%=request.getAttribute("classType")%>;
-	var userClass = <%=userClass%>;
-	if(typeClass==3){
+	var typeClass = <%=request.getAttribute("classType")%>; 
+	// 백엔드에서(ServiceImpl) 저장해둔 게시판 분류를 호출하여 불러옴
+	// 전체적인 로직에서의 해당 변수는 접속한 게시판의 값을 의미함
+	
+	var userClass = <%=userClass%>; // 형변환 한 회원 구분 값
+	
+	if(typeClass==3){ 
+		//// typeClass가 3에 해당한다면 공지 게시판이므로, [내 글 보기] 버튼의 display를 none으로 변경(비활성화)
 		document.getElementById("my_writing").style.display = "none";	
 		if(userClass!=0){
+			// userClass가 0이라면 관리자이므로 글 작성이 가능하지만, 일반 회원은 작성하지 못하도록 display를 none으로 변경(비활성화)
 			document.getElementById("writing").style.display = "none";	
 		}
 	}
 	
+	// 이전에 삭제를 진행 했다면 정상처리 유무를 확인하고, 페이지를 재로드 함(주소창에 데이터가 남아있으므로 초기화 하기 위함)
 	switch (<%=request.getAttribute("deleteRlt")%>) {
 	case 0:
 		alert('삭제가 정상적으로 처리되지 않았습니다. 다시 시도해주세요.');
@@ -820,7 +878,8 @@ function checkNotice() {
 	}
 	
 	
-	var searchIDX = '<%=searchIDX%>';
+	// 이전에 검색을 시도 한 경우, 해당 검색 내용을 자동으로 재입력 해주기 위한 코드
+	var searchIDX = '<%=searchIDX%>'; 
 	var searchIDXCON = '<%=searchIDXCON%>';
 	
 	switch (searchIDX) {
@@ -846,28 +905,31 @@ function checkNotice() {
 	
 }
 
+// 페이지 로드 시 자동 호출되는 함수
 function pagingFun() {
-	var pagingCnt = <%=request.getAttribute("pagingCntRlt")%>;//총 페이지 수
-	var pageNum = <%=request.getAttribute("pageNum")%>;//현재 페이지boardCnt
+	// 이미 페이징은 백엔드에서 연산 후 데이터만 받기 때문에 해당 JS에서는 페이지 번호 및 좌,우측 화살표를 생성하는 코드만 구현함
+	
+	var pagingCnt = <%=request.getAttribute("pagingCntRlt")%>;// 총 페이지 수
+	var pageNum = <%=request.getAttribute("pageNum")%>;// 현재 페이지
 	var boardCnt = <%=request.getAttribute("boardCnt")%>;// 총 게시물 수
-	var rltCnt = Math.floor(pageNum*0.1);//현재 페이지 / 10
+	var rltCnt = Math.floor(pageNum*0.1);// 현재 페이지 / 10
 	var pagingCntRlt = Math.floor(pagingCnt*0.1); // 총 페이지 / 10
-	var pTagInner = document.getElementById('pTagInner');
-	//현재 페이지가 처음과 끝인지 확인
-	if(pageNum==0){
+	var pTagInner = document.getElementById('pTagInner'); // innerHTML을 실행하기 위한 변수
+	
+	
+	if(pageNum==0){ //현재 페이지가 처음과 끝인지 확인
 		//처음 페이지라면 좌측 Arrow를 생성하지않음
 		document.getElementById("arrBtn01").setAttribute('type','hidden');
 		document.getElementById("arrBtn02").setAttribute('type','hidden');
 		
-	}else if(pageNum==pagingCnt-1){
-		//마지막 페이지라면 우측 Arrow를 생성하지않음
+	}else if(pageNum==pagingCnt-1){ //마지막 페이지라면 우측 Arrow를 생성하지않음
 		document.getElementById("arrBtn03").setAttribute('type','hidden');
 		document.getElementById("arrBtn04").setAttribute('type','hidden');			
 	}
 	
 	//20 이하인지 구분
 	if(pagingCnt<9){
-		//20 이하 일 경우 double Arrow를 생성하지 않는다.
+		//20 이하 일 경우 페이지를 옮기는 화설표를 생성하지 않는다.
 		document.getElementById("arrBtn01").setAttribute('type','hidden');			
 		document.getElementById("arrBtn02").setAttribute('type','hidden');			
 		document.getElementById("arrBtn03").setAttribute('type','hidden');			
@@ -876,11 +938,12 @@ function pagingFun() {
 	//20 이상 첫 페이지
 	switch (pagingCntRlt) {
 		case 0:
-		//첫 페이지 [10 이하]
+		//첫 페이지 [20 이하]
 		for(var i = 0; i < pagingCnt; i++){
 			if(pageNum==i){
-				pTagInner.innerHTML += i + 1 + '&nbsp;&nbsp;';
+				pTagInner.innerHTML += i + 1 + '&nbsp;&nbsp;'; // 현재 접속중인 페이지는 a태그로 구현하지 않기 위한 코드
 			}else {
+				// 페이지 번호 생성
 				pTagInner.innerHTML += '<a href="eachBoard.do?boardClassNum=<%=request.getAttribute("classType")%>&pagingNum=' + i + '" style="width: 30px; height: 30px; font-size: 17px;">' + (i+1) + '</a>&nbsp;&nbsp;';
 			}
 		}
