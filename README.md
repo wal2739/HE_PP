@@ -974,6 +974,123 @@ function pagingFun() {
 
 ```
 
+```CSS
+  .mainDiv{
+    width: 100%;
+    height: 100%;
+  }
+  
+  .div1{
+    height: 70px;
+    width: 100%;
+    display: inline-block;
+  }
+  .div1_textArea{
+    padding-left: 100px;
+    padding-top: 10px;
+    margin-left: 10%;
+  }
+.div2{
+  display: inline-block;
+  width: 100%;
+  height: 1200px;
+  text-align: center;
+}
+.div_2_back {
+	display : inline-block;
+	width: 70%;
+	height: 90%;
+	background: rgba(255,255,255,.75);
+	
+}
+  .div2_1 {
+    width: 95%;
+    height: 90%;
+    overflow: hidden;
+    margin : 0 auto 0 auto;
+  }
+  .div2_2 {
+    width: 95%;
+    height: 10%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin : 0 auto 0 auto;
+  }
+  .div3{
+    display: inline-block;
+    width: 100%;
+    height: 200px;
+  
+  }
+  /* div2_1 > table) css */
+.div2_1 h2{
+    text-align: center;
+}
+.searchForm {
+    float: right;
+    text-align : center;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+#searchBox {
+    top: 0;
+    float: left;
+}
+#searchBtn {
+    width: 20px;
+    height: 20px;
+}
+.etcBtn {
+    width: 30px;
+    height: 30px;
+}
+#arrBtn01, #arrBtn02, #arrBtn03, #arrBtn04 {
+    width: 20px;
+    height: 20px;
+}
+#searchBox,#searchBtn,#searchCond {
+	float : right;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+#boardTB {
+    width: 100%;
+    border: 0.5px solid #d7d7d7;
+    background: white;
+    
+}
+#boardTB td,#boardTB th{
+	border: 0.5px solid #d7d7d7;
+	text-align: center;
+    font-size: 15px;
+}
+#boardTB th {
+	background: #f7f7f5;
+	
+}
+.pagingA {
+    margin-top: 7px;
+    text-align: center;
+}
+  /* div2_2 > input) css */
+.div2_2 pre {
+    display: inline-block;
+    font-size: 15px;
+    color: red;
+    margin-left: 10px;
+}
+.div2_2 input {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+```
+
+```JSP
+/*ㄻㄴㄻㄴㄹ*/
+
+```
+
 ---
 
 <h2 align="center">마침</h1>
