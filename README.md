@@ -789,7 +789,7 @@ public class BoardInfoServiceImpl implements BoardInfoService{
 프로젝트를 시작 할 당시 익숙하지도 않고 잘 사용하지 못 했는데, 저에게는 이부분이 아직까지도 아쉬운 부분 중 하나입니다.
 하여 현재 프로젝트에서는 JSP를 통해 데이터를 받고, 페이지를 구성하였습니다.
 	
-그러면 이어서 게시판 화면 구성(eachBoard.jsp)을 jQuery, JS, CSS(style), HTML5 로 나누어 보여드리겠습니다.
+그러면 이어서 게시판 화면 구성(eachBoard.jsp)을 jQuery, JS, CSS(style), JSP(HTML5) 로 나누어 보여드리겠습니다.
 </div>
 
 ```jsp
@@ -1194,6 +1194,9 @@ function pagingFun() {
 	rel='stylesheet' type='text/css'>
 ```
 
+><h5 align="center">모듈화</h5>
+
+
 
 <div align="center">
 이제 제가 설계한 모듈을 하나씩 설명 드리겠습니다.
@@ -1457,6 +1460,369 @@ window.addEventListener('load',function loadOn() {
 });
 </script>
 ```
+
+<div align="center">
+다음은 플로팅 메뉴의 모듈입니다. (floating_module.jsp)
+플로팅 메뉴의 경우 상단 메뉴와 달리 단순한 기능만을 구현하고 있습니다.
+총 3가지 기능으로 구성되어 있으며, 각각의 기능은 맨위로(상단이동), HOME(메인 페이지 이동), 고객센터(해당 게시판 이동) 등 입니다.
+
+이 플로팅 메뉴는 화면이 스크롤 될 경우 정해진 위치에 고정되는 메뉴이지만, 아무런 애니메이션 없이
+화면에 고정만 되어 있다면 너무 딱딱한 느낌이 들어 jQuery를 통해 부드럽게 화면을 따라오는 애니메이션을 구현 하였습니다.
+
+물론 제게 익숙한 언어는 JavaScript 이지만 해당 기능을 JS로 구현했을때에는 프레임이 다소 떨어지는(부드럽지 않은) 현상이
+발생하여, jQuery를 이용하여 구현하였습니다.
+
+마지막으로 고객센터 기능은 아직 구현이 되지 않아 alert()로 구현 해두었으니, 참고 부탁드립니다.
+
+아래는 JSP로 구현된 코드 중 일부 입니다. 이어서 CSS도 보여드리겠습니다.
+</div>
+
+```jsp
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/main.css?ver=22">
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
+	rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="/js/main.js?ver=10" ></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var currentPosition = parseInt($("#floating_btn").css("top"));
+	// 플로팅 메뉴(floating_btn)의 top 값
+	
+	$(window).scroll(function() { // 스크롤 발생 시 실행되는 함수
+		var position = $(window).scrollTop();
+		// 현재 스크롤 위치 값
+		$("#floating_btn").stop().animate({"top":position+currentPosition+"px"},700);
+		// animate() 함수 전에 stop() 을 사용하여 애니메이션 도중 스크롤 값이 변경될 경우
+		// 해당 애니메이션을 중단하게 코딩 함
+	});
+});
+</script>
+<body>
+	<div class="floating_btn" id="floating_btn">
+    	<p id="floating_title"><b>리모컨</b></p>
+    	<div class="floating_btn_img" onclick="show_top();">
+    		<img src="/image/up_arrow.png" alt="상단 이동"/>
+    	</div>
+    	<p>맨위로</p>
+    	<div class="floating_btn_img" onclick="link_call();">
+    		<img src="/image/call_img.png" alt="상담 버튼"/>
+    	</div>
+    	<p>고객센터</p>
+    	<div class="floating_btn_img" onclick="location.href='main.do'">
+    		<img src="/image/home_btn.png" alt="상담 버튼"/>
+    	</div>
+    	<p>HOME</p>
+    </div>
+</body>
+```
+
+```CSS
+.floating_btn { 
+	position: absolute; 
+	right: 50%; 
+	top : 70%;
+	right : 50px;
+	text-align:center; 
+	width: 50px;
+	height: 250px;
+	border: 0.5px #CCCCCC solid;
+	background: linear-gradient( 45deg, #6E6E6E, #CCCCCC );
+	border-radius: 10px / 10px;
+	padding-bottom: 5px;
+}
+.floating_btn_img {
+	margin : 5px 0px 5px 0px;
+	display : inline-block;
+	background: linear-gradient( 45deg, #f0f0f0, #F2F2F2 );
+	width: 80%;
+	height: 30px;
+	padding-top: 5px;
+	border: 0.3px #f0f0f0 solid;
+	border-radius: 10px / 10px;
+}
+.floating_btn img {
+	width: 60%;
+	height: 65%;
+}
+.floating_btn p {
+	font-size : 7px;
+	color : #E3E3E3;
+}
+.floating_btn #floating_title{
+	color: black;
+}
+```
+
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 플로팅 메뉴 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+
+<div align="center">
+그 외 다른 모듈들이 있습니다.
+사업자 정보 등록 유무 모듈, 비회원 구분 모듈 등등 여러가지 모듈이 더 있지만 구성이 비슷하므로 생략 하겠습니다.
+</div>
+
+><h5 align="center">표현식</h5>
+
+<div align="center">
+새로운 데이터를 입력 받을 때, 제가 설계한 데이터만을 받기 위해 JavaScript를 이용한 정규 표현식을 통해
+원하는 데이터만 입력 할 수 있게 구현 했습니다. 
+이는 Back end로 대체 구현 가능한 기능 이지만, 그렇게 된다면 연산식이 많아지고 처리 속도에도 영향을 미치는 부분을 고려해
+JavaScript를 통해 프론트에서 해당 기능을 구현했습니다.
+	
+아래는 입력한 id의 유효성 검사 코드입니다.
+비밀번호와 이메일, 연락처 등등의 유효성 검사가 필요한 값들은 아래와 같은 코드로
+구현 되어있으므로 생략하겠습니다.
+</div>
+
+```javascript
+//newUser.jsp 중 일부
+function validate() {
+	var re = /^[a-zA-Z0-9]{4,12}$/; 
+	// 아이디가 적합한지 검사할 정규식
+	var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	// 이메일이 적합한지 검사할 정규식( 추후 사용 안함 )
+	var chkNum = /^[0-9]+$/;
+	// 숫자 정규식
+
+	var id = document.getElementById("userId").value;
+	// 입력된 id값
+	
+	if(!re.test(id)){
+		alert('아이디는 4~12자의 영문 대소문자와 숫자로만 입력');
+		return false;
+	}
+}
+```
+
+><h5 align="center">알고리즘</h5>
+
+<div align="center">
+그렇다면 주민등록번호와 같은 중요 데이터는 어떻게 검사를 해야 할까요?
+프로젝트를 진행하면서 오픈 API를 사용하여 검사하려고 했지만, 개인 프로젝트는 해당 API를 사용하기에
+여러가지 제약이 있었습니다. 
+
+하여 주민등록번호의 원리를 찾아 알고리즘으로 구현 했습니다.
+
+아래는 해당 코드입니다.
+</div>
+
+```javascript
+	/*
+주민등록번호는 마지막 자리의 숫자를 제외한 모든 숫자에 지정된 값(2,3,4,5,6,7,8,9,2,3,4,5)을
+곱한 후 해당 결과값을 모두 더하고, 결과값을 11로 나눈 나머지 11에서 뺀 값이 주민등록번호 마지막 자리의 수와 
+일치 한다면 정상적인 주민등록번호 입니다.
+(11로 나눈 나머지 값 = 마지막 자리 수)
+	*/
+	var boRrn01 = document.getElementById("boRrn01").value; // 주민등록번호 앞자리
+	var boRrn02 = document.getElementById("boRrn02").value; // 주민등록번호 뒷자리
+	var arrNum1 = new Array(); // 주민번호 앞자리숫자 6개를 담을 배열
+   	var arrNum2 = new Array(); // 주민번호 뒷자리숫자 7개를 담을 배열
+	var tempSum = 0; // 계산 합
+	
+	for (var i = 0; i < boRrn01.length; i++) {
+		arrNum1[i] = boRrn01.charAt(i);
+	} 
+	// 주민번호 앞자리를 배열에 순서대로 담는다.
+	
+	for (var i = 0; i < boRrn02.length; i++) {
+		arrNum2[i] = boRrn02.charAt(i);
+	} // 주민번호 뒷자리를 배열에 순서대로 담는다.
+	
+	for (var i = 0; i < boRrn01.length; i++) {
+	    tempSum += arrNum1[i] * (2 + i);
+	} 
+	// 주민번호 검사방법을 적용하여 앞 번호를 모두 계산하여 더함
+	
+	for (var i = 0; i < boRrn02.length - 1; i++) {
+	    if (i >= 2) {
+		tempSum += arrNum2[i] * i;
+	    } else {
+		tempSum += arrNum2[i] * (8 + i);
+	    }
+	} 
+	// 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
+	
+	if ((11 - (tempSum % 11)) % 10 != arrNum2[6]) {
+	// 모든 번호의 결과값의 합을 11로 나눈 나머지와 주민등록번호 마지막 자리가 일치하지 않을 경우
+	    alert("올바른 주민번호가 아닙니다.");
+	    boRrn01 = "";
+	    boRrn02 = "";
+	    document.getElementById("boRrn01").focus();
+	    return false;
+	}	
+```
+
+<div align="center">
+이렇게 해서 주민등록번호의 유효성 검사를 진행하는 로직을 구현했습니다.
+
+사업자등록번호 역시 마찬가지로 원리를 찾아 알고리즘으로 유효성 검사 코드를 구현했습니다.
+하지만 주민등록번호 유효성 검사와 같은 단순 연산 알고리즘이므로 생략하겠습니다.
+
+다음으로 보여드릴 알고리즘은 달력 알고리즘입니다.
+이 역시 달력의 원리를 알고 나면 단순 연산으로 구현 가능한 알고리즘이지만,
+개인적으로 달력의 원리가 잘 이해 되지 않아 구현하는데 상당히 애먹은 기능입니다.
+
+아래는 해당 코드입니다.
+</div>
+
+```javaScript
+
+/*
+해당 알고리즘에서 달력의 처음 즉 첫 날짜는 0년 1월 1일(월요일) 부터 시작하며,
+JSP를 통해 오늘 날짜를 가져와 기본 세팅을 진행해주었습니다.
+
+달력의 기본 원리는 1년마다 첫일(1월 1일)의 요일이 하루씩 밀린다는 겁니다.
+예를 들어 2001년 1월 1일이 월요일이라면 2002년 1월 1일은 화요일입니다.
+
+그런데 실제로 2000년 1월 1일은 토요일 입니다. 위에서 말씀 드린 내용을 바탕으로
+생각해보면 2001년 1월 1일은 일요일이어야 하는데 말이죠.
+
+이는 윤년 떄문입니다. 윤년에 해당하는 년도는 총 366일 이기 때문에 이틀이 밀리기 때문에
+2001년 1월 1일이 월요일이 됬습니다.
+
+윤년은 기본적으로 4년에 한번씩 오게 되며, 만약 윤년이 100의 배수가 된다면 해당 년도는 윤년이 아니게 됩니다.
+하지만 해당 윤년이 400의 배수가 된다면 윤년에 해당됩니다.
+
+즉 4년에 한번 씩 윤년이며, 100과 400의 공배수(공통 배수) 를 제외 한 100의 배수는 윤년에 해당 하지 않습니다.
+
+그럼 아래 코드를 설명드리겠습니다.
+	
+	jsp에 작성된 기본 셋팅
+	<%
+	Date now = Calendar.getInstance().getTime();
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy@MM@dd");
+	String[] nowDate = formatter.format(now).split("@");
+	int nowYear = Integer.parseInt(nowDate[0]);//이번년도
+	int nowMonth = Integer.parseInt(nowDate[1]);//이번달
+	int today = Integer.parseInt(nowDate[2]);//오늘
+	%> 
+*/
+	var nowYear = <%=nowYear%>; // 년도
+	var saveYear = <%=nowYear%>; // 년도
+	var nowMonth = <%=nowMonth%>;  // 월
+	var saveMonth = <%=nowMonth%>;  // 월 정보 저장
+	var today = <%=today%>;  // 날짜
+	var eachMonth = new Array(12);// 월별 일수
+	var sum_month = 0;// 월별 일수의 합
+	var relsult = 0;// 결과값
+	var lastYear = 0;// 작년 년도
+	
+	
+	// 기본 셋팅 함수
+	function set_day() {
+		eachMonth[0] =  31;
+		eachMonth[1] =  28;
+		eachMonth[2] =  31;
+		eachMonth[3] =  30;
+		eachMonth[4] =  31;
+		eachMonth[5] =  30;
+		eachMonth[6] =  31;
+		eachMonth[7] =  31;
+		eachMonth[8] =  30;
+		eachMonth[9] =  31;
+		eachMonth[10] =  30;
+		eachMonth[11] =  31;
+		if(nowYear%4==0 && (nowYear%400==0 || nowYear%100!=0)){//올해가 윤년일 경우 2월을 29일로 설정
+			eachMonth[1] = 29;
+		}
+	
+		sum_month = 0;//월별 일수의 합
+		lastYear = nowYear-1;//작년 년도
+	
+	
+		relsult = lastYear + lastYear/4 + (lastYear/400 - lastYear/100);
+		//0년 1월 1일 부터의 일 계산 (작년 + 작년까지의 4년주기의 윤년 수 + 작년까지의 400년 주기의 윤년 수 - 윤년에 해당하지 않는 윤년의 수(100으로 나누어 떨어지면 윤년이 아님);
+		//몇일이 밀려야 하는지를 계산함
+	
+		for(var i = 0; i < nowMonth; i++){//이번 달까지의 월별 일 수 를 모두 더함
+			sum_month = sum_month + eachMonth[i];
+		}
+	}
+	
+	function calendar_cleaner() {
+		for(var i = 1; i < 43; i++){
+			document.getElementById('day'+ i).innerHTML = '-';
+		}
+	}
+	
+	function show_calendar(){
+		set_day();
+		//셋팅
+		
+		var rlt = 0;
+		sum_month -= eachMonth[nowMonth-1];//이번달까지의 일수 - 이번달의 일수
+		relsult = relsult + sum_month;//0년 1월 1일부터 올해까지 밀린 일수 + 오늘까지 지난 올해의 일수
+		rlt = Math.round(relsult%7);//일주일을 나누면 나머지 값을 통해 이번달 첫 요일이 나옴
+		for(var i = 0 ; i < eachMonth[nowMonth-1]; i++){ // 캘린더에 입력
+			rlt++;
+			if(saveMonth==nowMonth&&saveYear==nowYear){
+				if(rlt==today){
+					document.getElementById('day'+rlt).innerHTML = '<span class="active">' + (i+1) + '</span>';
+				}else {
+					document.getElementById('day'+rlt).innerHTML = i+1;
+				}
+			}else {
+				document.getElementById('day'+rlt).innerHTML = i+1;
+			}
+		}
+		document.getElementById('month').innerHTML = nowMonth + '<br><span style="font-size: 18px">'+ nowYear +'</span>';
+		relsult=0;
+		sum_month=0;
+		lastYear=0;
+	}
+	
+	// 저번 달 or 다음 달 보기
+	function prevOrNext(click_num) {
+		switch (click_num) {
+		case 0:
+			calendar_cleaner();
+			if(nowMonth==1){
+				nowYear--;
+				nowMonth=12;
+			}else {
+				nowMonth--;
+			}
+			show_calendar();
+			break;
+		case 1:
+			calendar_cleaner();
+			if(nowMonth==12){
+				nowYear++;
+				nowMonth=1;
+			}else {
+				nowMonth++;
+			}
+			show_calendar();
+			break;
+		default:
+			alert('에러');
+			break;
+		}
+		
+		
+	}
+	
+	//오늘의 요일 구하기
+	function today_fun() {
+		set_day();
+		var rlt = 0;
+	    sum_month = sum_month - eachMonth[nowMonth-1] + today-1;//(이번달까지의 총일수 - 이번달 일수 + 오늘 날짜+1)
+	    relsult = relsult + sum_month;//0년 1월 1일부터 올해까지 밀린 일수 + 오늘까지 지난 올해의 일수
+	    rlt = Math.round(relsult%7);//일주일을 나누면 나머지 값을 통해 오늘의 요일이 나옴
+	    
+	}
+```
+
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※  사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+
+
+<div align="center">
+이렇게 알고리즘 파트를 마치겠습니다.
+더 많은 알고리즘을 구현했지만, 복잡하지 않고 단순한 알고리즘이 대부분이기 때문에 생략하겠습니다.
+</div>
+
+><h5 align="center">iframe</h5>
+><h5 align="center">업로드 및 다운로드</h5>
+><h5 align="center">API</h5>
 
 ---
 
