@@ -5,9 +5,6 @@
 ---
 
 <h2 align="center">머리글</h1>
-
-![녹화_2021_11_25_05_38_54_559](https://user-images.githubusercontent.com/14798713/143310634-6c4c1fe0-740a-4a13-8a11-49cb6e5e0dd4.gif)
-
 <div align="center">
 안녕하세요.
 풀스택 개발자 지망생 권상원입니다.
