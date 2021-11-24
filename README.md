@@ -64,7 +64,7 @@
 
 1-1. [Back end](#Back-end)<br/>
 1-2. [Front end](#Front-end)<br/>
-
+1-3. [etc](#etc)<br/>
 
 ><h4 align="center">Back end</h4>
 <div align="center">
@@ -1850,16 +1850,631 @@ JSP를 통해 오늘 날짜를 가져와 기본 세팅을 진행해주었습니�
 이 때, 등록된 작업 목록과 발주 가능한 개인 회원을 iframe태그를 이용하여 동적으로 구성하였으며
 작업을 선택하면 발주 회원을 선택하는 화면이 순차적으로 보여집니다.
 또한 원하는 작업 혹은 회원의 정보가 하단의 입력칸에 자동으로 입력됩니다.
+
+이를 통해 해당 프로그램에서는 개발자가 지정한 데이터만을 보여줄 수 있었습니다.
+(주소값 조작을 통해 다른 데이터 조회 불가능)
 	
 원활한 설명을 드리기 위해 결과 사진을 먼저 보여드리고 코드를 보여드리겠습니다.
+(CSS는 생략하겠습니다)
 </div>
 
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 작업 발주 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
 
+```jsp
+	/*
+	newOrder.jsp 중 일부
+	*/
+	
+	<jsp:include page="top_menu.jsp" />
+	<jsp:include page="floating_module.jsp" />
+	<jsp:include page="boCheck_module.jsp" />
+	<main>
+	<div class="mainDiv">
+		<div class="div1">
+			<div class="div1_textArea">
+				<h2>새 발주 등록</h2>
+			</div>
+		</div>
+		<div class="div2">
+			<div class="div_2_back">
+				<div class="div2_1">
+					<div class="div2_1_1">
+						<h2 id="div2_1_1_h2">작업 선택</h2>
+						<div class="h2_btn_div">
+							<button disabled="disabled" id="backBtn" onclick="back_btn();"
+								class="check_btn">이전</button>
+							<button onclick="confirm_work();" id="confirmBtn" value="0"
+								class="check_btn">작업 확정</button>
+						</div>
+					</div>
+					<div class="div2_1_2">
+						<iframe src="" frameborder="0" id="info_Frame"></iframe>
+						<p style="font-size: 18px;">※ 작업 선택 및 확정 > 작업자 선택 및 확정 > 발주 등록
+						</p>
+					</div>
+				</div>
+				<div class="div2_2">
+					<div class="div2_2_1">
+						<p style="font-size: 12px;">※ 상단에 원하시는 작업 혹은 작업자 를 선택 하시면 정보가
+							자동으로 입력 됩니다.</p>
+						<h3>작업 정보</h3>
+						<table id="inputTB">
+							<tr>
+								<th>현장명</th>
+								<td><input type="text" readonly="readonly" id="workField"
+									name="workField" /></td>
+								<th>현장 책임자</th>
+								<td><input type="text" readonly="readonly"
+									id="fieldManager" name="fieldManager" /></td>
+								<th colspan="2">현장 책임자 메일 주소</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="fieldManagerMail" name="fieldManagerMail" /></td>
+							</tr>
+							<tr>
+								<th colspan="2">현장 책임자 전화번호</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="fieldManagerPhone01" name="fieldManagerPhone01"
+									style="width: 30px;" /> - <input type="text"
+									readonly="readonly" id="fieldManagerPhone02"
+									name="fieldManagerPhone02" style="width: 35px;" /> - <input
+									type="text" readonly="readonly" id="fieldManagerPhone03"
+									name="fieldManagerPhone03" style="width: 35px;" /></td>
+								<th colspan="2">현장 책임자 핸드폰</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="fieldManagerCell01" name="fieldManagerCell01"
+									style="width: 30px;" /> - <input type="text"
+									readonly="readonly" id="fieldManagerCell02"
+									name="fieldManagerCell02" style="width: 35px;" /> - <input
+									type="text" readonly="readonly" id="fieldManagerCell03"
+									name="fieldManagerCell03" style="width: 35px;" /></td>
+							</tr>
+							<tr>
+								<th colspan="2">현장 주소</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="fieldAdd01" name="fieldAdd01" /></td>
+								<th colspan="2">현장 상세 주소</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="fieldAdd02" name="fieldAdd02" /></td>
+							</tr>
+							<tr>
+								<th>작업 날짜</th>
+								<td><input type="date" readonly="readonly" id="workDate"
+									name="workDate" /></td>
+								<th>작업 시간</th>
+								<td><input type="text" readonly="readonly" id="workTime01"
+									name="workTime01" style="width: 15px;" /> : <input type="text"
+									readonly="readonly" id="workTime02" name="workTime02"
+									style="width: 15px" /></td>
+								<th>작업 수당</th>
+								<td colspan="3"><input type="text" readonly="readonly"
+									id="workAmount" name="workAmount" /></td>
+							</tr>
+							<tr>
+								<th>거래처 명</th>
+								<td><input type="text" readonly="readonly"
+									id="clientCpName" name="clientCpName" /></td>
+								<th>거래처 담당자</th>
+								<td><input type="text" readonly="readonly"
+									id="ClientManager" name="ClientManager" /></td>
+								<th colspan="2">거래처 전화번호</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="clientPhone01" name="clientPhone01" style="width: 35px;" />-<input
+									type="text" readonly="readonly" id="clientPhone02"
+									name="clientPhone02" style="width: 35px;" />-<input
+									type="text" readonly="readonly" id="clientPhone03"
+									name="clientPhone03" style="width: 35px;" /></td>
+							</tr>
+							<tr>
+								<th colspan="2">요청 사항</th>
+								<td colspan="6"><input style="width: 90%;" type="text"
+									readonly="readonly" id="workRequests" name="workRequests" /></td>
+							</tr>
+						</table>
+						<h3>작업자 정보</h3>
+						<table id="inputTB">
+							<tr>
+								<th>작업자 이름</th>
+								<td colspan="2"><input type="text" id="userName"
+									name="userName" readonly="readonly" /> <input type="hidden"
+									id="rv" name="rv" readonly="readonly" /></td>
+								<th>작업자 연락처</th>
+								<td colspan="2"><input type="text" id="userCell"
+									name="userCell" readonly="readonly" /></td>
+							</tr>
+							<tr>
+								<th>장비 종류</th>
+								<td><input type="text" id="equipType" name="equipType"
+									readonly="readonly" /></td>
+								<th>장비 분류</th>
+								<td><input type="text" id="equipClass" name="equipClass"
+									readonly="readonly" /></td>
+								<th>장비 옵션</th>
+								<td><input type="text" id="equipOption" name="equipOption"
+									readonly="readonly" /></td>
+							</tr>
+						</table>
+					</div>
+					<div class="div2_2_2">
+						<div class="div2_2_2_btn">
+							<form action="newOrderAct.do" style="display: inline-block;">
+								<input type="hidden" id="workCode" name="workCode" /> <input
+									type="hidden" id="usRn" name="usRn" readonly="readonly" /> <input
+									type="hidden" id="eqRn" name="eqRn" readonly="readonly" />
+								<button type="submit" onclick="return confirm_All();">발주
+									등록</button>
+							</form>
+							<button onclick="location.href='workOrderInfo.do'">뒤로가기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="div3"></div>
+	</div>
+	</main>
+```
 
+```javaScript
+//javaScript 코드 중 일부
+
+	var info_num01; // 선택한 정보 값 (자식 페이지(iframe)에서 값 전달
+	var info_num02; // 선택한 정보 값 (자식 페이지(iframe)에서 값 전달
+	
+	//단순 정보 입력 함수
+	function insert_val01() {
+ 		var workField = document.getElementById('info_Frame').contentDocument.getElementsByName('workField')[info_num01].value;
+ 		var fieldManager = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManager')[info_num01].value;
+ 		var fieldManagerMail = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerMail')[info_num01].value;
+ 		var fieldManagerPhone01 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerPhone01')[info_num01].value;
+ 		var fieldManagerPhone02 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerPhone02')[info_num01].value;
+ 		var fieldManagerPhone03 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerPhone03')[info_num01].value;
+ 		var fieldManagerCell01 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerCell01')[info_num01].value;
+ 		var fieldManagerCell02 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerCell02')[info_num01].value;
+ 		var fieldManagerCell03 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldManagerCell03')[info_num01].value;
+ 		var fieldAdd01 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldAdd01')[info_num01].value;
+ 		var fieldAdd02 = document.getElementById('info_Frame').contentDocument.getElementsByName('fieldAdd02')[info_num01].value;
+ 		var workTime01 = document.getElementById('info_Frame').contentDocument.getElementsByName('workTime01')[info_num01].value;
+ 		var workTime02 = document.getElementById('info_Frame').contentDocument.getElementsByName('workTime02')[info_num01].value;
+ 		var workAmount = document.getElementById('info_Frame').contentDocument.getElementsByName('workAmount')[info_num01].value;
+ 		var workRequests = document.getElementById('info_Frame').contentDocument.getElementsByName('workRequests')[info_num01].value;
+ 		var clientCpName = document.getElementById('info_Frame').contentDocument.getElementsByName('clientCpName')[info_num01].value;
+ 		var ClientManager = document.getElementById('info_Frame').contentDocument.getElementsByName('ClientManager')[info_num01].value;
+ 		var clientPhone01 = document.getElementById('info_Frame').contentDocument.getElementsByName('clientPhone01')[info_num01].value;
+ 		var clientPhone02 = document.getElementById('info_Frame').contentDocument.getElementsByName('clientPhone02')[info_num01].value;
+ 		var clientPhone03 = document.getElementById('info_Frame').contentDocument.getElementsByName('clientPhone03')[info_num01].value;
+ 		var workCode = document.getElementById('info_Frame').contentDocument.getElementsByName('workCode')[info_num01].value;
+ 		var rv = document.getElementById('info_Frame').contentDocument.getElementsByName('rv')[info_num01].value;
+ 		
+ 		document.getElementById('workField').value = workField;
+ 		document.getElementById('fieldManager').value = fieldManager;
+ 		document.getElementById('fieldManagerMail').value = fieldManagerMail;
+ 		document.getElementById('fieldManagerPhone01').value = fieldManagerPhone01;
+ 		document.getElementById('fieldManagerPhone02').value = fieldManagerPhone02;
+ 		document.getElementById('fieldManagerPhone03').value = fieldManagerPhone03;
+ 		document.getElementById('fieldManagerCell01').value = fieldManagerCell01;
+ 		document.getElementById('fieldManagerCell02').value = fieldManagerCell02;
+ 		document.getElementById('fieldManagerCell03').value = fieldManagerCell03;
+ 		document.getElementById('fieldAdd01').value = fieldAdd01;
+ 		document.getElementById('fieldAdd02').value = fieldAdd02;
+ 		document.getElementById('workTime01').value = workTime01;
+ 		document.getElementById('workTime02').value = workTime02;
+ 		document.getElementById('workAmount').value = workAmount;
+ 		document.getElementById('workRequests').value = workRequests;
+ 		document.getElementById('clientCpName').value = clientCpName;
+ 		document.getElementById('ClientManager').value = ClientManager;
+ 		document.getElementById('clientPhone01').value = clientPhone01;
+ 		document.getElementById('clientPhone02').value = clientPhone02;
+ 		document.getElementById('clientPhone03').value = clientPhone03;
+ 		document.getElementById('workCode').value = workCode;
+ 		document.getElementById('rv').value = rv;
+	}
+	
+	//단순 정보 입력 함수
+	function insert_val02() {
+ 		var usRn = document.getElementById('info_Frame').contentDocument.getElementsByName('usRn')[info_num02].value;
+ 		var userName = document.getElementById('info_Frame').contentDocument.getElementsByName('userName')[info_num02].value;
+ 		var userCell = document.getElementById('info_Frame').contentDocument.getElementsByName('userCell')[info_num02].value;
+ 		var equipType = document.getElementById('info_Frame').contentDocument.getElementsByName('equipType')[info_num02].value;
+ 		var equipClass = document.getElementById('info_Frame').contentDocument.getElementsByName('equipClass')[info_num02].value;
+ 		var equipOption = document.getElementById('info_Frame').contentDocument.getElementsByName('equipOption')[info_num02].value;
+ 		var eqRn = document.getElementById('info_Frame').contentDocument.getElementsByName('eqRn')[info_num02].value;
+ 		
+ 		
+ 		document.getElementById('usRn').value = usRn;
+ 		document.getElementById('userName').value = userName;
+ 		document.getElementById('userCell').value = userCell;
+ 		document.getElementById('equipType').value = equipType;
+ 		document.getElementById('equipClass').value = equipClass;
+ 		document.getElementById('equipOption').value = equipOption;
+ 		document.getElementById('eqRn').value = eqRn;
+	}
+	
+	
+	// 작업 확정 시 실행되는 함수
+	function confirm_work() {
+ 		var btn_val = document.getElementById('confirmBtn').value; // 작업 확정 버튼의 value 값
+ 		var confirmBtn = document.getElementById('confirmBtn');
+ 		var backBtn = document.getElementById('backBtn'); // 작업 확정 후 확정 취소를 위한 버튼
+ 		switch (btn_val) {
+		case '0': // default 값이 0으로 설정되어 있음
+			
+			if(document.getElementById('workCode').value==''){ // 작업이 선택되지 않음
+				alert('작업을 선택 해주세요.');
+			}else { // 작업이 선택됨
+				var rv = document.getElementById('rv');
+				var h2 = document.getElementById('div2_1_1_h2');
+				
+				// iframe 태그의 주소값을 변경해 줌으로써 같은 영역에 다른 정보를 보여줌
+				// (작업자 목록을 보여주기 위함)
+				document.getElementById('info_Frame').setAttribute('src','order_frame02.do?equipType=' + rv.value);
+				confirmBtn.value = 1; // 확정 버튼의 값이 1이면 작업이 확정되어 있는 상태임
+				backBtn.removeAttribute('disabled'); // 뒤로 가기 버튼 활성화
+				confirmBtn.innerHTML='작업자 확정'; // 버튼 이름 변경
+				h2.innerHTML='작업자 선택';
+			}
+			break;
+		case '1': // 작업 확정이 완료 되었으며, 작업자 확정 버튼을 클릭 했을때 실행
+			if(document.getElementById('workCode').value==''){ // 작업 확정 재검사
+				alert('잘못된 접근 입니다.');
+			}else if(document.getElementById('usRn').value==''||document.getElementById('eqRn').value==''){ // 작업자 미선택
+				alert('작업자를 선택 해주세요.');
+			}else { //작업자 선택 완료
+				confirmBtn.value = 2; // 해당 버튼의 value 가 2일 경우 모든 데이터 입력이 완료 됨
+				backBtn.setAttribute('disabled','disabled'); // 뒤로가기 버튼 비활성화
+				confirmBtn.setAttribute('disabled','disabled'); // 확정 버튼 비활성화
+				alert('발주 정보 등록이 완료 되었습니다. \n하단의 [ 발주 등록 ] 버튼을 눌러주세요.');
+			}
+			break;
+		default:
+			alert('err - 관리자에게 문의 하세요. 페이지가 새로고침 됩니다.');
+			location.href = 'newOrder.do';
+			break;
+		}
+	}
+	
+	// 작업 확정 후 뒤로가기 버튼 실행 시
+	function back_btn() {
+		// 작업 확정 전 상태로 데이터 초기화 및 롤백
+		
+		var confirmBtn = document.getElementById('confirmBtn');
+		var h2 = document.getElementById('div2_1_1_h2');
+		document.getElementById('info_Frame').setAttribute('src','order_frame01.do');
+		document.getElementById('backBtn').setAttribute('disabled','disabled');
+		confirmBtn.innerHTML='작업 확정';
+		confirmBtn.value = 0;
+		h2.innerHTML='작업 선택';
+		alert('작업 선택 후 [ 작업 확정 ] 버튼을 다시 눌러주세요.');
+	}
+	
+	// 모든 정보 입력 후 최종 확정 버튼 실행 시
+	function confirm_All() {
+ 		var confirmBtn = document.getElementById('confirmBtn');
+		switch (confirmBtn.value) {
+		case '2': // 확정 버튼의 value 가 2 일 경우만 정상적으로 완료 됨
+			return confirm('발주 등록을 완료 하시겠습니까?');
+			break;
+		default:
+			alert('정상적인 접근이 아닙니다.\n입력된 정보를 다시 확인 해주세요.');
+			return false;
+			break;
+		}
+	}
+	
+	
+	
+	// 자식 페이지에서 실행되는 함수
+	// 작업 혹은 작업자 선택 시 실행됨
+	// 작업 리스트, 회원 리스트 둘 다 동일
+	// (order_frame01.jsp , order_frame02.jsp ) 참고
+	function sendInfo(num) {
+		parent.info_num01 = num;
+		parent.insert_val01();
+	}
+	
+	
+	
+	// 작업 리스트, 회원 리스트 의 HTML5/JSP 코드는 다른 코드(ex. 게시판 등등)와 거의 동일하므로
+	// 생략하겠습니다.
+```
+
+><h5 align="center">자식창과 부모창</h5>
+
+<div align="center">
+iframe을 사용한 자식창과 부모창간의 호출 및 모듈화를 보여드렸습니다.
+이는 새 창 열기(window.open())에서도 역시 활용되었습니다.
+
+
+아래는 회원 가입 시 새 창을 이용한 아이디 중복확인 기능에 대한 코드입니다.
+이 역시 ajax를 사용하면 좀 더 효율적인 코드가 만들어질 수 있습니다만 해당 프로젝트에서는 ajax를 사용하지 않았습니다.
+	
+회원가입(newUser.jsp) 폼 중 일부 JS,HTML5/JSP 코드만 보여드리겠습니다.
+</div>
+
+```jsp
+<div class="int-area">/*아이디 입력 폼*/
+	<input type="text" name="userId" id="userId" maxlength="12" onkeydown="inputidcheck()" autocomplete="off" required/>
+	<label for="userId">아이디 *</label>
+</div>
+<div class="check-area">/*중복체크 버튼*/
+	<button onclick="idcheck01();">중복 체크</button>
+	<input type="hidden" value="0" id="idcheck" name="idcheck"/>
+</div>
+```
+
+```javaScript
+function idcheck01() {
+	var re = /^[a-zA-Z0-9]{4,12}$/; // 정규 표현식
+	var id = document.getElementById("userId").value; // id 입력 값
+	if(id!=""&&re.test(id)){ // 널값이 아니면서 정규 표현식에 해당하는 id 값이라면 실행
+		window.name="parentForm"; // 새 창 이름 설정
+		window.open("IdCheck.jsp","chkForm","width=500,height=300,resizable=no,scrollbars=no"); // 새 창 열기
+	}else if(id==""){ // 아이디를 입력하지 않았다면 실행
+		alert('아이디를 입력 하신 후 중복확인을 눌러주십시오.')
+		return false;
+	}else if(!re.test(id)){ // 정규 표현식에 일치하지 않는다면 실행
+		alert('아이디는 4~12자의 영문 대소문자와 숫자로만 입력');
+		return false;
+	}
+}
+```
+
+><h4 align="center">etc</h4>
+
+<div align="center">
+etc 파트에서는 말 그대로 기타 항목들을 정리해서 보여드리겠습니다.
+대표적으로 API 와 업로드 및 다운로드 등 프론트와 백엔드로 나누어 보여드릴 수 없는 기술들을
+정리해보았습니다.
+	
+먼저 업로드와 다운로드 부분입니다.
+제가 구현한 업로드/다운로드 기능은 대략적으로 아래 사진과 같이 구성되어 있습니다.
+자세한 코드는 사진 바로 아래에 첨부하겠습니다.
+</div>
+
+![KakaoTalk_20211125_035918569](https://user-images.githubusercontent.com/14798713/143298385-0dac079d-b2e4-4fcf-b779-e33b4811cef9.png)
 
 ><h5 align="center">업로드 및 다운로드</h5>
+
+```jsp
+/* newWorkData.jsp 중 일부 */
+
+<%String workCode = (String)request.getAttribute("wCode"); %>
+<body onload="loadOn();">
+	<jsp:include page="boCheck_module.jsp" />/*로그인/사업자 정보 유효성 검사 모듈*/
+	<form action="WorkDataUpload.do" method="post" enctype="multipart/form-data" onsubmit="return check_file();">
+	/* enctype="multipart/form-data" 을 통해 인코딩 방식을 설정 (이미지 업로드를 위해 인코딩 하지 않음으로 설정) */
+	/* check_file()를 통해 증빙자료가 정상적으로 선택 되었는지 검사 */
+		<h1>증빙 자료 등록</h1>
+		<div class="btnArea">
+			<label for="uploadFile" id="label_upload">파일 업로드</label>
+			<input type="file" id="uploadFile" class="uploadInput" name="uploadFile" accept="image/*" onchange="fileUpload(this);"/><br /> /* 파일 선택 */
+			<p id="filename_p"></p> /* 파일 선택시 선택된 파일 명을 보여줌 */
+			<input type="hidden" id="workCode" name="workCode" value="<%=workCode%>"/>
+			/* 어떤 작업의 증명 파일인지 구분하기 위함  */
+			<input class="submit_btn" type="submit" value="등록"/>
+		</div>
+	</form>
+</body>
+```
+
+```javaScript
+	//파일 업로드 후 정상 처리 검사 함수 onload를 통해 자동 실행
+	function loadOn() {
+		var uploadChk = <%=request.getAttribute("uploadChk")%>;
+		switch (uploadChk) {
+		case null:
+			break;
+		case 0:
+			alert('증빙자료가 정상적으로 등록되지 않았습니다. 다시 시도해주세요.');
+			break;
+		case 1:
+			alert('증빙자료가 정상적으로 등록었습니다. ');
+			opener.parent.location.href='finishedWorkList.do';
+			window.close();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	// 파일 선택 후 해당 위치(filename_p)에 파일 이름을 명시해주는 함수
+	function fileUpload(fis) {
+		var str = fis.value;
+		document.getElementById('filename_p').innerHTML = " 선택된 파일 : " + fis.value.substring(str.lastIndexOf("\\")+1);
+	}
+	
+	// 파일이 선택되지 않은 상태로 완료 버튼을 눌렀을 경우를 방지하기 위한 
+	function check_file() {
+		if(document.getElementById('uploadFile').value==''){
+			alert('증빙 자료를 선택 해주세요.');
+			return false;
+		}
+	}
+```
+
+<div align="center">
+이렇게 front end에서의 업로드 세팅이 끝나고, 해당 코드를 이용하여 사용자가
+이미지를 업로드 하게 된다면 Back end(서버/컨트롤러)에서 처리가 됩니다.
+	
+아래는 Back end 로직입니다.
+</div>
+
+```java
+//WorkController 
+
+@Controller
+public class WorkController {
+	
+	@Autowired
+	WorkDataInfoService workDataInfoService;
+	
+	@RequestMapping("WorkDataUpload.do")
+	public String testUpload(WorkDataInfoVO vo, HttpServletRequest request) throws IllegalStateException, IOException{
+		String saveFileName ="";
+		//MultipartFile로 파일 정보를 받음
+		MultipartFile uploadFile = vo.getUploadFile();
+		//randomUUID로 랜덤값 받음
+		String genId = UUID.randomUUID().toString().substring(5, 12);
+		// realPath로 프로젝트에 fileSave 폴더에 값을 저장함
+		String realPath = request.getSession().getServletContext().getRealPath("/workDataUpload/");
+		
+		// 만약 uploadFile이 비어있지않다면 다음과 같이 코드 실행
+		if(!uploadFile.isEmpty()) {
+			// originalFileName에 원본 파일명을 저장함
+			String originalFileName = uploadFile.getOriginalFilename();
+			// saveFileName에 랜덤값이 저장된 genID와 파일명을 저장함
+			saveFileName = genId + "." + FilenameUtils.getExtension(originalFileName);
+			// 아래 함수로 파일을 업로드함
+            		uploadFile.transferTo(new File(realPath+saveFileName));
+		}
+		workDataInfoService.workDataUpload(saveFileName, request);
+		//request 영역에 정상적으로 처리되었는지에 대한 값을 저장함
+		return "newWorkData.do";
+
+	}
+
+}
+```
+
+
+
+
+<div align="center">
+그렇다면 다운로드는 어떻게 진행 될까요 ? 
+다운로드의 핵심은 OutputStream 입니다.
+	
+front end에서 request영역에 저장한 파일명을 가져와, 지정된 경로와 정보들을
+response의 헤더에 저장하고 파일을 바이트 스트림으로 읽기 위해 FileInputStream 객체를 생성합니다.
+마지막으로 OutputStream 을 사용하여 Byte 단위로 출력 스트림으로 보내주는게 다운로드의 과정입니다.
+
+front end 코드는 이미지와 다운로드 버튼만 보여주기 때문에 생략하였습니다. (workDataIMG.jsp)
+아래는  Back end 로직입니다.
+</div>
+
+
+```java
+//WorkController 중 일부
+
+@Controller
+public class WorkController {
+
+	@RequestMapping("workDataDownload.do")
+	public void fileDownload(HttpServletResponse response,HttpServletRequest request) {
+		String fileName = (String)request.getParameter("dtName");
+		// front end에서 파일명을 받아옴
+		String realPath = request.getSession().getServletContext().getRealPath("/workDataUpload/");
+		realPath = realPath+fileName;
+		// 경로 및 파일 명 설정
+		
+		File file = new File(realPath);
+		long fileLength = file.length();
+		// DB에 없는 정보는 파일로 만들어서 가져옴
+
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+		response.setHeader("Content-Transfer-Encoding", "binary"); 
+		response.setHeader("Content-Type", "jpg");
+		response.setHeader("Content-Length", "" + fileLength);
+		response.setHeader("Pragma", "no-cache;");
+		response.setHeader("Expires", "-1;");
+		// 그 정보들을 가지고 reponse의 Header에 세팅
+
+		try {
+			// saveFileName을 파라미터로 넣어 inputStream 객체를 생성
+			// response에서 파일을 내보낼 OutputStream을 가져옴  
+			FileInputStream fis = new FileInputStream(realPath);
+			OutputStream out = response.getOutputStream();
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+			// 파일 읽을 만큼 크기의 buffer를 생성
+			while ((readCount = fis.read(buffer)) != -1) {
+				out.write(buffer, 0, readCount);
+				// outputStream에 작성
+			}
+		} catch (Exception e) {
+		    	System.err.println(e);
+		}
+	}
+}
+```
+
 ><h5 align="center">API</h5>
+
+<div align="center">
+마지막으로 소개해드릴 파트는 API에 관한 내용입니다.
+해당 프로그램을 개발하면서 여러가지 API를 활용해보고 싶었습니다.
+위에서 말씀 드렸다시피 개인 포트폴리오 작업을 진행함에 있어 몇가지 API는 제약 사항이 많았습니다.
+
+아무래도 개인정보와 관련 있는 API를 사용 하려고 했기 때문이라고 생각합니다.
+(주민등록번호 유효성 검사, 핸드폰 인증 및 naver 로그인 등등)
+
+저는 크게 두가지 api를 사용하였습니다.
+Bootstrap과 naver에서 운영하는 스마트에디터 api입니다. 
+	
+BootStrap API를 이용하여 메인 페이지의 게시판 미리보기 디자인을 만들었습니다.
+이는 원하는 태그에 class이름만 맞추어 작성하면 되었기 때문에 굉장히 쉬웠습니다.
+	
+하여 해당 코드는 생략하고, 네이버 스마트에디터 API 적용 코드를 소개해드릴까 합니다.
+	
+스마트에디터는 네이버에서 제공하는 오픈 API로써 게시판 기능 중 하나인 글 작성 시 유용하게
+사용 할 수 있는 API입니다. 먼저 사진으로 어떤 API인지 보여드리겠습니다.
+</div>
+
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 게시판 글 작성 화면 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+
+<div align="center">
+해당 API는 스마트에디터의 크기 조절 및 데이터 전송 시 데이터의 타입 변환
+(HTML5코드를 문자열 형식으로 변환/공백 및 여러가지 특수문자의 데이터 변환)
+등등의 여러가지 기능을 수행 할 수 있습니다.
+	
+아래는 적용 코드입니다.
+</div>
+
+
+```jsp
+/* insertBoardForFree.jsp 중 일부 */
+<tr style="height: 79%;">
+	<th>
+		내용
+		<p style="font-size: 7px; color: red;" class="countSpan"></p>
+	</th>
+	<td colspan="3">
+		<textarea name="boardContents" id="boardContents" maxlength="800">
+		</textarea>
+	</td>
+</tr>
+```
+
+```javaScript
+	//스마트에디터 적용 JS/jQuery코드
+	
+	var oEditors = [];
+				
+	nhn.husky.EZCreator.createInIFrame({ oAppRef : oEditors,
+		elPlaceHolder : "boardContents", // 적용 할 태그(textarea)
+		sSkinURI : "/naver-smarteditor2-ca95d21/demo/SmartEditor2Skin.html", // 적용할 스마트 에디터 경로
+		fCreator : "createSEditor2"
+	});
+	
+	setTimeout(function() {
+		var ctntarea = document.querySelector("iframe").contentWindow.document.querySelector("iframe").contentWindow.document.querySelector(".se2_inputarea");
+		ctntarea.addEventListener("keyup", function(e) {
+			var text = this.innerHTML;
+			text = text.replace(/<br>/ig, "");
+			text = text.replace(/&nbsp;/ig, "");
+			text = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+			
+			var len = text.length; // 글자 수 보여주기 위해 커스텀한 코드
+			document.querySelector(".countSpan").innerHTML = len + "byte";
+			if (len > 3950) {
+			    alert("최대 3950글자까지 입력 가능합니다.");
+			}
+			// 3950 이후 글자 초기화 코드 추가 예정
+		});
+	}, 1000)
+```
+
+<div align="center">
+이렇게 기능 및 코드 설명을 마치겠습니다.
+</div>
 
 ---
 
