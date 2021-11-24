@@ -1105,7 +1105,7 @@ function pagingFun() {
 ```
 
 ```HTML5
-<%-- HTML5 코드 및 jsp 코드  --%>
+<%-- HTML5/jsp 코드  --%>
 <body onload="checkNotice();pagingFun();">
 	<jsp:include page="class_Module.jsp" />
 	<jsp:include page="top_menu.jsp" />
@@ -1178,38 +1178,24 @@ function pagingFun() {
 
 ```
 
-<h4 align="center">결과 화면</h4>
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 게시판 결과 화면 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+
+![게시판 결과](https://user-images.githubusercontent.com/14798713/143312530-f42724e3-04b4-4602-b3b8-b6355557deea.gif)
+페이징 결과 화면
 
 <div align="center">
 이렇게 게시판 페이지의 프론트엔드 코드와 결과 화면을 보여드렸습니다.
-그렇다면 아마 이해가 안 되시는 부분이 몇가지 보이실 겁니다.
 
-
-맞습니다.
-
-제가 보여드린 코드와 결과 화면이 아무리 봐도 다른 것 같아 보이실텐데요.
-그 이유는 제가 모듈화 한 코드들은 보여드리지 않아서 입니다.
-그렇다면 어떤 부분을 모듈화 했는지 지금부터 보여드리겠습니다.
+위의 결과 화면은 사이즈를 위해 좌우상하 부분이 짤린 화면입니다.
+이 프로그램의 모든 페이지에는 상단과 우측 하단에 메뉴가 있습니다.
 	
-먼저 제가 사용한 라이브러리 목록입니다.
+그렇다면 왜 위의 코드에는 해당 부분이 보이지 않는가 에 대한 의문이 생기실 겁니다.
+
+사실 HTML5/JSP 코드의 상단 부분을 보시면 jsp:include 태그를 이용하여 모듈화 한 페이지를 불러와
+사용 했기에 때문에 코드 부분이 노출되지 않았습니다.
+	
+이 외에도 다양한 기능들을 모듈화하여 사용했는데요.
+그렇다면 어떤 부분을 모듈화 했는지 지금부터 보여드리겠습니다.
 </div>
-
-```jsp
-
-<%-- jQuery --%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<%-- 공용 JS(모든 페이지 공용으로 사용될 JS코드만 따로 파일화) --%>
-<script type="text/javascript" src="/js/main.js?ver=1" ></script>
-
-<%-- CSS --%>
-<link rel="stylesheet" href="/css/main.css?ver=18">
-
-<%-- 폰트 --%>
-<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
-	rel='stylesheet' type='text/css'>
-```
 
 ><h5 align="center">모듈화</h5>
 
@@ -1427,8 +1413,8 @@ a {
 </body>
 ```
 
-
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 상단 메뉴 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+![상단 메뉴](https://user-images.githubusercontent.com/14798713/143312508-95635a60-2d01-453f-a6ee-a9ae287b6070.gif)
+상단 메뉴 
 
 <div align="center">
 다음은 회원 분류 모듈입니다. (class_Module.jsp)
@@ -1570,7 +1556,8 @@ $(document).ready(function(){
 }
 ```
 
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 플로팅 메뉴 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+![플로팅](https://user-images.githubusercontent.com/14798713/143312497-26646a07-4899-480d-b919-bc4a964318e7.gif)
+플로팅 메뉴 결과 화면
 
 <div align="center">
 그 외 다른 모듈들이 있습니다.
@@ -1829,8 +1816,8 @@ JSP를 통해 오늘 날짜를 가져와 기본 세팅을 진행해주었습니�
 	}
 ```
 
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 달력 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
-
+![달력](https://user-images.githubusercontent.com/14798713/143312516-ab76bd65-8a6e-4341-aa86-1d93a4dbaa64.gif)
+달력 결과 화면
 
 <div align="center">
 이렇게 알고리즘 파트를 마치겠습니다.
@@ -1875,7 +1862,8 @@ JSP를 통해 오늘 날짜를 가져와 기본 세팅을 진행해주었습니�
 (CSS는 생략하겠습니다)
 </div>
 
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 작업 발주 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+![발주](https://user-images.githubusercontent.com/14798713/143312476-7c076496-8d19-4351-99b9-b5cb03d57e65.gif)
+작업 발주 결과 화면
 
 ```jsp
 	/*
@@ -2435,7 +2423,8 @@ BootStrap API를 이용하여 메인 페이지의 게시판 미리보기 디자�
 사용 할 수 있는 API입니다. 먼저 사진으로 어떤 API인지 보여드리겠습니다.
 </div>
 
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※ 게시판 글 작성 화면 사진이 들어가야 함 ※※※※※※※※※※※※※※※※※※※※※※
+![게시판 글쓰기](https://user-images.githubusercontent.com/14798713/143312523-e0d295b9-816b-4904-b47a-637a9c2dae8a.gif)
+게시판 글쓰기 결과 화면
 
 <div align="center">
 해당 API는 스마트에디터의 크기 조절 및 데이터 전송 시 데이터의 타입 변환
